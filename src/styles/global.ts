@@ -11,9 +11,6 @@ export const GlobalStyle = createGlobalStyle`
         text-decoration: none;
     }
 
-    :root {
-    }
-
     body {
         background-color: ${Color.MAIN_DARK};
         color: ${Color.TEXT_MAIN};
