@@ -99,7 +99,7 @@ const InputText = ({
     <InputContainer {...validationProps}>
       <InputLabel {...validationProps}>
         {label}
-        {validationProps.hasError && ` - ${errors[name].message}`}
+        {validationProps.hasError && `${errors[name].message}`}
       </InputLabel>
       <InputWrapper {...validationProps}>
         {inputTypeOptions[type]}
@@ -114,7 +114,9 @@ const InputText = ({
             }
           }}
           placeholder={placeholder}
-          type={type === "password" ? "password" : "text"}
+          type={
+            type === InputTypes.PASSWORD ? InputTypes.PASSWORD : InputTypes.TEXT
+          }
         />
       </InputWrapper>
     </InputContainer>
