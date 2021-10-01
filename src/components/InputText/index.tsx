@@ -6,7 +6,7 @@ import StringUtils from "../../shared/util/string-utils";
 import { Input, InputContainer, InputLabel, InputWrapper } from "./styles";
 import { GoMail } from "react-icons/go";
 import { FaRegUserCircle } from "react-icons/fa";
-import { GrLock } from "react-icons/gr";
+import { AiOutlineLock } from "react-icons/ai";
 import { InputTypes } from "../../model/enums/input-types";
 import { InputTypeProps } from "../../model/input";
 
@@ -23,7 +23,7 @@ interface InputTextProps {
 const inputTypeOptions = {
   [InputTypes.USER]: <FaRegUserCircle />,
   [InputTypes.EMAIL]: <GoMail />,
-  [InputTypes.PASSWORD]: <GrLock />,
+  [InputTypes.PASSWORD]: <AiOutlineLock />,
   [InputTypes.DEFAULT]: <></>,
 };
 

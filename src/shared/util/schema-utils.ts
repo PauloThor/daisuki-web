@@ -11,6 +11,11 @@ class SchemaUtils {
         .string()
         .email("Precisa ser um email válido")
         .required("Campo obrigatório"),
+      emailConfirm: yup
+        .string()
+        .email()
+        .required("Campo obrigatório")
+        .oneOf([yup.ref("email")], "Os emails devem ser iguais"),
       password: yup.string().min(8, "Mínimo de 8 caracteres"),
       passwordConfirm: yup
         .string()

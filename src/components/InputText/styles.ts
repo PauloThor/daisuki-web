@@ -11,6 +11,11 @@ interface InputWrapperProps {
 
 export const InputContainer = styled.div`
   margin: 1rem 0.5rem;
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 `;
 
 export const InputWrapper = styled.div<InputWrapperProps>`
@@ -38,7 +43,8 @@ export const InputWrapper = styled.div<InputWrapperProps>`
 export const Input = styled.input`
   background-color: transparent;
   color: ${Color.TEXT_MAIN};
-  font-size: ${Font.MAIN};
+  font-family: ${Font.MAIN};
+  font-size: 14px;
 
   padding: 0.5rem 1rem;
   border: none;

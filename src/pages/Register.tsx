@@ -18,7 +18,7 @@ const Register = () => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <div style={{ backgroundColor: Color.MAIN_LIGHT, padding: "10px" }}>
+        <div style={{ backgroundColor: Color.MAIN, padding: "10px" }}>
           <InputText
             name="username"
             placeholder="Nome de Usuário"
@@ -32,15 +32,21 @@ const Register = () => {
             type={InputTypes.EMAIL}
           />
           <InputText
+            name="emailConfirm"
+            placeholder="exemplo@mail.com"
+            label="Confirme o e-mail*"
+            type={InputTypes.EMAIL}
+          />
+          <InputText
             name="password"
-            placeholder="******"
+            placeholder="Senha"
             label="Senha*"
             type={InputTypes.PASSWORD}
           />
           <InputText
             name="passwordConfirm"
-            placeholder="******"
-            label="Confirmar Senha*"
+            placeholder="Senha"
+            label="Confirme a senha*"
             type={InputTypes.PASSWORD}
           />
         </div>
