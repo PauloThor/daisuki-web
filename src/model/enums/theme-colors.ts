@@ -1,5 +1,5 @@
 export enum Color {
-  MAIN_DARK = "#14114",
+  MAIN_DARK = "#141414",
   MAIN = "#281528",
   MAIN_LIGHT = "#432343",
   HIGHLIGHT_DARK = "#B4184C",
