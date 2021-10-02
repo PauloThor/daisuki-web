@@ -1,5 +1,6 @@
 import { Color } from "../../model/enums/theme-colors";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const FullContainer = styled.div`
   height: 100vh;
@@ -11,17 +12,22 @@ export const LogoContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding-top: 0.5rem;
+
+  @media (min-width: 768px) {
+    justify-content: start;
+    padding-left: 100px;
+  }
 `;
 
 export const Container = styled.div`
   display: flex;
-  /* padding: 1rem; */
   justify-content: center;
   align-items: center;
   overflow: hidden;
 
   @media (min-width: 768px) {
     height: 100%;
+    padding: 0 0.5rem;
   }
 `;
 
@@ -74,7 +80,7 @@ export const Subtitle = styled.p`
   text-align: right;
 `;
 
-export const Link = styled.a`
+export const StyledLink = styled(Link)`
   font-weight: 700;
   cursor: pointer;
 

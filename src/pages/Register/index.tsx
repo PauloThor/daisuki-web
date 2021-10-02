@@ -7,14 +7,13 @@ import {
   Container,
   FormContainer,
   FullContainer,
-  Link,
   LogoContainer,
   LottieContainer,
+  StyledLink,
   Subtitle,
 } from "./styles";
 import Lottie from "react-lottie";
 import kakashi from "../../assets/lottie/kakashi.json";
-import { useHistory } from "react-router";
 import Logo from "../../assets/img/logo.svg";
 
 interface FormInput {
@@ -77,10 +76,6 @@ const Register = () => {
     },
   ];
 
-  const history = useHistory();
-
-  const handlePath = () => history.push("/home");
-
   return (
     <FullContainer>
       <LogoContainer>
@@ -103,8 +98,8 @@ const Register = () => {
                 Enviar
               </button>
               <Subtitle>
-                Já é cadastrado? <Link onClick={handlePath}>Acessar conta</Link>
-                .
+                Já é cadastrado?{" "}
+                <StyledLink to="/home">Acessar conta.</StyledLink>
               </Subtitle>
             </FormContainer>
           </form>
