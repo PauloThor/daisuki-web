@@ -21,7 +21,7 @@ export const loginThunk =
   ) =>
   (dispatch: Dispatch<ILogin>) => {
     daisukiApi
-      .post("/login", data)
+      .post("/users", data)
       .then((response) => {
         localStorage.setItem("@Daisuki:token", response.data.access);
 

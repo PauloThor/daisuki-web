@@ -1,5 +1,4 @@
 import { Redirect, Route as ReactDOMRoute } from "react-router-dom";
-// import { useAuth } from "../hooks/Auth";
 
 interface RouteProps {
   isPrivate?: boolean;
@@ -13,8 +12,7 @@ export default function Route({
   component: Component,
   ...rest
 }: RouteProps) {
-  //   const { token } = useAuth();
-  const token = false;
+  const token = localStorage.getItem("@Daisuki:token") || "";
 
   return (
     <ReactDOMRoute
