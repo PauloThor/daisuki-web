@@ -6,12 +6,15 @@ import SchemaUtils from "../../shared/util/schema-utils";
 import {
   Container,
   FormContainer,
-  Link,
+  FullContainer,
+  LogoContainer,
   LottieContainer,
+  StyledLink,
   Subtitle,
-} from "./styles";
+} from "../Register/styles";
 import Lottie from "react-lottie";
 import sailormoon from "../../assets/lottie/sailor-moon.json";
+import Logo from "../../assets/img/logo.svg";
 
 interface FormInput {
   username: string;
@@ -56,33 +59,44 @@ const Login = () => {
   ];
 
   return (
-    <Container>
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <FormContainer>
-            {inputList.map((input, index) => (
-              <InputText
-                key={`${input.name}-${index}`}
-                name={input.name}
-                placeholder={input.placeholder}
-                label={input.label}
-                type={input?.type ?? ""}
-              />
-            ))}
-            <button type="submit" style={{ margin: "5px 10px" }}>
-              Enviar
-            </button>
-            <Link>Esqueceu a senha?</Link>
-            <Subtitle>
-              Não é cadastrado? <Link>Criar conta</Link>.
-            </Subtitle>
-          </FormContainer>
-        </form>
-      </FormProvider>
-      <LottieContainer>
-        <Lottie options={loginOptions} />
-      </LottieContainer>
-    </Container>
+    <FullContainer>
+      <LogoContainer>
+        <img src={Logo} alt="logo" />
+      </LogoContainer>
+      <Container>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <FormContainer>
+              {inputList.map((input, index) => (
+                <InputText
+                  key={`${input.name}-${index}`}
+                  name={input.name}
+                  placeholder={input.placeholder}
+                  label={input.label}
+                  type={input?.type ?? ""}
+                />
+              ))}
+              <button type="submit" style={{ margin: "5px 10px" }}>
+                Enviar
+              </button>
+
+              <Subtitle>
+                <StyledLink to="/recover-password">
+                  Esqueceu a senha?
+                </StyledLink>
+              </Subtitle>
+              <Subtitle>
+                Não é cadastrado?
+                <StyledLink to="/login"> Criar conta.</StyledLink>
+              </Subtitle>
+            </FormContainer>
+          </form>
+        </FormProvider>
+        <LottieContainer>
+          <Lottie options={loginOptions} />
+        </LottieContainer>
+      </Container>
+    </FullContainer>
   );
 };
 
