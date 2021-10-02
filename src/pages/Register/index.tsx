@@ -6,12 +6,16 @@ import SchemaUtils from "../../shared/util/schema-utils";
 import {
   Container,
   FormContainer,
+  FullContainer,
   Link,
+  LogoContainer,
   LottieContainer,
   Subtitle,
 } from "./styles";
 import Lottie from "react-lottie";
 import kakashi from "../../assets/lottie/kakashi.json";
+import { useHistory } from "react-router";
+import Logo from "../../assets/img/logo.svg";
 
 interface FormInput {
   username: string;
@@ -73,33 +77,43 @@ const Register = () => {
     },
   ];
 
+  const history = useHistory();
+
+  const handlePath = () => history.push("/home");
+
   return (
-    <Container>
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <FormContainer>
-            {inputList.map((input, index) => (
-              <InputText
-                key={`${input.name}-${index}`}
-                name={input.name}
-                placeholder={input.placeholder}
-                label={input.label}
-                type={input?.type ?? ""}
-              />
-            ))}
-            <button type="submit" style={{ margin: "5px 10px" }}>
-              Enviar
-            </button>
-            <Subtitle>
-              Já é cadastrado? <Link>Acessar conta</Link>.
-            </Subtitle>
-          </FormContainer>
-        </form>
-      </FormProvider>
-      <LottieContainer>
-        <Lottie options={registerOptions} />
-      </LottieContainer>
-    </Container>
+    <FullContainer>
+      <LogoContainer>
+        <img src={Logo} alt="logo" />
+      </LogoContainer>
+      <Container>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <FormContainer>
+              {inputList.map((input, index) => (
+                <InputText
+                  key={`${input.name}-${index}`}
+                  name={input.name}
+                  placeholder={input.placeholder}
+                  label={input.label}
+                  type={input?.type ?? ""}
+                />
+              ))}
+              <button type="submit" style={{ margin: "5px 10px" }}>
+                Enviar
+              </button>
+              <Subtitle>
+                Já é cadastrado? <Link onClick={handlePath}>Acessar conta</Link>
+                .
+              </Subtitle>
+            </FormContainer>
+          </form>
+        </FormProvider>
+        <LottieContainer>
+          <Lottie options={registerOptions} />
+        </LottieContainer>
+      </Container>
+    </FullContainer>
   );
 };
 

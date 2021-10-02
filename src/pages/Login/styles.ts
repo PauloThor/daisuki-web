@@ -1,28 +1,13 @@
 import { Color } from "../../model/enums/theme-colors";
 import styled from "styled-components";
 
-export const FullContainer = styled.div`
-  height: 100vh;
-  overflow: hidden;
-`;
-
-export const LogoContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 0.5rem;
-`;
-
 export const Container = styled.div`
   display: flex;
-  /* padding: 1rem; */
+  padding: 1rem;
   justify-content: center;
   align-items: center;
+  height: 100vh;
   overflow: hidden;
-
-  @media (min-width: 768px) {
-    height: 100%;
-  }
 `;
 
 export const LottieContainer = styled.div`
