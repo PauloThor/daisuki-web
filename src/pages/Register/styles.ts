@@ -12,11 +12,26 @@ export const Container = styled.div`
 
 export const LottieContainer = styled.div`
   display: none;
+
   @media (min-width: 768px) {
     display: initial;
-    padding-left: 240px;
+    padding-left: 50px;
     margin-top: auto;
     margin-bottom: -130px;
+
+    svg {
+      width: 250px;
+      height: 250px;
+    }
+  }
+
+  @media (min-width: 1136px) {
+    padding-left: 240px;
+
+    svg {
+      width: 500px;
+      height: 500px;
+    }
   }
 `;
 

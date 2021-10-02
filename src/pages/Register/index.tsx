@@ -97,7 +97,7 @@ const Register = () => {
         </form>
       </FormProvider>
       <LottieContainer>
-        <Lottie options={registerOptions} width={500} height={500} />
+        <Lottie options={registerOptions} />
       </LottieContainer>
     </Container>
   );
