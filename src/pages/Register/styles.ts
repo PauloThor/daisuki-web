@@ -23,7 +23,7 @@ export const LogoContainer = styled.div`
     justify-content: start;
   }
 
-  @media (min-width: 2000px) {
+  @media (min-width: 1980px) {
     padding-left: 100px;
   }
 `;
