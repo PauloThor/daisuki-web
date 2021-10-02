@@ -7,6 +7,7 @@ import SchemaUtils from "../../shared/util/schema-utils";
 import {
   Container,
   FormContainer,
+  Form,
   FullContainer,
   LogoContainer,
   LottieContainer,
@@ -26,7 +27,7 @@ interface FormInput {
 }
 
 const Register = () => {
-  const registerOptions = {
+  const defaultOptions = {
     loop: true,
     autoplay: true,
     animationData: kakashi,
@@ -80,14 +81,14 @@ const Register = () => {
   return (
     <FullContainer>
       <LogoContainer>
-    <Link to="/">
-        <img src={Logo} alt="logo" />
-    </Link>
+        <Link to="/">
+          <img src={Logo} alt="logo" />
+        </Link>
       </LogoContainer>
       <Container>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
-            <FormContainer>
+        <FormContainer>
+          <FormProvider {...methods}>
+            <Form onSubmit={methods.handleSubmit(onSubmit)}>
               {inputList.map((input, index) => (
                 <InputText
                   key={`${input.name}-${index}`}
@@ -104,11 +105,11 @@ const Register = () => {
                 Já é cadastrado?{" "}
                 <StyledLink to="/login">Acessar conta.</StyledLink>
               </Subtitle>
-            </FormContainer>
-          </form>
-        </FormProvider>
+            </Form>
+          </FormProvider>
+        </FormContainer>
         <LottieContainer>
-          <Lottie options={registerOptions} />
+          <Lottie options={defaultOptions} />
         </LottieContainer>
       </Container>
     </FullContainer>

@@ -4,18 +4,26 @@ import { Link } from "react-router-dom";
 
 export const FullContainer = styled.div`
   height: 100vh;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+  padding: 4px 10px 0;
+
+  @media (min-width: 768px) {
+    padding: 8px 30px 0;
+  }
 `;
 
 export const LogoContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 0.5rem;
-
 
   @media (min-width: 768px) {
     justify-content: start;
+  }
+
+  @media (min-width: 2000px) {
     padding-left: 100px;
   }
 `;
@@ -25,11 +33,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
-
-  @media (min-width: 768px) {
-    height: 100%;
-    padding: 0 0.5rem;
-  }
+  flex-grow: 1;
 `;
 
 export const LottieContainer = styled.div`
@@ -37,9 +41,8 @@ export const LottieContainer = styled.div`
 
   @media (min-width: 768px) {
     display: initial;
-    padding-left: 50px;
-    margin-top: auto;
-    margin-bottom: -130px;
+    align-self: flex-end;
+    margin-bottom: -100px;
 
     svg {
       width: 250px;
@@ -47,9 +50,11 @@ export const LottieContainer = styled.div`
     }
   }
 
-  @media (min-width: 1136px) {
-    padding-left: 240px;
+  @media (min-width: 1024px) {
+    margin-bottom: -130px;
+  }
 
+  @media (min-width: 1136px) {
     svg {
       width: 500px;
       height: 500px;
@@ -58,18 +63,25 @@ export const LottieContainer = styled.div`
 `;
 
 export const FormContainer = styled.div`
-  width: fit-content;
+  @media (min-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+  }
+`;
+
+export const Form = styled.form`
   background-color: ${Color.MAIN};
-  padding: 10px;
-  margin: 1rem auto;
+  padding: 16px;
   border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 295px;
+  width: 300px;
 
   @media (min-width: 768px) {
-    max-width: 350px;
+    width: 350px;
   }
 `;
 
