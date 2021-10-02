@@ -84,7 +84,8 @@ export const StyledLink = styled(Link)`
   font-weight: 700;
   cursor: pointer;
 
-  &:hover {
+  &:hover,
+  &:focus {
     color: ${Color.TEXT_MAIN};
     transition: 0.5s;
   }
