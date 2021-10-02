@@ -1,61 +1,37 @@
 import "antd/dist/antd.css";
 import { Menu, Dropdown } from "antd";
-import { DownOutlined } from "@ant-design/icons";
 import {
   MenuContainer,
   MenuItem,
+  MenuLabel,
   MenuStyles,
   StyledMenuSubItem,
 } from "./styles";
+import { SubItem } from "../../model/menu-item";
 
 interface DropdownItemProps {
   title: string;
-  items?: string[];
+  items?: SubItem[];
 }
 
-const DropdownItem = ({ title }: DropdownItemProps) => {
+const DropdownItem = ({ title, items }: DropdownItemProps) => {
   const menu = (
     <Menu style={MenuStyles}>
-      <StyledMenuSubItem>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.antgroup.com"
-        >
-          1st menu item
-        </a>
-      </StyledMenuSubItem>
-      <Menu.Item icon={<DownOutlined />} disabled>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.aliyun.com"
-        >
-          2nd menu item (disabled)
-        </a>
-      </Menu.Item>
-      <Menu.Item disabled>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.luohanacademy.com"
-        >
-          3rd menu item (disabled)
-        </a>
-      </Menu.Item>
-      <Menu.Item danger>a danger item</Menu.Item>
+      {items?.map((item, index) => (
+        <StyledMenuSubItem key={`${item.name}-${index}`}>
+          <a target="_blank" rel="noopener noreferrer" href={item.path}>
+            {item.name}
+          </a>
+        </StyledMenuSubItem>
+      ))}
     </Menu>
   );
 
   return (
     <MenuContainer>
       <Dropdown overlay={menu}>
-        <MenuItem
-          className="ant-dropdown-link"
-          onClick={(e) => e.preventDefault()}
-          href="/"
-        >
-          {title}
+        <MenuItem onClick={(e) => e.preventDefault()} href="/">
+          <MenuLabel>{title}</MenuLabel>
         </MenuItem>
       </Dropdown>
     </MenuContainer>
