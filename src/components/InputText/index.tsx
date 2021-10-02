@@ -7,12 +7,13 @@ import { Input, InputContainer, InputLabel, InputWrapper } from "./styles";
 import { GoMail } from "react-icons/go";
 import { FaRegUserCircle } from "react-icons/fa";
 import { AiOutlineLock } from "react-icons/ai";
+import { FiSearch } from "react-icons/fi";
 import { InputTypes } from "../../model/enums/input-types";
 import { InputTypeProps } from "../../model/input";
 
 interface InputTextProps {
-  name: string;
-  label: string;
+  name?: string;
+  label?: string;
   placeholder: string;
   handleOnChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   mask?: MaskProps;
@@ -25,10 +26,12 @@ const inputTypeOptions = {
   [InputTypes.EMAIL]: <GoMail />,
   [InputTypes.PASSWORD]: <AiOutlineLock />,
   [InputTypes.DEFAULT]: <></>,
+  [InputTypes.TEXT]: <></>,
+  [InputTypes.SEARCH]: <FiSearch />,
 };
 
 const InputText = ({
-  name,
+  name = "input",
   placeholder,
   handleOnChange,
   mask = Mask.DEFAULT,
@@ -97,28 +100,48 @@ const InputText = ({
 
   return (
     <InputContainer {...validationProps}>
-      <InputLabel {...validationProps}>
-        {label}
-        {validationProps.hasError && `${errors[name].message}`}
-      </InputLabel>
-      <InputWrapper {...validationProps}>
-        {inputTypeOptions[type]}
-        <Input
-          {...register(name)}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChange={(evt) => {
-            handleRegister.onChange(evt);
-            if (handleOnChange) {
-              handleOnChange(evt);
-            }
-          }}
-          placeholder={placeholder}
-          type={
-            type === InputTypes.PASSWORD ? InputTypes.PASSWORD : InputTypes.TEXT
-          }
-        />
-      </InputWrapper>
+      {type !== InputTypes.SEARCH ? (
+        <>
+          <InputLabel {...validationProps}>
+            {label}
+            {validationProps.hasError && `${errors[name].message}`}
+          </InputLabel>
+          <InputWrapper {...validationProps}>
+            {inputTypeOptions[type]}
+            <Input
+              {...register(name)}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              onChange={(evt) => {
+                handleRegister.onChange(evt);
+                if (handleOnChange) {
+                  handleOnChange(evt);
+                }
+              }}
+              placeholder={placeholder}
+              type={
+                type === InputTypes.PASSWORD
+                  ? InputTypes.PASSWORD
+                  : InputTypes.TEXT
+              }
+            />
+          </InputWrapper>
+        </>
+      ) : (
+        <InputWrapper {...validationProps} style={{ maxWidth: "270px" }}>
+          <Input
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onChange={(evt) => {
+              if (handleOnChange) {
+                handleOnChange(evt);
+              }
+            }}
+            placeholder={placeholder}
+          />
+          {inputTypeOptions[type]}
+        </InputWrapper>
+      )}
     </InputContainer>
   );
 };

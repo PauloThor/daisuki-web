@@ -4,4 +4,5 @@ export enum InputTypes {
   EMAIL = "email",
   USER = "usuário",
   DEFAULT = "default",
+  SEARCH = "search",
 }

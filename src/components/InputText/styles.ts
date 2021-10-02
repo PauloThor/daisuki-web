@@ -10,21 +10,28 @@ interface InputWrapperProps {
 }
 
 export const InputContainer = styled.div`
-  margin: 1rem 0.5rem;
+  margin: 1rem auto;
+  width: 100%;
+  padding: 0 0.5rem;
 
   svg {
     width: 1.5rem;
     height: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1.1rem;
   }
 `;
 
 export const InputWrapper = styled.div<InputWrapperProps>`
   border-radius: 8px;
   border: 1px solid ${Color.MAIN_DARK};
-  width: 250px;
+  width: 100%;
   display: flex;
   align-items: center;
   padding: 0 0.5rem;
+  margin: 0.5rem 0;
 
   ${(props) =>
     props.isFocused
@@ -53,9 +60,14 @@ export const Input = styled.input`
     color: ${Color.TEXT_MAIN};
     opacity: 0.7;
   }
+
+  @media (min-width: 768px) {
+    font-size: 1.1rem;
+  }
 `;
 
-export const InputLabel = styled.p<InputWrapperProps>`
+export const InputLabel = styled.label<InputWrapperProps>`
+  width: 100%;
   color: ${Color.TEXT_MAIN};
   padding-bottom: 5px;
 
