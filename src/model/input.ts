@@ -1,0 +1,7 @@
+import { InputTypes } from "./enums/input-types";
+
+export type InputTypeProps =
+  | InputTypes.EMAIL
+  | InputTypes.PASSWORD
+  | InputTypes.USER
+  | InputTypes.DEFAULT;
