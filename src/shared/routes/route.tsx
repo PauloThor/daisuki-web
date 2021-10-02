@@ -23,7 +23,7 @@ export default function Route({
         ) : (
           <Redirect
             to={{
-              pathname: isPrivate ? "/" : "/dashboard",
+              pathname: "/",
             }}
           />
         );
