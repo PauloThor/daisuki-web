@@ -8,6 +8,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import SchemaUtils from "../../shared/util/schema-utils";
 import MenuUtils from "../../shared/util/menu-items-utils";
 
+import mock from "../../assets/img/avatar-thor.png";
+
 interface HeaderProps {
   isAuth?: boolean;
 }
@@ -33,11 +35,17 @@ const Header = ({ isAuth = false }: HeaderProps) => {
           <InputText placeholder="Buscar anime" type={InputTypes.SEARCH} />
         </form>
       </FormProvider>
-      <HeaderItem>
-        <ProfileLink to="/login">Entrar</ProfileLink>
-        <Divider />
-        <ProfileLink to="/login">Cadastrar</ProfileLink>
-      </HeaderItem>
+      {!isAuth ? (
+        <HeaderItem>
+          <ProfileLink to="/login">Entrar</ProfileLink>
+          <Divider />
+          <ProfileLink to="/login">Cadastrar</ProfileLink>
+        </HeaderItem>
+      ) : (
+        <HeaderItem>
+          <img src={mock} alt="avatar" />
+        </HeaderItem>
+      )}
     </Container>
   );
 };
