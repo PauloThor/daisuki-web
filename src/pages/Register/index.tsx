@@ -3,15 +3,40 @@ import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { InputTypes } from "../../model/enums/input-types";
 import SchemaUtils from "../../shared/util/schema-utils";
-import { Container, Link, Subtitle } from "./styles";
+import {
+  Container,
+  FormContainer,
+  Link,
+  LottieContainer,
+  Subtitle,
+} from "./styles";
+import Lottie from "react-lottie";
+import kakashi from "../../assets/lottie/kakashi.json";
+
+interface FormInput {
+  username: string;
+  email: string;
+  emailConfirm: string;
+  password: string;
+  passwordConfirm: string;
+}
 
 const Register = () => {
+  const registerOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: kakashi,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
   const methods = useForm({
     resolver: yupResolver(SchemaUtils.register()),
     mode: "all",
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FormInput) => {
     console.log(data);
   };
 
@@ -49,10 +74,10 @@ const Register = () => {
   ];
 
   return (
-    <div>
+    <Container>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <Container>
+          <FormContainer>
             {inputList.map((input, index) => (
               <InputText
                 key={`${input.name}-${index}`}
@@ -68,10 +93,13 @@ const Register = () => {
             <Subtitle>
               Já é cadastrado? <Link>Acessar conta</Link>.
             </Subtitle>
-          </Container>
+          </FormContainer>
         </form>
       </FormProvider>
-    </div>
+      <LottieContainer>
+        <Lottie options={registerOptions} width={500} height={500} />
+      </LottieContainer>
+    </Container>
   );
 };
 
