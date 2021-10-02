@@ -5,6 +5,7 @@ import { InputTypes } from "../../model/enums/input-types";
 import SchemaUtils from "../../shared/util/schema-utils";
 import {
   Container,
+  Form,
   FormContainer,
   FullContainer,
   LogoContainer,
@@ -15,6 +16,7 @@ import {
 import Lottie from "react-lottie";
 import sailormoon from "../../assets/lottie/sailor-moon.json";
 import Logo from "../../assets/img/logo.svg";
+import { Link } from "react-router-dom";
 
 interface FormInput {
   username: string;
@@ -25,7 +27,7 @@ interface FormInput {
 }
 
 const Login = () => {
-  const loginOptions = {
+  const defaultOptions = {
     loop: true,
     autoplay: true,
     animationData: sailormoon,
@@ -61,12 +63,14 @@ const Login = () => {
   return (
     <FullContainer>
       <LogoContainer>
-        <img src={Logo} alt="logo" />
+        <Link to="/">
+          <img src={Logo} alt="logo" />
+        </Link>
       </LogoContainer>
       <Container>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
-            <FormContainer>
+        <FormContainer>
+          <FormProvider {...methods}>
+            <Form onSubmit={methods.handleSubmit(onSubmit)}>
               {inputList.map((input, index) => (
                 <InputText
                   key={`${input.name}-${index}`}
@@ -79,7 +83,6 @@ const Login = () => {
               <button type="submit" style={{ margin: "5px 10px" }}>
                 Enviar
               </button>
-
               <Subtitle>
                 <StyledLink to="/recover-password">
                   Esqueceu a senha?
@@ -87,13 +90,13 @@ const Login = () => {
               </Subtitle>
               <Subtitle>
                 Não é cadastrado?
-                <StyledLink to="/login"> Criar conta.</StyledLink>
+                <StyledLink to="/register"> Criar conta.</StyledLink>
               </Subtitle>
-            </FormContainer>
-          </form>
-        </FormProvider>
+            </Form>
+          </FormProvider>
+        </FormContainer>
         <LottieContainer>
-          <Lottie options={loginOptions} />
+          <Lottie options={defaultOptions} />
         </LottieContainer>
       </Container>
     </FullContainer>
