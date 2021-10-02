@@ -10,9 +10,8 @@ interface InputWrapperProps {
 }
 
 export const InputContainer = styled.div`
-  margin: 0.5rem auto;
+  margin: 0.2rem auto;
   width: 100%;
-  padding: 0 0.5rem;
 
   svg {
     width: 1.5rem;
@@ -20,7 +19,7 @@ export const InputContainer = styled.div`
   }
 
   @media (min-width: 768px) {
-    font-size: 1.1rem;
+    margin: 0.5rem auto;
   }
 `;
 
@@ -31,7 +30,6 @@ export const InputWrapper = styled.div<InputWrapperProps>`
   display: flex;
   align-items: center;
   padding: 0 0.5rem;
-  margin: 0;
 
   ${(props) =>
     props.isFocused
@@ -45,18 +43,12 @@ export const InputWrapper = styled.div<InputWrapperProps>`
       : css`
           border-color: ${Color.MAIN_DARK};
         `}
-
-  @media (min-width: 768px) {
-    margin: 0.5rem 0;
-  }
 `;
 
 export const Input = styled.input`
   background-color: transparent;
   color: ${Color.TEXT_MAIN};
   font-family: ${Font.MAIN};
-  font-size: 14px;
-
   padding: 0.5rem 1rem;
   border: none;
 
@@ -64,17 +56,17 @@ export const Input = styled.input`
     color: ${Color.TEXT_MAIN};
     opacity: 0.7;
   }
-
-  @media (min-width: 768px) {
-    font-size: 1.1rem;
-  }
 `;
 
 export const InputLabel = styled.label<InputWrapperProps>`
   width: 100%;
   color: ${Color.TEXT_MAIN};
-  padding-bottom: 5px;
-  font-size: 0.9rem;
+  padding-bottom: 2px;
+
+  @media (min-width: 768px) {
+    font-size: 1rem;
+    padding-bottom: 6px;
+  }
 
   ${(props) =>
     props.hasError
@@ -88,8 +80,4 @@ export const InputLabel = styled.label<InputWrapperProps>`
       : css`
           color: ${Color.TEXT_MAIN};
         `}
-
-  @media (min-width: 768px) {
-    font-size: 1rem;
-  }
 `;
