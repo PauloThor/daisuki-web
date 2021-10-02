@@ -13,6 +13,7 @@ export const LogoContainer = styled.div`
   align-items: center;
   padding-top: 0.5rem;
 
+
   @media (min-width: 768px) {
     justify-content: start;
     padding-left: 100px;
@@ -82,7 +83,7 @@ export const Subtitle = styled.p`
 
 export const StyledLink = styled(Link)`
   font-weight: 700;
-  cursor: pointer;
+  color: ${Color.TEXT_SECONDARY};
 
   &:hover,
   &:focus {

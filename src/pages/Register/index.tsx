@@ -1,7 +1,8 @@
-import InputText from "../../components/InputText";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Link } from "react-router-dom";
 import { InputTypes } from "../../model/enums/input-types";
+import InputText from "../../components/InputText";
 import SchemaUtils from "../../shared/util/schema-utils";
 import {
   Container,
@@ -79,7 +80,9 @@ const Register = () => {
   return (
     <FullContainer>
       <LogoContainer>
+    <Link to="/">
         <img src={Logo} alt="logo" />
+    </Link>
       </LogoContainer>
       <Container>
         <FormProvider {...methods}>
@@ -99,7 +102,7 @@ const Register = () => {
               </button>
               <Subtitle>
                 Já é cadastrado?{" "}
-                <StyledLink to="/home">Acessar conta.</StyledLink>
+                <StyledLink to="/login">Acessar conta.</StyledLink>
               </Subtitle>
             </FormContainer>
           </form>
