@@ -16,7 +16,7 @@ export const Subtitle = styled.p`
   text-align: right;
 `;
 
-export const Link = styled.label`
+export const Link = styled.a`
   font-weight: 700;
   cursor: pointer;
 `;

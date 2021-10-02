@@ -14,7 +14,7 @@ interface InputTextProps {
   name: string;
   label: string;
   placeholder: string;
-  handleOnChange?: (e: any) => void;
+  handleOnChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   mask?: MaskProps;
   defaultValue?: string;
   type?: InputTypeProps;
