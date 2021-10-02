@@ -96,6 +96,7 @@ const Register = () => {
                   placeholder={input.placeholder}
                   label={input.label}
                   type={input?.type ?? ""}
+                  autofocus={index === 0}
                 />
               ))}
               <button type="submit" style={{ margin: "5px 10px" }}>

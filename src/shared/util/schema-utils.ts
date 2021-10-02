@@ -24,6 +24,16 @@ class SchemaUtils {
         .oneOf([yup.ref("password")], ""),
     });
   }
+
+  static login() {
+    return yup.object({
+      email: yup
+        .string()
+        .email(" - Precisa ser um email")
+        .required(" - Campo obrigatório"),
+      password: yup.string().min(8, " - Mínimo de 8 caracteres"),
+    });
+  }
 }
 
 export default SchemaUtils;
