@@ -4,4 +4,6 @@ export type InputTypeProps =
   | InputTypes.EMAIL
   | InputTypes.PASSWORD
   | InputTypes.USER
-  | InputTypes.DEFAULT;
+  | InputTypes.DEFAULT
+  | InputTypes.TEXT
+  | InputTypes.SEARCH;
