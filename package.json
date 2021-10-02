@@ -61,6 +61,7 @@
     "@types/react-lottie": "^1.2.6",
     "@types/react-router-dom": "^5.3.0",
     "@types/styled-components": "^5.1.14",
-    "@types/yup": "^0.29.13"
+    "@types/yup": "^0.29.13",
+    "miragejs": "^0.1.42"
   }
 }
