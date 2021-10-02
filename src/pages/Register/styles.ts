@@ -14,9 +14,9 @@ export const LottieContainer = styled.div`
   display: none;
   @media (min-width: 768px) {
     display: initial;
-    margin-top: auto;
     padding-left: 240px;
-    margin-bottom: -100px;
+    margin-top: auto;
+    margin-bottom: -130px;
   }
 `;
 

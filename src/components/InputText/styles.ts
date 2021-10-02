@@ -10,7 +10,7 @@ interface InputWrapperProps {
 }
 
 export const InputContainer = styled.div`
-  margin: 1rem auto;
+  margin: 0.5rem auto;
   width: 100%;
   padding: 0 0.5rem;
 
