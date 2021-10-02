@@ -1,4 +1,5 @@
 import { Switch } from "react-router-dom";
+import Register from "../../pages/Register";
 import Route from "./route";
 
 const Routes = () => {
@@ -10,7 +11,7 @@ const Routes = () => {
 
   return (
     <Switch>
-      {/* <Route exact path="/" component={LandingPage} /> */}
+      <Route exact path="/register" component={Register} />
       {/* <Route exact path="/styleguide" component={Styleguide} /> */}
       {/* <Route path="/login" component={Login} />
       <Route exact path="/dashboard" component={***client, admin ou representative Dashboard***} isPrivate />

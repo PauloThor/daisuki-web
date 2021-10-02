@@ -14,7 +14,7 @@ export default function Route({
   ...rest
 }: RouteProps) {
   //   const { token } = useAuth();
-  const token = true;
+  const token = false;
 
   return (
     <ReactDOMRoute
