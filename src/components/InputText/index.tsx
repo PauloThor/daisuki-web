@@ -19,6 +19,7 @@ interface InputTextProps {
   mask?: MaskProps;
   defaultValue?: string;
   type?: InputTypeProps;
+  autofocus?: boolean;
 }
 
 const inputTypeOptions = {
@@ -38,6 +39,7 @@ const InputText = ({
   defaultValue,
   label,
   type = InputTypes.DEFAULT,
+  autofocus = false,
 }: InputTextProps) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
@@ -124,6 +126,7 @@ const InputText = ({
                   ? InputTypes.PASSWORD
                   : InputTypes.TEXT
               }
+              autoFocus={autofocus}
             />
           </InputWrapper>
         </>

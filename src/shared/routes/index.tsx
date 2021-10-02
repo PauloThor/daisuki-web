@@ -1,4 +1,5 @@
 import { Switch } from "react-router-dom";
+import Login from "../../pages/Login";
 import Register from "../../pages/Register";
 import Route from "./route";
 
@@ -12,6 +13,7 @@ const Routes = () => {
   return (
     <Switch>
       <Route exact path="/register" component={Register} />
+      <Route exact path="/login" component={Login} />
       {/* <Route exact path="/styleguide" component={Styleguide} /> */}
       {/* <Route path="/login" component={Login} />
       <Route exact path="/dashboard" component={***client, admin ou representative Dashboard***} isPrivate />

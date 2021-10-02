@@ -5,13 +5,18 @@ import { InputTypes } from "../../model/enums/input-types";
 import SchemaUtils from "../../shared/util/schema-utils";
 import {
   Container,
+  Form,
   FormContainer,
-  Link,
+  FullContainer,
+  LogoContainer,
   LottieContainer,
+  StyledLink,
   Subtitle,
-} from "./styles";
+} from "../Register/styles";
 import Lottie from "react-lottie";
 import sailormoon from "../../assets/lottie/sailor-moon.json";
+import Logo from "../../assets/img/logo.svg";
+import { Link } from "react-router-dom";
 
 interface FormInput {
   username: string;
@@ -22,7 +27,7 @@ interface FormInput {
 }
 
 const Login = () => {
-  const loginOptions = {
+  const defaultOptions = {
     loop: true,
     autoplay: true,
     animationData: sailormoon,
@@ -56,33 +61,46 @@ const Login = () => {
   ];
 
   return (
-    <Container>
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <FormContainer>
-            {inputList.map((input, index) => (
-              <InputText
-                key={`${input.name}-${index}`}
-                name={input.name}
-                placeholder={input.placeholder}
-                label={input.label}
-                type={input?.type ?? ""}
-              />
-            ))}
-            <button type="submit" style={{ margin: "5px 10px" }}>
-              Enviar
-            </button>
-            <Link>Esqueceu a senha?</Link>
-            <Subtitle>
-              Não é cadastrado? <Link>Criar conta</Link>.
-            </Subtitle>
-          </FormContainer>
-        </form>
-      </FormProvider>
-      <LottieContainer>
-        <Lottie options={loginOptions} />
-      </LottieContainer>
-    </Container>
+    <FullContainer>
+      <LogoContainer>
+        <Link to="/">
+          <img src={Logo} alt="logo" />
+        </Link>
+      </LogoContainer>
+      <Container>
+        <FormContainer>
+          <FormProvider {...methods}>
+            <Form onSubmit={methods.handleSubmit(onSubmit)}>
+              {inputList.map((input, index) => (
+                <InputText
+                  key={`${input.name}-${index}`}
+                  name={input.name}
+                  placeholder={input.placeholder}
+                  label={input.label}
+                  type={input?.type ?? ""}
+                  autofocus={index === 0}
+                />
+              ))}
+              <button type="submit" style={{ margin: "5px 10px" }}>
+                Enviar
+              </button>
+              <Subtitle>
+                <StyledLink to="/recover-password">
+                  Esqueceu a senha?
+                </StyledLink>
+              </Subtitle>
+              <Subtitle>
+                Não é cadastrado?
+                <StyledLink to="/register"> Criar conta.</StyledLink>
+              </Subtitle>
+            </Form>
+          </FormProvider>
+        </FormContainer>
+        <LottieContainer>
+          <Lottie options={defaultOptions} />
+        </LottieContainer>
+      </Container>
+    </FullContainer>
   );
 };
 
