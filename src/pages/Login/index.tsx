@@ -19,11 +19,8 @@ import Logo from "../../assets/img/logo.svg";
 import { Link } from "react-router-dom";
 
 interface FormInput {
-  username: string;
   email: string;
-  emailConfirm: string;
   password: string;
-  passwordConfirm: string;
 }
 
 const Login = () => {
@@ -37,7 +34,7 @@ const Login = () => {
   };
 
   const methods = useForm({
-    resolver: yupResolver(SchemaUtils.register()),
+    resolver: yupResolver(SchemaUtils.login()),
     mode: "all",
   });
 
