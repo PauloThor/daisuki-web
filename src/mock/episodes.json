@@ -1,0 +1,515 @@
+[
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/0Na8pDy.jpg",
+      "video_url": "https://streamable.com/4fl2of",
+      "views": 950,
+      "anime_id": 1,
+      "created_at": "2021-10-01 10:31:25"
+    },
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/ZGOOjYb.jpg",
+      "video_url": "https://streamable.com/109h2l",
+      "views": 431,
+      "anime_id": 2,
+      "created_at": "2021-10-01 10:34:48"
+    },
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/1FMxTBu.jpg",
+      "video_url": "https://streamable.com/gf72wx",
+      "views": 247,
+      "anime_id": 3,
+      "created_at": "2021-10-01 10:47:11"
+    },
+    {
+      "episode_number": 2,
+      "image_url": "https://i.imgur.com/SQhGV7j.jpg",
+      "video_url": "https://streamable.com/9wekl8",
+      "views": 99,
+      "anime_id": 3,
+      "created_at": "2021-10-01 11:01:53"
+    },
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/AOo0icz.jpg",
+      "video_url": "https://streamable.com/pz8k3o",
+      "views": 322,
+      "anime_id": 4,
+      "created_at": "2021-10-01 11:22:33"
+    },
+    {
+      "episode_number": 2,
+      "image_url": "https://i.imgur.com/vrllso2.jpg",
+      "video_url": "https://streamable.com/bfhns2",
+      "views": 285,
+      "anime_id": 4,
+      "created_at": "2021-10-01 11:30:14"
+    },
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/tspO1Wh.jpg",
+      "video_url": "https://streamable.com/8pnfsc",
+      "views": 5436,
+      "anime_id": 5,
+      "created_at": "2021-10-01 11:35:15"
+    },
+    {
+      "episode_number": 2,
+      "image_url": "https://i.imgur.com/wBafPqc.jpg",
+      "video_url": "https://streamable.com/v31xvk",
+      "views": 5358,
+      "anime_id": 5,
+      "created_at": "2021-10-01 11:49:57"
+    },
+    {
+      "episode_number": 3,
+      "image_url": "https://i.imgur.com/0Od6Avp.jpg",
+      "video_url": "https://streamable.com/ct9co5",
+      "views": 5994,
+      "anime_id": 5,
+      "created_at": "2021-10-01 12:01:26"
+    },
+    {
+      "episode_number": 4,
+      "image_url": "https://i.imgur.com/73Cmr2l.jpg",
+      "video_url": "https://streamable.com/9t610q",
+      "views": 5832,
+      "anime_id": 5,
+      "created_at": "2021-10-01 12:11:38"
+    },
+    {
+      "episode_number": 5,
+      "image_url": "https://i.imgur.com/d3ktdmR.jpg",
+      "video_url": "https://streamable.com/jxmveu",
+      "views": 5421,
+      "anime_id": 5,
+      "created_at": "2021-10-01 12:19:27"
+    },
+    {
+      "episode_number": 6,
+      "image_url": "https://i.imgur.com/SEJcsK3.jpg",
+      "video_url": "https://streamable.com/dr174p",
+      "views": 4081,
+      "anime_id": 5,
+      "created_at": "2021-10-01 13:22:49"
+    },
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/ac7jeDL.jpg",
+      "video_url": "https://streamable.com/ur81od",
+      "views": 224,
+      "anime_id": 7,
+      "created_at": "2021-10-01 15:43:24"
+    },
+    {
+      "episode_number": 2,
+      "image_url": "https://i.imgur.com/Au4urDi.jpg",
+      "video_url": "https://streamable.com/fkfsru",
+      "views": 188,
+      "anime_id": 7,
+      "created_at": "2021-10-01 15:48:13"
+    },
+    {
+      "episode_number": 3,
+      "image_url": "https://i.imgur.com/8SANaLx.jpg",
+      "video_url": "https://streamable.com/n9vhdl",
+      "views": 167,
+      "anime_id": 7,
+      "created_at": "2021-10-01 15:59:01"
+    },
+    {
+      "episode_number": 4,
+      "image_url": "https://i.imgur.com/1FPtLiQ.jpg",
+      "video_url": "https://streamable.com/anhn9s",
+      "views": 158,
+      "anime_id": 7,
+      "created_at": "2021-10-01 16:04:36"
+    },
+    {
+      "episode_number": 5,
+      "image_url": "https://i.imgur.com/RCIKwxj.jpg",
+      "video_url": "https://streamable.com/vj0fir",
+      "views": 162,
+      "anime_id": 7,
+      "created_at": "2021-10-01 16:12:14"
+    },
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/eD9A2g7.jpg",
+      "video_url": "https://streamable.com/f9hy7e",
+      "views": 8836,
+      "anime_id": 6,
+      "created_at": "2021-10-01 16:15:28"
+    },
+    {
+      "episode_number": 2,
+      "image_url": "https://i.imgur.com/XsIrp6W.jpg",
+      "video_url": "https://streamable.com/l930x7",
+      "views": 9034,
+      "anime_id": 6,
+      "created_at": "2021-10-01 16:16:51"
+    },
+    {
+      "episode_number": 3,
+      "image_url": "https://i.imgur.com/4rdaP2G.jpg",
+      "video_url": "https://streamable.com/nyl2ps",
+      "views": 8718,
+      "anime_id": 6,
+      "created_at": "2021-10-01 16:20:10"
+    },
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/jUeQHtt.jpg",
+      "video_url": "https://streamable.com/y1de44",
+      "views": 671,
+      "anime_id": 9,
+      "created_at": "2021-10-01 17:05:42"
+    },
+    {
+      "episode_number": 2,
+      "image_url": "https://i.imgur.com/GeYq3eC.jpg",
+      "video_url": "https://streamable.com/y76n9e",
+      "views": 689,
+      "anime_id": 9,
+      "created_at": "2021-10-01 17:09:22"
+    },
+    {
+      "episode_number": 4,
+      "image_url": "https://i.imgur.com/BXY74jC.jpg",
+      "video_url": "https://streamable.com/oseend",
+      "views": 8285,
+      "anime_id": 6,
+      "created_at": "2021-10-01 17:13:47"
+    },
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/1ivMGHd.jpg",
+      "video_url": "https://streamable.com/rb2gzm",
+      "views": 4011,
+      "anime_id": 8,
+      "created_at": "2021-10-01 17:16:58"
+    },
+    {
+      "episode_number": 2,
+      "image_url": "https://i.imgur.com/t0zp8xr.jpg",
+      "video_url": "https://streamable.com/5y1zx4",
+      "views": 3626,
+      "anime_id": 8,
+      "created_at": "2021-10-01 17:23:45"
+    },
+    {
+      "episode_number": 3,
+      "image_url": "https://i.imgur.com/qG36myn.jpg",
+      "video_url": "https://streamable.com/flid8s",
+      "views": 2337,
+      "anime_id": 8,
+      "created_at": "2021-10-01 17:30:06"
+    },
+    {
+      "episode_number": 5,
+      "image_url": "https://i.imgur.com/CZPrxfu.jpg",
+      "video_url": "https://streamable.com/iil5es",
+      "views": 8192,
+      "anime_id": 6,
+      "created_at": "2021-10-01 17:33:37"
+    },
+    {
+      "episode_number": 6,
+      "image_url": "https://i.imgur.com/tPea9zL.jpg",
+      "video_url": "https://streamable.com/18it2n",
+      "views": 8201,
+      "anime_id": 6,
+      "created_at": "2021-10-01 17:37:13"
+    },
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/w7Yqa6a.jpg",
+      "video_url": "https://streamable.com/7kswru",
+      "views": 2259,
+      "anime_id": 10,
+      "created_at": "2021-10-01 19:51:00"
+    },
+    {
+      "episode_number": 2,
+      "image_url": "https://i.imgur.com/bGdjW3D.jpg",
+      "video_url": "https://streamable.com/gkvwqo",
+      "views": 1916,
+      "anime_id": 10,
+      "created_at": "2021-10-01 19:52:41"
+    },
+    {
+      "episode_number": 3,
+      "image_url": "https://i.imgur.com/tRSEUSF.jpg",
+      "video_url": "https://streamable.com/qus4ni",
+      "views": 1804,
+      "anime_id": 10,
+      "created_at": "2021-10-01 19:53:28"
+    },
+    {
+      "episode_number": 4,
+      "image_url": "https://i.imgur.com/SujLPTj.jpg",
+      "video_url": "https://streamable.com/833a2a",
+      "views": 1633,
+      "anime_id": 10,
+      "created_at": "2021-10-01 19:54:15"
+    },
+    {
+      "episode_number": 5,
+      "image_url": "https://i.imgur.com/Yh1tl5i.jpg",
+      "video_url": "https://streamable.com/wab41f",
+      "views": 1570,
+      "anime_id": 10,
+      "created_at": "2021-10-01 19:55:19"
+    },
+    {
+      "episode_number": 6,
+      "image_url": "https://i.imgur.com/5Im4lal.jpg",
+      "video_url": "https://streamable.com/ye68e4",
+      "views": 1519,
+      "anime_id": 10,
+      "created_at": "2021-10-01 19:56:34"
+    },
+    {
+      "episode_number": 7,
+      "image_url": "https://i.imgur.com/tOmXnK3.jpg",
+      "video_url": "https://streamable.com/1w63i0",
+      "views": 1426,
+      "anime_id": 10,
+      "created_at": "2021-10-01 19:57:40"
+    },
+    {
+      "episode_number": 8,
+      "image_url": "https://i.imgur.com/Xh2F8i2.jpg",
+      "video_url": "https://streamable.com/3g5inc",
+      "views": 1287,
+      "anime_id": 10,
+      "created_at": "2021-10-01 19:58:36"
+    },
+    {
+      "episode_number": 9,
+      "image_url": "https://i.imgur.com/GLESbQy.jpg",
+      "video_url": "https://streamable.com/gxwhu4",
+      "views": 850,
+      "anime_id": 10,
+      "created_at": "2021-10-01 19:59:17"
+    },
+    {
+      "episode_number": 10,
+      "image_url": "https://i.imgur.com/CHzWuCW.jpg",
+      "video_url": "https://streamable.com/w9b0h2",
+      "views": 431,
+      "anime_id": 10,
+      "created_at": "2021-10-01 20:01:05"
+    },
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/mpgJ1xf.jpg",
+      "video_url": "https://streamable.com/8nyhl6",
+      "views": 5646,
+      "anime_id": 11,
+      "created_at": "2021-10-02 09:20:44"
+    },
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/iyqeHqj.jpg",
+      "video_url": "https://streamable.com/uml3w8",
+      "views": 9129,
+      "anime_id": 12,
+      "created_at": "2021-10-02 09:24:38"
+    },
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/dgNkOkC.jpg",
+      "video_url": "https://streamable.com/2gn7fs",
+      "views": 823,
+      "anime_id": 13,
+      "created_at": "2021-10-02 11:18:26"
+    },
+    {
+      "episode_number": 2,
+      "image_url": "https://i.imgur.com/JPn2hgb.jpg",
+      "video_url": "https://streamable.com/0h6w2l",
+      "views": 795,
+      "anime_id": 13,
+      "created_at": "2021-10-02 11:24:14"
+    },
+    {
+      "episode_number": 3,
+      "image_url": "https://i.imgur.com/4FKHvh5.jpg",
+      "video_url": "https://streamable.com/3i2qjc",
+      "views": 754,
+      "anime_id": 13,
+      "created_at": "2021-10-02 11:28:05"
+    },
+    {
+      "episode_number": 4,
+      "image_url": "https://i.imgur.com/LsWC6Dl.jpg",
+      "video_url": "https://streamable.com/s3j1gj",
+      "views": 618,
+      "anime_id": 13,
+      "created_at": "2021-10-02 11:36:50"
+    },
+    {
+      "episode_number": 5,
+      "image_url": "https://i.imgur.com/rQHfdO9.jpg",
+      "video_url": "https://streamable.com/a4qdhm",
+      "views": 706,
+      "anime_id": 13,
+      "created_at": "2021-10-02 11:40:08"
+    },
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/hJlzl6V.jpg",
+      "video_url": "https://streamable.com/mvswe3",
+      "views": 3256,
+      "anime_id": 14,
+      "created_at": "2021-10-02 14:38:03"
+    },
+    {
+      "episode_number": 2,
+      "image_url": "https://i.imgur.com/q5S1bhz.jpg",
+      "video_url": "https://streamable.com/44ahcj",
+      "views": 3184,
+      "anime_id": 14,
+      "created_at": "2021-10-02 14:54:26"
+    },
+    {
+      "episode_number": 3,
+      "image_url": "https://i.imgur.com/LU3zBDC.jpg",
+      "video_url": "https://streamable.com/cd5yhn",
+      "views": 3213,
+      "anime_id": 14,
+      "created_at": "2021-10-03 06:11:14"
+    },
+    {
+      "episode_number": 4,
+      "image_url": "https://i.imgur.com/hcnPMMx.jpg",
+      "video_url": "https://streamable.com/a0s51q",
+      "views": 3119,
+      "anime_id": 14,
+      "created_at": "2021-10-03 06:19:34"
+    },
+    {
+      "episode_number": 5,
+      "image_url": "https://i.imgur.com/Sxnq1Hw.jpg",
+      "video_url": "https://streamable.com/ckx12r",
+      "views": 3117,
+      "anime_id": 14,
+      "created_at": "2021-10-03 06:30:21"
+    },
+    {
+      "episode_number": 6,
+      "image_url": "https://i.imgur.com/CTd9jLE.jpg",
+      "video_url": "https://streamable.com/r8s7x3",
+      "views": 3091,
+      "anime_id": 14,
+      "created_at": "2021-10-03 08:15:29"
+    },
+    {
+      "episode_number": 7,
+      "image_url": "https://i.imgur.com/5V1Bce1.jpg",
+      "video_url": "https://streamable.com/bs2v7t",
+      "views": 3115,
+      "anime_id": 14,
+      "created_at": "2021-10-03 08:23:57"
+    },
+    {
+      "episode_number": 8,
+      "image_url": "https://i.imgur.com/ZrnvnOj.jpg",
+      "video_url": "https://streamable.com/lohteb",
+      "views": 3128,
+      "anime_id": 14,
+      "created_at": "2021-10-03 08:32:20"
+    },
+    {
+      "episode_number": 9,
+      "image_url": "https://i.imgur.com/2LTiVaq.jpg",
+      "video_url": "https://streamable.com/qocmhm",
+      "views": 3066,
+      "anime_id": 14,
+      "created_at": "2021-10-03 12:00:58"
+    },
+    {
+      "episode_number": 10,
+      "image_url": "https://i.imgur.com/H6BplLx.jpg",
+      "video_url": "https://streamable.com/99kxle",
+      "views": 3047,
+      "anime_id": 14,
+      "created_at": "2021-10-03 12:03:13"
+    },
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/2bpcrDr.jpg",
+      "video_url": "https://streamable.com/4dmcor",
+      "views": 7013,
+      "anime_id": 15,
+      "created_at": "2021-10-03 13:10:21"
+    },
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/Y4unfMF.jpg",
+      "video_url": "https://streamable.com/x695na",
+      "views": 1820,
+      "anime_id": 16,
+      "created_at": "2021-10-03 13:18:39"
+    },
+    {
+      "episode_number": 2,
+      "image_url": "https://i.imgur.com/u4karhw.jpg",
+      "video_url": "https://streamable.com/c58yhq",
+      "views": 1782,
+      "anime_id": 16,
+      "created_at": "2021-10-03 13:21:47"
+    },
+    {
+      "episode_number": 11,
+      "image_url": "https://i.imgur.com/kUUs2hr.jpg",
+      "video_url": "https://streamable.com/gg2gbg",
+      "views": 3211,
+      "anime_id": 14,
+      "created_at": "2021-10-03 13:24:31"
+    },
+    {
+      "episode_number": 12,
+      "image_url": "https://i.imgur.com/cj82hCi.jpg",
+      "video_url": "https://streamable.com/5iyd5a",
+      "views": 3181,
+      "anime_id": 14,
+      "created_at": "2021-10-03 13:29:56"
+    },
+    {
+      "episode_number": 13,
+      "image_url": "https://i.imgur.com/24jFHQe.jpg",
+      "video_url": "https://streamable.com/bxtvej",
+      "views": 3158,
+      "anime_id": 14,
+      "created_at": "2021-10-03 13:32:26"
+    },
+    {
+      "episode_number": 1,
+      "image_url": "https://i.imgur.com/hOPOYOc.jpg",
+      "video_url": "https://streamable.com/ismmos",
+      "views": 561,
+      "anime_id": 17,
+      "created_at": "2021-10-03 15:02:54"
+    },
+    {
+      "episode_number": 3,
+      "image_url": "https://i.imgur.com/5bjZNF6.jpg",
+      "video_url": "https://streamable.com/d0a0ce",
+      "views": 1706,
+      "anime_id": 16,
+      "created_at": "2021-10-03 15:11:06"
+    },
+    {
+      "episode_number": 4,
+      "image_url": "https://i.imgur.com/RQFKWJl.jpg",
+      "video_url": "https://streamable.com/pseddp",
+      "views": 1675,
+      "anime_id": 16,
+      "created_at": "2021-10-03 15:14:28"
+    }
+  ]
+  
