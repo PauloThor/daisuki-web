@@ -1,11 +1,13 @@
-import InputText from "../../components/InputText";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Link } from "react-router-dom";
 import { InputTypes } from "../../model/enums/input-types";
+import InputText from "../../components/InputText";
 import SchemaUtils from "../../shared/util/schema-utils";
 import {
   Container,
   FormContainer,
+  Form,
   FullContainer,
   LogoContainer,
   LottieContainer,
@@ -25,7 +27,7 @@ interface FormInput {
 }
 
 const Register = () => {
-  const registerOptions = {
+  const defaultOptions = {
     loop: true,
     autoplay: true,
     animationData: kakashi,
@@ -79,12 +81,14 @@ const Register = () => {
   return (
     <FullContainer>
       <LogoContainer>
-        <img src={Logo} alt="logo" />
+        <Link to="/">
+          <img src={Logo} alt="logo" />
+        </Link>
       </LogoContainer>
       <Container>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
-            <FormContainer>
+        <FormContainer>
+          <FormProvider {...methods}>
+            <Form onSubmit={methods.handleSubmit(onSubmit)}>
               {inputList.map((input, index) => (
                 <InputText
                   key={`${input.name}-${index}`}
@@ -99,13 +103,13 @@ const Register = () => {
               </button>
               <Subtitle>
                 Já é cadastrado?{" "}
-                <StyledLink to="/home">Acessar conta.</StyledLink>
+                <StyledLink to="/login">Acessar conta.</StyledLink>
               </Subtitle>
-            </FormContainer>
-          </form>
-        </FormProvider>
+            </Form>
+          </FormProvider>
+        </FormContainer>
         <LottieContainer>
-          <Lottie options={registerOptions} />
+          <Lottie options={defaultOptions} />
         </LottieContainer>
       </Container>
     </FullContainer>
