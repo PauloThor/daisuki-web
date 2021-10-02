@@ -7,12 +7,12 @@ export const MenuContainer = styled.div`
 `;
 
 export const MenuStyles = {
-  backgroundColor: Color.MAIN,
+  backgroundColor: Color.MAIN_LIGHT,
   borderRadius: "8px",
 };
 
 export const StyledMenuSubItem = styled(Menu.Item)`
-  background-color: ${Color.MAIN};
+  background-color: ${Color.MAIN_LIGHT};
   color: ${Color.TEXT_MAIN};
 
   &:hover {
@@ -30,7 +30,7 @@ export const MenuItem = styled.a`
 `;
 
 export const MenuLabel = styled.label`
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
 
   &:hover {

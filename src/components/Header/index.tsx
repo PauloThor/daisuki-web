@@ -1,51 +1,43 @@
-import { Container } from "./styles";
+import { Container, Divider, HeaderItem, ProfileLink } from "./styles";
 import Logo from "../../assets/img/logo.svg";
 import DropdownItem from "../Dropdown";
+import InputText from "../InputText";
+import { InputTypes } from "../../model/enums/input-types";
+import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import SchemaUtils from "../../shared/util/schema-utils";
+import MenuUtils from "../../shared/util/menu-items-utils";
 
-const Header = () => {
-  const animeItems = [
-    {
-      name: "Em lançamento",
-      path: "/animes/airing",
-    },
-    {
-      name: "Completos",
-      path: "/animes/completed",
-    },
-    {
-      name: "Legendados",
-      path: "/animes/subbed",
-    },
-    {
-      name: "Dublados",
-      path: "/animes/dubbed",
-    },
-    {
-      name: "Top animes",
-      path: "/animes/top",
-    },
-  ];
+interface HeaderProps {
+  isAuth?: boolean;
+}
 
-  const movieItems = [
-    {
-      name: "Legendados",
-      path: "/movies/airing",
-    },
-    {
-      name: "Dublados",
-      path: "/movies/dubbed",
-    },
-    {
-      name: "Top filmes",
-      path: "/movies/top",
-    },
-  ];
+const Header = ({ isAuth = false }: HeaderProps) => {
+  const methods = useForm({
+    resolver: yupResolver(SchemaUtils.register()),
+    mode: "all",
+  });
+
+  const onSubmit = (data: any) => console.log(data);
 
   return (
     <Container>
       <img src={Logo} alt="logo" />
-      <DropdownItem title="Animes" items={animeItems} />
-      <DropdownItem title="Filmes" items={movieItems} />
+      <HeaderItem>
+        <DropdownItem title="Animes" items={MenuUtils.animes} />
+        <DropdownItem title="Filmes" items={MenuUtils.movies} />
+        <DropdownItem title="Gênero" items={MenuUtils.genders} />
+      </HeaderItem>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <InputText placeholder="Buscar anime" type={InputTypes.SEARCH} />
+        </form>
+      </FormProvider>
+      <HeaderItem>
+        <ProfileLink to="/login">Entrar</ProfileLink>
+        <Divider />
+        <ProfileLink to="/login">Cadastrar</ProfileLink>
+      </HeaderItem>
     </Container>
   );
 };
