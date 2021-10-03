@@ -1,8 +1,9 @@
-import InputText from "../../components/InputText";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Link } from "react-router-dom";
 import { InputTypes } from "../../model/enums/input-types";
 import SchemaUtils from "../../shared/util/schema-utils";
+import InputText from "../../components/InputText";
 import {
   Container,
   Form,
@@ -12,18 +13,14 @@ import {
   LottieContainer,
   StyledLink,
   Subtitle,
-} from "../Register/styles";
+} from "./styles";
 import Lottie from "react-lottie";
 import sailormoon from "../../assets/lottie/sailor-moon.json";
 import Logo from "../../assets/img/logo.svg";
-import { Link } from "react-router-dom";
 
 interface FormInput {
-  username: string;
   email: string;
-  emailConfirm: string;
   password: string;
-  passwordConfirm: string;
 }
 
 const Login = () => {
@@ -37,7 +34,7 @@ const Login = () => {
   };
 
   const methods = useForm({
-    resolver: yupResolver(SchemaUtils.register()),
+    resolver: yupResolver(SchemaUtils.login()),
     mode: "all",
   });
 

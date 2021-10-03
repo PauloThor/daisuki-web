@@ -9,6 +9,8 @@ import SchemaUtils from "../../shared/util/schema-utils";
 import MenuUtils from "../../shared/util/menu-items-utils";
 
 import mock from "../../assets/img/avatar-thor.png";
+import { Link } from "react-router-dom";
+import MenuMobile from "../MenuMobile";
 
 interface HeaderProps {
   isAuth?: boolean;
@@ -24,7 +26,9 @@ const Header = ({ isAuth = false }: HeaderProps) => {
 
   return (
     <Container>
-      <img src={Logo} alt="logo" />
+      <Link to="/">
+        <img src={Logo} alt="logo" />
+      </Link>
       <HeaderItem>
         <DropdownItem title="Animes" items={MenuUtils.animes} />
         <DropdownItem title="Filmes" items={MenuUtils.movies} />
@@ -39,13 +43,14 @@ const Header = ({ isAuth = false }: HeaderProps) => {
         <HeaderItem>
           <ProfileLink to="/login">Entrar</ProfileLink>
           <Divider />
-          <ProfileLink to="/login">Cadastrar</ProfileLink>
+          <ProfileLink to="/register">Cadastrar</ProfileLink>
         </HeaderItem>
       ) : (
         <HeaderItem>
           <img src={mock} alt="avatar" />
         </HeaderItem>
       )}
+      <MenuMobile />
     </Container>
   );
 };

@@ -11,6 +11,14 @@ export const Container = styled.div`
   padding: 10px 30px;
   position: fixed;
   justify-content: space-between;
+
+  form {
+    display: none;
+
+    @media (min-width: 768px) {
+      display: initial;
+    }
+  }
 `;
 
 export const ProfileLink = styled(Link)`
@@ -29,7 +37,21 @@ export const Divider = styled.div`
 `;
 
 export const HeaderItem = styled.div`
-  display: flex;
   align-items: center;
   padding: 0 15px;
+  display: none;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
+`;
+
+export const MenuMobileContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;

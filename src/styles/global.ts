@@ -1,7 +1,7 @@
 import { Font } from "./../model/enums/theme-fonts";
 import { Color } from "./../model/enums/theme-colors";
 import { createGlobalStyle } from "styled-components";
-import 'antd/dist/antd.css';
+import "antd/dist/antd.css";
 
 export const GlobalStyle = createGlobalStyle`
     html, body, div, p, ul, li, header, footer, main, section, aside, form, nav, input, button, figure, figcaption, a, h1, h2, h3, h4, h5, h6 {
@@ -29,4 +29,7 @@ export const GlobalStyle = createGlobalStyle`
         outline: none;
     }
 
+    .ant-dropdown-menu {
+        background-color: transparent;
+    }
 `;
