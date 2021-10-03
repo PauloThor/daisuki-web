@@ -31,7 +31,7 @@ const MenuMobile = () => {
       <Container>
         <Dropdown overlay={menu}>
           <a onClick={(e) => e.preventDefault()} href="/">
-            <GiHamburgerMenu size={30} color="white" />
+            <GiHamburgerMenu size={35} color="white" />
           </a>
         </Dropdown>
       </Container>
