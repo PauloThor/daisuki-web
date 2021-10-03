@@ -1,4 +1,5 @@
 import { Redirect, Route as ReactDOMRoute } from "react-router-dom";
+import { useUser } from "../../hooks/User"
 
 interface RouteProps {
   isPrivate?: boolean;
@@ -12,7 +13,7 @@ export default function Route({
   component: Component,
   ...rest
 }: RouteProps) {
-  const token = localStorage.getItem("@Daisuki:token") || "";
+  const { token } = useUser();
 
   return (
     <ReactDOMRoute
