@@ -3,13 +3,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Container = styled.div`
-  width: 100vw;
   background-color: ${Color.MAIN_LIGHT};
   height: 78px;
   display: flex;
   align-items: center;
   padding: 10px 30px;
-  position: fixed;
   justify-content: space-between;
 
   form {
