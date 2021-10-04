@@ -1,4 +1,3 @@
-import "antd/dist/antd.css";
 import { Menu, Dropdown } from "antd";
 import {
   MenuContainer,
