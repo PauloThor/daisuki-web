@@ -15,6 +15,23 @@ export const GlobalStyle = createGlobalStyle`
     body {
         background-color: ${Color.MAIN_DARK};
         color: ${Color.TEXT_MAIN};
+
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: #2a2a2a;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: ${Color.MAIN_DARK};
+
+            &:hover {
+                background-color: ${Color.MAIN};
+            }
+        }
+
     }
 
     body, button, a {
