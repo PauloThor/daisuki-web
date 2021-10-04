@@ -4,7 +4,7 @@ interface ButtonProps {
   text: string;
   color?: string;
   margin?: string;
-  type?: "submit" | "button" | "reset" | undefined;
+  type?: "submit" | "button" | "reset";
   handleClick?: () => void;
 }
 

@@ -9,7 +9,7 @@ export const Container = styled.header`
   align-items: center;
   padding: 10px 30px;
   justify-content: space-between;
-  box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.25);
 
   form {
     display: none;
