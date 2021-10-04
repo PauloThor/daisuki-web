@@ -1,10 +1,22 @@
 import Header from "../../components/Header";
+import bannerImg from "../../assets/img/banner.png";
+import { Banner, Text, Image } from "./styles";
 
 const Home = () => {
   return (
-    <div style={{ height: "300vh" }}>
+    <>
       <Header />
-    </div>
+      <Banner>
+        <Text>
+          <p>
+            Assista <span>animes online</span> com qualidade
+          </p>
+        </Text>
+        <Image>
+          <img src={bannerImg} alt="Personagem Shuna" />
+        </Image>
+      </Banner>
+    </>
   );
 };
 

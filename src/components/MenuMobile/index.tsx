@@ -1,4 +1,3 @@
-import "antd/dist/antd.css";
 import { Dropdown, Menu } from "antd";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Container, MenuStyles, StyledItem, StyledSubMenu } from "./styles";

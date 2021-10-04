@@ -2,15 +2,14 @@ import { Color } from "./../../model/enums/theme-colors";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export const Container = styled.div`
-  width: 100vw;
+export const Container = styled.header`
   background-color: ${Color.MAIN_LIGHT};
   height: 78px;
   display: flex;
   align-items: center;
   padding: 10px 30px;
-  position: fixed;
   justify-content: space-between;
+  box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.25);
 
   form {
     display: none;
