@@ -7,10 +7,6 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "@types/jest": "^27.0.2",
-    "@types/node": "^12.0.0",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
     "antd": "^4.16.13",
     "axios": "^0.21.4",
     "framer-motion": "^4.1.17",
@@ -21,13 +17,9 @@
     "react-icons": "^4.2.0",
     "react-lottie": "^1.2.3",
     "react-multi-carousel": "^2.6.5",
-    "react-redux": "^7.2.5",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
-    "redux": "^4.1.1",
-    "redux-thunk": "^2.3.0",
     "styled-components": "^5.3.1",
-    "typescript": "^4.4.3",
     "web-vitals": "^1.0.1",
     "yup": "^0.32.9"
   },
@@ -57,12 +49,17 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
+    "@types/jest": "^27.0.2",
     "@types/jwt-decode": "^3.1.0",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "@types/react-icons": "^3.0.0",
     "@types/react-lottie": "^1.2.6",
     "@types/react-router-dom": "^5.3.0",
     "@types/styled-components": "^5.1.14",
     "@types/yup": "^0.29.13",
-    "miragejs": "^0.1.42"
+    "miragejs": "^0.1.42",
+    "typescript": "^4.4.3"
   }
 }
