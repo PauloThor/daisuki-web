@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Font } from "./../../model/enums/theme-fonts";
 import { Color } from "./../../model/enums/theme-colors";
 
 interface ButtonProps {
@@ -8,22 +7,24 @@ interface ButtonProps {
 }
 
 export const ButtonStyle = styled.button<ButtonProps>`
-  cursor: pointer;
   height: 48px;
   width: 166px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  font-family: ${Font.MAIN};
-  color: ${Color.TEXT_MAIN};
   background-color: ${({ color }) => (color ? color : Color.HIGHLIGHT_DARK)};
   margin: ${({ margin }) => margin && margin};
   outline: none;
   border: none;
-  border-radius: 5px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.25);
+  transition: 0.3s;
 
   &:hover,
   &:focus {
     background-color: ${Color.HIGHLIGHT};
+  }
+
+  @media (min-width: 768px) {
+    font-size: 18px;
   }
 `;

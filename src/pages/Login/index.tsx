@@ -17,6 +17,7 @@ import {
 import Lottie from "react-lottie";
 import sailormoon from "../../assets/lottie/sailor-moon.json";
 import Logo from "../../assets/img/logo.svg";
+import Button from "../../components/Button";
 
 interface FormInput {
   email: string;
@@ -78,9 +79,7 @@ const Login = () => {
                   autofocus={index === 0}
                 />
               ))}
-              <button type="submit" style={{ margin: "5px 10px" }}>
-                Enviar
-              </button>
+              <Button text="Enviar" margin="8px 0" />
               <Subtitle>
                 <StyledLink to="/recover-password">
                   Esqueceu a senha?

@@ -17,6 +17,7 @@ import {
 import Lottie from "react-lottie";
 import kakashi from "../../assets/lottie/kakashi.json";
 import Logo from "../../assets/img/logo.svg";
+import Button from "../../components/Button";
 
 interface FormInput {
   username: string;
@@ -99,11 +100,9 @@ const Register = () => {
                   autofocus={index === 0}
                 />
               ))}
-              <button type="submit" style={{ margin: "5px 10px" }}>
-                Enviar
-              </button>
+              <Button text="Enviar" margin="8px 0" />
               <Subtitle>
-                Já é cadastrado?{" "}
+                Já é cadastrado?
                 <StyledLink to="/login">Acessar conta.</StyledLink>
               </Subtitle>
             </Form>
