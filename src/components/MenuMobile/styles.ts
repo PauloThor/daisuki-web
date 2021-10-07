@@ -1,6 +1,7 @@
 import { Color } from "./../../model/enums/theme-colors";
 import { Menu } from "antd";
 import styled from "styled-components";
+import { isBlock } from "typescript";
 
 const { SubMenu } = Menu;
 
@@ -47,4 +48,12 @@ export const StyledSubMenu = styled(SubMenu)`
 export const StyledItem = styled(Menu.Item)`
   background-color: ${Color.MAIN_LIGHT};
   color: ${Color.TEXT_MAIN};
+`;
+
+export const MobileMenu = styled(Menu)`
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+  top: 0;
+  left: 0;
 `;
