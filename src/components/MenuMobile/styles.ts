@@ -9,7 +9,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
 
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     display: none;
   }
 `;

@@ -14,7 +14,7 @@ export const Container = styled.header`
   form {
     display: none;
 
-    @media (min-width: 768px) {
+    @media (min-width: 1024px) {
       display: initial;
     }
   }
@@ -40,7 +40,7 @@ export const HeaderItem = styled.div`
   padding: 0 15px;
   display: none;
 
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     display: flex;
   }
 `;
@@ -50,7 +50,7 @@ export const MenuMobileContainer = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     display: none;
   }
 `;
