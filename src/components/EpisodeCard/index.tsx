@@ -1,6 +1,6 @@
-import { Container, StyledLink } from "./styles";
+import { Container, StyledLink, ReleaseInfo } from "./styles";
 import { Episode } from "../../model/episode";
-import StringUtils from "../../shared/util/string-utils"
+import StringUtils from "../../shared/util/string-utils";
 
 interface Props {
   episode: Episode;
@@ -18,10 +18,15 @@ const EpisodeCard = ({ episode }: Props) => {
             !anime?.is_movie && `episódio ${episode_number}`
           }`}
         />
-        <div>{`${anime?.name}${
-          !anime?.is_movie && ` - Episódio ${episode_number}`
-        }`}</div>
+        <div>
+          {anime?.is_movie
+            ? `${anime?.name}`
+            : `${anime?.name} - Episódio ${episode_number}`}
+        </div>
       </StyledLink>
+      <ReleaseInfo>
+        <span>1 hora atrás</span>
+      </ReleaseInfo>
     </Container>
   );
 };

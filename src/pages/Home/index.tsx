@@ -37,9 +37,8 @@ const Home = () => {
           <img src={bannerImg} alt="Personagem Shuna" />
         </Image>
       </Banner>
-      <div>
         <EpisodeCard episode={episode}/>
-      </div>
+
     </>
   );
 };
