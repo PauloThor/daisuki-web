@@ -48,19 +48,14 @@ export const Title = styled.h2`
   font-size: 1.125rem;
   color: ${Color.TEXT_MAIN};
   font-weight: 700;
-  text-align: center;
   margin: 16px 0;
   @media (min-width: 768px) {
     font-size: 1.5rem;
     margin: 24px 0;
-
-    &:first-child {
-      margin: 16px 0 24px;
-    }
   }
 `;
 
-export const ReleasesSection = styled.section`
+export const Section = styled.section`
   text-align: center;
 `;
 

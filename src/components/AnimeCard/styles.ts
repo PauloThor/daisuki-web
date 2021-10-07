@@ -1,16 +1,11 @@
-import styled from "styled-components";
+import styled from "styled-components"
 import { Link } from "react-router-dom";
 import { Color } from "../../model/enums/theme-colors";
 
-export const Container = styled.div`
-  width: max-content;
-`;
-
-export const StyledLink = styled(Link)`
-  position: relative;
+export const Container = styled(Link)`
+    position: relative;
   display: block;
   width: fit-content;
-  transition: 0.3s ease-in-out;
 
   img {
     width: 290px;
@@ -34,14 +29,4 @@ export const StyledLink = styled(Link)`
     text-align: center;
     background-color: rgba(26, 26, 26, 0.9);
   }
-
-  &:hover, &:focus {
-    filter: grayscale(0.8);
-  }
-`;
-
-export const ReleaseInfo = styled.div`
-  font-size: 0.875rem;
-  color: ${Color.HIGHLIGHT_LIGHT};
-  text-align: end;
-`;
+`

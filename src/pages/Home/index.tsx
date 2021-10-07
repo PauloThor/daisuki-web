@@ -7,8 +7,8 @@ import {
   Text,
   Image,
   Main,
+  Section,
   Title,
-  ReleasesSection,
   ReleasesList,
 } from "./styles";
 import { useState } from "react";
@@ -67,7 +67,7 @@ const Home = () => {
         </Image>
       </Banner>
       <Main>
-        <ReleasesSection>
+        <Section>
           <Title>Lançamentos</Title>
           <ReleasesList>
             {episodes.map((episode, index) => (
@@ -82,7 +82,17 @@ const Home = () => {
             total={108}
             onChange={handleChange}
           />
-        </ReleasesSection>
+        </Section>
+        <Section>
+          <Title>
+            Animes mais populares
+          </Title>
+        </Section>
+        <Section>
+          <Title>
+            Últimos animes adicionados
+          </Title>
+        </Section>
       </Main>
     </>
   );
