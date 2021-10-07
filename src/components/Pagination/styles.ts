@@ -15,6 +15,7 @@ export const PaginationStyled = styled(Pagination)`
       color: ${Color.TEXT_MAIN};
 
       &:disabled {
+        border-color: #2e2e2e;
         color: #2e2e2e;
       }
     }
