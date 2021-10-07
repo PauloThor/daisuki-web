@@ -1,7 +1,17 @@
 import Header from "../../components/Header";
 import bannerImg from "../../assets/img/banner.png";
 import EpisodeCard from "../../components/EpisodeCard";
-import { Banner, Text, Image } from "./styles";
+import Pagination from "../../components/Pagination"
+import {
+  Banner,
+  Text,
+  Image,
+  Main,
+  Title,
+  ReleasesSection,
+  ReleasesList,
+} from "./styles";
+import { useState } from "react";
 
 const episode = {
   episode_number: 2,
@@ -23,7 +33,26 @@ const episode = {
   },
 };
 
+const episodes = [
+  episode,
+  episode,
+  episode,
+  episode,
+  episode,
+  episode,
+  episode,
+  episode,
+  episode,
+  episode,
+  episode,
+  episode,
+];
+
 const Home = () => {
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const handleChange = (page: number) => {
+    setCurrentPage(page)
+  }
   return (
     <>
       <Header />
@@ -37,8 +66,19 @@ const Home = () => {
           <img src={bannerImg} alt="Personagem Shuna" />
         </Image>
       </Banner>
-        <EpisodeCard episode={episode}/>
-
+      <Main>
+        <ReleasesSection>
+          <Title>Lançamentos</Title>
+          <ReleasesList>
+            {episodes.map((episode, index) => (
+              <li key={index}>
+                <EpisodeCard episode={episode} />
+              </li>
+            ))}
+          </ReleasesList>
+          <Pagination current={currentPage}  pageSize={12} total={36} onChange={handleChange}/>
+        </ReleasesSection>
+      </Main>
     </>
   );
 };
