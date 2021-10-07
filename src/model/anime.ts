@@ -4,7 +4,7 @@ export interface Anime {
   id?: number;
   name?: string;
   synopsis?: string;
-  imgae_url?: string;
+  image_url?: string;
   total_episodes?: number;
   is_movie?: boolean;
   is_dubbed?: boolean;
