@@ -2,9 +2,8 @@ import Header from "../../components/Header";
 import bannerImg from "../../assets/img/banner.png";
 import EpisodeCard from "../../components/EpisodeCard";
 import { Banner, Text, Image } from "./styles";
-import { Episode } from "../../model/episode";
 
-const episode: Episode = {
+const episode = {
   episode_number: 2,
   image_url: "https://i.imgur.com/q5S1bhz.jpg",
   video_url: "https://streamable.com/44ahcj",

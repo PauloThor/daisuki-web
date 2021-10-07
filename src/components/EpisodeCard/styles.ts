@@ -1,10 +1,13 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { Color } from "../../model/enums/theme-colors";
 
 export const Container = styled.div``;
 
 export const StyledLink = styled(Link)`
     position: relative;
+    display: block;
+    width: fit-content;
 
     img {
         width: 290px;
@@ -20,8 +23,12 @@ export const StyledLink = styled(Link)`
     div {
         position: absolute;
         bottom: 0;
+        left: 0;
+        right: 0;
         padding: 4px 0;
-        background-color: rgba(26, 26, 26, 0.9);
+        color: ${Color.TEXT_MAIN};
+        font-size: 1rem;
         text-align: center;
+        background-color: rgba(26, 26, 26, 0.9);
     }
 `
