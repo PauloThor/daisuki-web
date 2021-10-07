@@ -1,5 +1,8 @@
 import * as yup from "yup";
 
+const URL =
+  /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+
 class SchemaUtils {
   static register() {
     return yup.object({
@@ -32,6 +35,44 @@ class SchemaUtils {
         .email(" - Precisa ser um email")
         .required(" - Campo obrigatório"),
       password: yup.string().min(8, " - Mínimo de 8 caracteres"),
+    });
+  }
+
+  static anime() {
+    return yup.object({
+      name: yup.string().required(" - Campo obrigatório"),
+      sinopse: yup
+        .string()
+        .min(20, " - Mínimo de 20 caracteres")
+        .required(" - campo obrigatório"),
+      movie: yup.boolean(),
+      totalepisodes: yup
+        .number()
+        .integer("Insira um valor inteiro")
+        .required(" - Campo obrigatório"),
+      dubbed: yup.boolean(),
+      image: yup.mixed().transform((value) => value[0]),
+    });
+  }
+
+  static episode() {
+    return yup.object({
+      anime: yup.string().required(" - Selecione um anime"),
+      episodenumber: yup
+        .number()
+        .integer(" - Insira um valor inteiro")
+        .required(" - Campo obrigatório"),
+      videourl: yup.string().matches(URL).required(" - Campo obrigatório"),
+      image: yup.mixed().transform((value) => value[0]),
+    });
+  }
+
+  static moderator() {
+    return yup.object({
+      email: yup
+        .string()
+        .email(" - Precisa ser um email")
+        .required(" - Campo obrigatório"),
     });
   }
 }
