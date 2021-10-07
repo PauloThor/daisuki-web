@@ -44,6 +44,13 @@ class StringUtils {
 
     return `R$ ${value}`;
   };
+
+  static urlMask = (value?: string) => {
+    if (value == null) {
+      return "";
+    }
+    return value.toLowerCase().replaceAll(" ", "-").replace(/[()]/g, "");
+  };
 }
 
 export default StringUtils;

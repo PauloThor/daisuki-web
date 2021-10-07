@@ -1,8 +1,11 @@
+import { Anime } from "./anime";
+
 export interface Episode {
   id?: number;
-  anime_id: number;
-  name: string;
-  avatar: string;
+  episode_number?: number;
+  image_url?: string;
+  video_url?: string;
+  views?: number;
+  anime?: Anime;
+  created_at?: string;
 }
-
-//TODO adicionar demais atributos
