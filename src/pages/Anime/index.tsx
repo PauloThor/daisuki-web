@@ -9,13 +9,14 @@ import { BackTop, Rate } from "antd";
 import { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { daisukiApi } from "../../services/api";
 import { AnimeProps } from "../../model/anime";
 import NotFound from "../NotFound";
 import { Spin } from "antd";
 import FavIcon from "../../assets/img/fav-icon.svg";
 import { Episode } from "../../model/episode";
+import { ModalSynopsis } from "../../components/ModalSynopsis";
 
 interface ParamProps {
   id: string;
@@ -23,11 +24,14 @@ interface ParamProps {
 
 const Anime = () => {
   const params: ParamProps = useParams();
+  const history = useHistory();
 
   const [anime, setAnime] = useState<AnimeProps>();
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [isInvalidLink, setIsInvalidLink] = useState<boolean>(false);
+  const [isModalSynopsisVisible, setIsModalSynopsisVisible] =
+    useState<boolean>(false);
 
   const loadAnime = async () => {
     const isValidAnime = await daisukiApi
@@ -61,11 +65,20 @@ const Anime = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // TODO integrar com a nota do anime quando o backend ficar pronto.
   const [animeRate, setAnimeRate] = useState(5);
   const desc = ["1.00", "2.00", "3.00", "4.00", String(animeRate.toFixed(2))];
 
   const handleRate = (value: number) => {
     setAnimeRate(value);
+  };
+
+  const handleModalSynopsis = () => {
+    setIsModalSynopsisVisible(!isModalSynopsisVisible);
+  };
+
+  const handleToEpisode = (id: number) => {
+    history.push(`/animes/${params.id}/episodes/${id}`);
   };
 
   return (
@@ -118,16 +131,26 @@ const Anime = () => {
               </div>
               <div className="container-image">
                 <img src={anime.image_url} alt="anime cover" />
-                <Button text="Ver Sinopse" margin="8px 0" />
+                <button onClick={handleModalSynopsis}>Ver Sinopse </button>
               </div>
             </InfoAnime>
 
             <ListEpisodes>
               {episodes.map((epi) => (
-                <li key={epi.id}>Episódio {epi.episode_number}</li>
+                <li
+                  key={epi.id}
+                  onClick={() => handleToEpisode(epi.episode_number)}
+                >
+                  Episódio {epi.episode_number}
+                </li>
               ))}
             </ListEpisodes>
             <BackTop />
+            <ModalSynopsis
+              handleModalSynopsis={handleModalSynopsis}
+              isModalSynopsisVisible={isModalSynopsisVisible}
+              synopsis={anime.synopsis}
+            />
           </Container>
         </>
       )}
