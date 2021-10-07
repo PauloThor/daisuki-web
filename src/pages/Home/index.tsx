@@ -2,6 +2,7 @@ import Header from "../../components/Header";
 import bannerImg from "../../assets/img/banner.png";
 import EpisodeCard from "../../components/EpisodeCard";
 import Pagination from "../../components/Pagination";
+import AnimeCard from "../../components/AnimeCard";
 import {
   Banner,
   Text,
@@ -32,6 +33,19 @@ const episode = {
     created_at: "2021-10-02 14:21:48",
   },
 };
+
+const anime = {
+  id: 14,
+  name: "Kami no Tou",
+  synopsis:
+    "A Torre de Deus gira em torno de um garoto chamado Vigésimo Quinto Bam, que passou a maior parte de sua vida preso sob uma vasta e misteriosa Torre, com apenas sua amiga íntima, Rachel, para fazer-lhe companhia. Quando Rachel entra na Torre, Bam também consegue abrir a porta e enfrenta desafios em cada andar dessa torre enquanto tenta encontrar seu companheiro mais próximo.",
+  image_url: "https://i.imgur.com/TnDn5kI.jpg",
+  total_episodes: 13,
+  is_movie: false,
+  is_dubbed: false,
+  is_completed: true,
+  created_at: "2021-10-02 14:21:48",
+}
 
 const episodes = [
   episode,
@@ -87,6 +101,7 @@ const Home = () => {
           <Title>
             Animes mais populares
           </Title>
+          <AnimeCard anime={anime}/>
         </Section>
         <Section>
           <Title>

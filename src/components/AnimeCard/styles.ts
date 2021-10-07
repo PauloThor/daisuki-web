@@ -1,20 +1,21 @@
-import styled from "styled-components"
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Color } from "../../model/enums/theme-colors";
 
 export const Container = styled(Link)`
-    position: relative;
+  position: relative;
   display: block;
   width: fit-content;
+  transition: 0.3s ease-in-out;
 
   img {
-    width: 290px;
-    height: 150px;
+    width: 142px;
+    height: 192px;
     object-fit: cover;
 
     @media (min-width: 768px) {
-      width: 300px;
-      height: 160px;
+      width: 226px;
+      height: 286px;
     }
   }
 
@@ -29,4 +30,9 @@ export const Container = styled(Link)`
     text-align: center;
     background-color: rgba(26, 26, 26, 0.9);
   }
-`
+
+  &:hover,
+  &:focus {
+    filter: grayscale(0.8);
+  }
+`;
