@@ -79,7 +79,7 @@ const Home = () => {
           <Pagination
             current={currentPage}
             pageSize={12}
-            total={36}
+            total={108}
             onChange={handleChange}
           />
         </ReleasesSection>

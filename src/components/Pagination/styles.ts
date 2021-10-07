@@ -3,10 +3,13 @@ import { Pagination } from "antd";
 import { Color } from "../../model/enums/theme-colors";
 
 export const PaginationStyled = styled(Pagination)`
+ .ant-pagination-options {
+   display: none;
+ }
   li {
     background-color: transparent;
     border-color: ${Color.TEXT_MAIN};
-    a {
+    a{
       color: ${Color.TEXT_MAIN};
     }
 
@@ -17,6 +20,14 @@ export const PaginationStyled = styled(Pagination)`
       &:disabled {
         border-color: #2e2e2e;
         color: #2e2e2e;
+      }
+      .ant-pagination-item-ellipsis {
+        color: ${Color.TEXT_MAIN};
+      }
+      .ant-pagination-item-container {
+        svg {
+          color: ${Color.HIGHLIGHT};
+        }
       }
     }
 

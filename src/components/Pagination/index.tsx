@@ -14,6 +14,7 @@ const Pagination = ({ current, pageSize, total, onChange }: Props) => {
       pageSize={pageSize}
       total={total}
       onChange={onChange}
+      showLessItems
     />
   );
 };
