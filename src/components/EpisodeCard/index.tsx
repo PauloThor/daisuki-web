@@ -1,6 +1,7 @@
 import { Container, StyledLink, ReleaseInfo } from "./styles";
 import { Episode } from "../../model/episode";
 import StringUtils from "../../shared/util/string-utils";
+import DateUtils from "../../shared/util/date-utils";
 
 interface Props {
   episode: Episode;
@@ -25,7 +26,7 @@ const EpisodeCard = ({ episode }: Props) => {
         </div>
       </StyledLink>
       <ReleaseInfo>
-        <span>1 hora atrás</span>
+        <span>{DateUtils.timeFromNow(created_at)}</span>
       </ReleaseInfo>
     </Container>
   );

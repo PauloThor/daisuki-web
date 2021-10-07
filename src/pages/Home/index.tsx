@@ -11,7 +11,7 @@ const episode = {
   created_at: "2021-10-02 14:54:26",
   anime: {
     id: 14,
-    name: "Kami no Tou (Dublado)",
+    name: "Kami no Tou",
     synopsis:
       "A Torre de Deus gira em torno de um garoto chamado Vigésimo Quinto Bam, que passou a maior parte de sua vida preso sob uma vasta e misteriosa Torre, com apenas sua amiga íntima, Rachel, para fazer-lhe companhia. Quando Rachel entra na Torre, Bam também consegue abrir a porta e enfrenta desafios em cada andar dessa torre enquanto tenta encontrar seu companheiro mais próximo.",
     image_url: "https://i.imgur.com/TnDn5kI.jpg",
