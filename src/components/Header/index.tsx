@@ -31,13 +31,10 @@ interface HeaderProps {
 
 const Header = ({ isAuth = true }: HeaderProps) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const [profileMenuOpen, setMenuProfileOpen] = useState<boolean>(false);
 
   const history = useHistory();
 
   const handleOpenMenu = () => setMenuOpen(!menuOpen);
-
-  const handleOpenProfile = () => setMenuProfileOpen(!setMenuProfileOpen);
 
   const handlePath = (path: string) => history.push(path);
 
@@ -52,17 +49,32 @@ const Header = ({ isAuth = true }: HeaderProps) => {
     <MobileMenu onClick={() => console.log()} mode="inline">
       <MobileSubMenu key="sub1" title="Animes">
         {MenuUtils.animes.map((item, index) => (
-          <MobileItem key={`anime${index}`}>{item.name}</MobileItem>
+          <MobileItem
+            key={`anime${index}`}
+            onClick={() => handlePath(item.path)}
+          >
+            {item.name}
+          </MobileItem>
         ))}
       </MobileSubMenu>
       <MobileSubMenu key="sub2" title="Filmes">
         {MenuUtils.movies.map((item, index) => (
-          <MobileItem key={`movie${index}`}>{item.name}</MobileItem>
+          <MobileItem
+            key={`movie${index}`}
+            onClick={() => handlePath(item.path)}
+          >
+            {item.name}
+          </MobileItem>
         ))}
       </MobileSubMenu>
       <MobileSubMenu key="sub3" title="Gênero">
         {MenuUtils.genders.map((item, index) => (
-          <MobileItem key={`gender${index}`}>{item.name}</MobileItem>
+          <MobileItem
+            key={`gender${index}`}
+            onClick={() => handlePath(item.path)}
+          >
+            {item.name}
+          </MobileItem>
         ))}
       </MobileSubMenu>
       {!isAuth && (
@@ -77,10 +89,6 @@ const Header = ({ isAuth = true }: HeaderProps) => {
         </>
       )}
     </MobileMenu>
-  );
-
-  const renderAvatar = () => (
-    <img src={mock} alt="avatar" onClick={handleOpenProfile} />
   );
 
   return (
@@ -118,10 +126,10 @@ const Header = ({ isAuth = true }: HeaderProps) => {
         />
       ) : (
         <MobileAuth>
-          <label>
+          <label onClick={handleOpenMenu}>
             Navegar <TiArrowSortedDown size={20} />
           </label>
-          {renderAvatar()}
+          <DropdownItem title="avatar" hasAvatar items={MenuUtils.account} />
         </MobileAuth>
       )}
 

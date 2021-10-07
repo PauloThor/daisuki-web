@@ -63,6 +63,17 @@ class MenuUtils {
       path: "/animes/fantasy",
     },
   ];
+
+  static account = [
+    {
+      name: "Cadastrar",
+      path: "/register",
+    },
+    {
+      name: "Entrar",
+      path: "/login",
+    },
+  ];
 }
 
 export default MenuUtils;
