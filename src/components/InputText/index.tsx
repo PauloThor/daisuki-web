@@ -29,6 +29,9 @@ const inputTypeOptions = {
   [InputTypes.DEFAULT]: <></>,
   [InputTypes.TEXT]: <></>,
   [InputTypes.SEARCH]: <FiSearch />,
+  [InputTypes.FILE]: <></>,
+  [InputTypes.NUMBER]: <></>,
+  [InputTypes.CHECKBOX]: <></>,
 };
 
 const InputText = ({

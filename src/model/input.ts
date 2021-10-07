@@ -6,4 +6,7 @@ export type InputTypeProps =
   | InputTypes.USER
   | InputTypes.DEFAULT
   | InputTypes.TEXT
-  | InputTypes.SEARCH;
+  | InputTypes.SEARCH
+  | InputTypes.FILE
+  | InputTypes.NUMBER
+  | InputTypes.CHECKBOX;
