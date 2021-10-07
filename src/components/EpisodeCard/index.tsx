@@ -1,10 +1,8 @@
-interface Episode {
+import { Episode } from "../../model/episode"
+
+const EpisodeCard = (episode: Episode) => {
+    const {image_url, } = episode
     
-}
-
-
-
-const EpisodeCard = (episode) => {
     return (
         <div></div>
     )
