@@ -1,7 +1,7 @@
 import Header from "../../components/Header";
 import bannerImg from "../../assets/img/banner.png";
 import EpisodeCard from "../../components/EpisodeCard";
-import Pagination from "../../components/Pagination"
+import Pagination from "../../components/Pagination";
 import {
   Banner,
   Text,
@@ -49,10 +49,10 @@ const episodes = [
 ];
 
 const Home = () => {
-  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const handleChange = (page: number) => {
-    setCurrentPage(page)
-  }
+    setCurrentPage(page);
+  };
   return (
     <>
       <Header />
@@ -76,7 +76,12 @@ const Home = () => {
               </li>
             ))}
           </ReleasesList>
-          <Pagination current={currentPage}  pageSize={12} total={36} onChange={handleChange}/>
+          <Pagination
+            current={currentPage}
+            pageSize={12}
+            total={36}
+            onChange={handleChange}
+          />
         </ReleasesSection>
       </Main>
     </>
