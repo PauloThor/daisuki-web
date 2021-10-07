@@ -29,7 +29,7 @@ interface HeaderProps {
   isAuth?: boolean;
 }
 
-const Header = ({ isAuth = true }: HeaderProps) => {
+const Header = ({ isAuth = false }: HeaderProps) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   const history = useHistory();
