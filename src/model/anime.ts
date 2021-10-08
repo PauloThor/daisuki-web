@@ -7,7 +7,7 @@ export interface AnimeProps {
   is_movie: boolean;
   is_dubbed: boolean;
   is_completed: boolean;
-  created_at: string;
+  created_at: Date;
 }
 
 //TODO adicionar demais atributos

@@ -1,30 +1,30 @@
 import {
   Category,
   Container,
+  Footer,
   InfoAnime,
   ListEpisodes,
   SpinContainer,
+  StyledCollapse,
+  StyledListEpisodes,
 } from "./styles";
-import { BackTop, Rate } from "antd";
+import { useHistory, useParams } from "react-router";
 import { useEffect, useState } from "react";
+import { BackTop, Rate, Spin, Collapse } from "antd";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
-import { useHistory, useParams } from "react-router";
+import { ModalSynopsis } from "../../components/ModalSynopsis";
+import NotFound from "../NotFound";
 import { daisukiApi } from "../../services/api";
 import { AnimeProps } from "../../model/anime";
-import NotFound from "../NotFound";
-import { Spin } from "antd";
-import FavIcon from "../../assets/img/fav-icon.svg";
 import { Episode } from "../../model/episode";
-import { ModalSynopsis } from "../../components/ModalSynopsis";
-
-interface ParamProps {
-  id: string;
-}
+import { ParamProps } from "../../model/param";
+import FavIcon from "../../assets/img/fav-icon.svg";
 
 const Anime = () => {
-  const params: ParamProps = useParams();
+  const param: ParamProps = useParams();
   const history = useHistory();
+  const { Panel } = Collapse;
 
   const [anime, setAnime] = useState<AnimeProps>();
   const [episodes, setEpisodes] = useState<Episode[]>([]);
@@ -35,7 +35,7 @@ const Anime = () => {
 
   const loadAnime = async () => {
     const isValidAnime = await daisukiApi
-      .get(`/animes/${params.id}`)
+      .get(`/animes/${param.id}`)
       .then((response) => {
         if (response?.data?.anime) {
           setAnime(response.data.anime);
@@ -55,7 +55,7 @@ const Anime = () => {
   };
 
   const loadEpisodes = async () => {
-    daisukiApi.get(`/animes/${params.id}/episodes`).then((response) => {
+    daisukiApi.get(`/animes/${param.id}/episodes`).then((response) => {
       setEpisodes(response?.data.episodes);
     });
   };
@@ -78,8 +78,24 @@ const Anime = () => {
   };
 
   const handleToEpisode = (id: number) => {
-    history.push(`/animes/${params.id}/episodes/${id}`);
+    history.push(`/animes/${param.id}/episodes/${id}`);
   };
+
+  const getListsEpisodes = () => {
+    let output: [Episode[]] = [[]];
+    let outputIndex = 0;
+    for (let counter = 0; counter < episodes.length; counter++) {
+      if (output[outputIndex].length < 24) {
+        output[outputIndex].push(episodes[counter]);
+      } else {
+        output[outputIndex + 1] = [episodes[counter]];
+        outputIndex++;
+      }
+    }
+    return output;
+  };
+
+  const episodesList = getListsEpisodes();
 
   return (
     <>
@@ -117,7 +133,13 @@ const Anime = () => {
                   <p>Áudio: {anime.is_dubbed ? "Português" : "Japonês"}</p>
                   <p>Episódios: {anime.total_episodes}</p>
                   <p>
-                    Status: {anime.is_completed ? "Encerrado" : "Em lançamento"}
+                    {anime.is_movie
+                      ? `Lançamento: ${new Intl.DateTimeFormat("pt-BR").format(
+                          new Date(anime.created_at)
+                        )}`
+                      : `Status: ${
+                          anime.is_completed ? "Encerrado" : "Em lançamento"
+                        }`}
                   </p>
                   <div className="categories">
                     <Category>Ação</Category>
@@ -131,20 +153,67 @@ const Anime = () => {
               </div>
               <div className="container-image">
                 <img src={anime.image_url} alt="anime cover" />
-                <button onClick={handleModalSynopsis}>Ver Sinopse </button>
+                <Button
+                  text="Ver Sinopse"
+                  margin="0 8px"
+                  handleClick={handleModalSynopsis}
+                />
               </div>
             </InfoAnime>
 
-            <ListEpisodes>
-              {episodes.map((epi) => (
-                <li
-                  key={epi.id}
-                  onClick={() => handleToEpisode(epi.episode_number)}
-                >
-                  Episódio {epi.episode_number}
-                </li>
-              ))}
-            </ListEpisodes>
+            {episodes.length > 24 ? (
+              episodesList.map((list) => (
+                <>
+                  <StyledCollapse defaultActiveKey={["0"]} bordered={false}>
+                    <Panel
+                      header={
+                        <span>
+                          Episódios:{" "}
+                          {episodesList.indexOf(list) !== 0
+                            ? 1 * episodesList.indexOf(list)
+                            : 1}
+                          {" - "}
+                          {episodesList.indexOf(list) !== 0
+                            ? 24 * episodesList.indexOf(list)
+                            : list.length}
+                        </span>
+                      }
+                      key={episodesList.indexOf(list)}
+                      style={{ color: "white" }}
+                    >
+                      <StyledListEpisodes>
+                        {list.map((epi) => (
+                          <li
+                            className="card-episode"
+                            key={epi.id}
+                            onClick={() => handleToEpisode(epi.episode_number)}
+                          >
+                            {anime.is_movie
+                              ? anime.name
+                              : `Episódio ${epi.episode_number}`}
+                          </li>
+                        ))}
+                      </StyledListEpisodes>
+                    </Panel>
+                  </StyledCollapse>
+                </>
+              ))
+            ) : (
+              <ListEpisodes>
+                {episodes.map((epi) => (
+                  <li
+                    className="card-episode"
+                    key={epi.id}
+                    onClick={() => handleToEpisode(epi.episode_number)}
+                  >
+                    {anime.is_movie
+                      ? `${anime.name} - Filme`
+                      : `Episódio ${epi.episode_number}`}
+                  </li>
+                ))}
+              </ListEpisodes>
+            )}
+            <Footer />
             <BackTop />
             <ModalSynopsis
               handleModalSynopsis={handleModalSynopsis}

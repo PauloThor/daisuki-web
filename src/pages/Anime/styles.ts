@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Font } from "../../model/enums/theme-fonts";
 import { Color } from "../../model/enums/theme-colors";
+import { Collapse } from "antd";
 
 interface InfoAnimeProps {
   favIcon: string;
@@ -118,6 +119,22 @@ export const InfoAnime = styled.div<InfoAnimeProps>`
         overflow: auto;
         display: none;
 
+        &::-webkit-scrollbar {
+          width: 10px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background-color: #2a2a2a;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: ${Color.MAIN_LIGHT};
+
+          &:hover {
+            background-color: ${Color.MAIN};
+          }
+        }
+
         @media (min-width: 768px) {
           display: block;
         }
@@ -153,21 +170,21 @@ export const InfoAnime = styled.div<InfoAnimeProps>`
 
 export const ListEpisodes = styled.ul`
   list-style: none;
-
+  margin-top: 10px;
   padding: 0 1rem;
   padding-bottom: 1.5rem;
 
   @media (min-width: 768px) {
-    margin-top: 15px;
     padding: 0 2rem;
     padding-bottom: 1.5rem;
   }
 
-  li {
+  .card-episode {
     background-color: ${Color.MAIN};
     height: 2.5rem;
-    font-size: 1rem;
+    font-size: 1.1rem;
     padding: 1rem 0.5rem;
+    color: white;
 
     display: flex;
     align-items: center;
@@ -187,7 +204,7 @@ export const ListEpisodes = styled.ul`
   }
 
   li + li {
-    margin-top: 3px;
+    margin-top: 4px;
   }
 `;
 
@@ -207,4 +224,48 @@ export const Category = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const StyledCollapse = styled(Collapse)`
+  background-color: ${Color.MAIN_DARK};
+  border-color: ${Color.MAIN_LIGHT};
+  border-radius: 3px;
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 20px;
+  color: white;
+
+  .ant-collapse-header {
+    border: 2px solid ${Color.MAIN_LIGHT};
+    span {
+      color: white;
+      font-size: 1.2rem;
+
+      @media (min-width: 768px) {
+        font-size: 1.4rem;
+      }
+    }
+  }
+  .ant-collapse-content-box {
+    padding: 0;
+  }
+  .ant-collapse-content,
+  .ant-collapse-content-active {
+    border-color: ${Color.MAIN_LIGHT};
+    background-color: ${Color.MAIN_DARK};
+  }
+
+  .ant-collapse-item,
+  .ant-collapse-item-active {
+    border: none;
+  }
+`;
+
+export const Footer = styled.div`
+  width: 100%;
+  height: 30px;
+`;
+
+export const StyledListEpisodes = styled(ListEpisodes)`
+  padding: 0;
 `;
