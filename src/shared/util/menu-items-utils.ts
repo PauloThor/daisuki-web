@@ -110,6 +110,10 @@ class MenuUtils {
 
   static account = [
     {
+      name: "Minha conta",
+      path: "/my-account",
+    },
+    {
       name: "Cadastrar",
       path: "/register",
     },

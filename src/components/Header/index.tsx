@@ -19,7 +19,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import SchemaUtils from "../../shared/util/schema-utils";
 import MenuUtils from "../../shared/util/menu-items-utils";
 
-import mock from "../../assets/img/avatar-thor.png";
 import { Link, useHistory } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
@@ -29,7 +28,7 @@ interface HeaderProps {
   isAuth?: boolean;
 }
 
-const Header = ({ isAuth = false }: HeaderProps) => {
+const Header = ({ isAuth = true }: HeaderProps) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   const history = useHistory();
@@ -47,30 +46,30 @@ const Header = ({ isAuth = false }: HeaderProps) => {
 
   const renderMobileMenu = () => (
     <MobileMenu onClick={() => console.log()} mode="inline">
-      <MobileSubMenu key="sub1" title="Animes">
+      <MobileSubMenu key="submobile1" title="Animes">
         {MenuUtils.animes.map((item, index) => (
           <MobileItem
-            key={`anime${index}`}
+            key={`anime-mobile-${index}`}
             onClick={() => handlePath(item.path)}
           >
             {item.name}
           </MobileItem>
         ))}
       </MobileSubMenu>
-      <MobileSubMenu key="sub2" title="Filmes">
+      <MobileSubMenu key="submobile2" title="Filmes">
         {MenuUtils.movies.map((item, index) => (
           <MobileItem
-            key={`movie${index}`}
+            key={`movie-mobile-${index}`}
             onClick={() => handlePath(item.path)}
           >
             {item.name}
           </MobileItem>
         ))}
       </MobileSubMenu>
-      <MobileSubMenu key="sub3" title="Gênero">
+      <MobileSubMenu key="submobile3" title="Gênero">
         {MenuUtils.genders.map((item, index) => (
           <MobileItem
-            key={`gender${index}`}
+            key={`gender-mobile-${index}`}
             onClick={() => handlePath(item.path)}
           >
             {item.name}
@@ -81,10 +80,10 @@ const Header = ({ isAuth = false }: HeaderProps) => {
         <>
           <StyledLink to="/register">
             <div style={{ width: "23px" }} />
-            <Item key="signup1" title="Cadastrar" />
+            <Item key="signup-mobile-1" title="Cadastrar" />
           </StyledLink>
           <StyledLink to="/login">
-            <Item key="login1" title="Entrar" />
+            <Item key="login-mobile-1" title="Entrar" />
           </StyledLink>
         </>
       )}
@@ -114,7 +113,12 @@ const Header = ({ isAuth = false }: HeaderProps) => {
         </HeaderItem>
       ) : (
         <HeaderItem>
-          <img src={mock} alt="avatar" />
+          <DropdownItem
+            title="avatar"
+            hasAvatar
+            items={MenuUtils.account}
+            key={"desktop-dropdown-1"}
+          />
         </HeaderItem>
       )}
       {!isAuth ? (
@@ -129,7 +133,12 @@ const Header = ({ isAuth = false }: HeaderProps) => {
           <label onClick={handleOpenMenu}>
             Navegar <TiArrowSortedDown size={20} />
           </label>
-          <DropdownItem title="avatar" hasAvatar items={MenuUtils.account} />
+          <DropdownItem
+            title="avatar"
+            hasAvatar
+            items={MenuUtils.account}
+            key={"mobile-dropdown-1"}
+          />
         </MobileAuth>
       )}
 
