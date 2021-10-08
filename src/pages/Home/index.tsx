@@ -45,7 +45,8 @@ const anime = {
   is_dubbed: false,
   is_completed: true,
   created_at: "2021-10-02 14:21:48",
-}
+  rating: 4.1,
+};
 
 const episodes = [
   episode,
@@ -98,15 +99,11 @@ const Home = () => {
           />
         </Section>
         <Section>
-          <Title>
-            Animes mais populares
-          </Title>
-          <AnimeCard anime={anime}/>
+          <Title>Animes mais populares</Title>
+          <AnimeCard anime={anime} />
         </Section>
         <Section>
-          <Title>
-            Últimos animes adicionados
-          </Title>
+          <Title>Últimos animes adicionados</Title>
         </Section>
       </Main>
     </>
