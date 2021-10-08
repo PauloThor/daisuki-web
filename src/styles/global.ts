@@ -46,4 +46,40 @@ export const GlobalStyle = createGlobalStyle`
         outline: none;
     }
 
+<<<<<<< HEAD
+    .ant-dropdown-menu {
+        background-color: transparent;
+    }
+
+    .ant-spin-dot-item {
+    background-color: ${Color.HIGHLIGHT_DARK};
+    }
+
+    html{
+        @media(max-width: 1080px){
+            font-size: 93.75%;
+        }
+        @media(max-width: 720px){
+            font-size: 87.5%;
+        }
+        
+    }
+
+    ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+    ::-webkit-scrollbar-track {
+            background-color: #2a2a2a;
+        } 
+
+    ::-webkit-scrollbar-thumb {
+        background-color: ${Color.MAIN_LIGHT};
+
+        &:hover {
+            background-color: ${Color.MAIN};
+        }
+    } 
+=======
+>>>>>>> develop
 `;
