@@ -3,6 +3,31 @@ import Button from "../../components/Button";
 import InputText from "../../components/InputText";
 import { Container, Box } from "./styles";
 import { InputTypes } from "../../model/enums/input-types";
+import { Checkbox, Select } from "antd";
+import SchemaUtils from "../../shared/util/schema-utils";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, FormProvider } from "react-hook-form";
+import animes from "../../mock/animes.json";
+
+interface FormAnime {
+  name: string;
+  sinopse: string;
+  movie: boolean;
+  episodesNumber: number;
+  dubbed: boolean;
+  image: File;
+}
+
+interface FormEpisode {
+  select: string;
+  episodeNumber: number;
+  videoUri: string;
+  image: File;
+}
+
+interface FormModerator {
+  email: string;
+}
 
 const Admin = () => {
   const inputAnime = [
@@ -26,36 +51,129 @@ const Admin = () => {
     },
   ];
 
-  const checkBoxList = [
+  const fileInput = {
+    name: "image",
+    placeholder: "Imagem",
+    label: "Imagem",
+    type: InputTypes.FILE,
+  };
+
+  const inputModerator = [
     {
-      name: "movie",
-      placeholder: "Filme",
-      label: "Filme",
-      type: InputTypes.CHECKBOX,
+      name: "email",
+      placeholder: "exemplo@mail.com",
+      label: "Email*",
+      type: InputTypes.EMAIL,
+    },
+  ];
+  const inputEpisode = [
+    {
+      name: "episodenumber",
+      placeholder: "número",
+      label: "Número*",
+      type: InputTypes.NUMBER,
     },
     {
-      name: "dubbed",
-      placeholder: "Dublado",
-      label: "Dublado",
-      type: InputTypes.CHECKBOX,
+      name: "videoUrl",
+      placeholder: "https://example.com",
+      label: "Vídeo url*",
+      type: InputTypes.TEXT,
     },
   ];
 
-  const inputModerator = [];
-  const inputEpisode = [
-    { name: "", placeholder: "", label: "", type: InputTypes },
-  ];
+  const methodsAnime = useForm({
+    resolver: yupResolver(SchemaUtils.anime()),
+    mode: "all",
+  });
+
+  const methodsModerator = useForm({
+    resolver: yupResolver(SchemaUtils.moderator()),
+    mode: "all",
+  });
+
+  const methodsEpisode = useForm({
+    resolver: yupResolver(SchemaUtils.episode()),
+    mode: "all",
+  });
+
+  const onSubmit = (data: FormAnime) => {
+    console.log(data);
+  };
+
+  const { Option } = Select;
 
   return (
     <>
       <Header />
       <Container>
         <h2>Adicionar anime:</h2>
-        <Box></Box>
+        <Box>
+          <FormProvider {...methodsAnime}>
+            <form onSubmit={methodsAnime.handleSubmit(onSubmit)}>
+              {inputAnime.map((input, index) => (
+                <InputText
+                  key={`${input.name}-${index}`}
+                  name={input.name}
+                  placeholder={input.placeholder}
+                  label={input.label}
+                  type={input?.type ?? ""}
+                  autofocus={index === 0}
+                />
+              ))}
+              <Checkbox name="dubbed" onChange={(e) => e.target.checked}>
+                Dublado
+              </Checkbox>
+              <Checkbox name="movie" onChange={(e) => e.target.checked}>
+                Filme
+              </Checkbox>
+
+              <Button text="Enviar" />
+            </form>
+          </FormProvider>
+        </Box>
         <h2>Adicionar episódio:</h2>
-        <Box></Box>
+        <Box>
+          <FormProvider {...methodsEpisode}>
+            <form onSubmit={methodsEpisode.handleSubmit(onSubmit)}>
+              <Select>
+                {animes.map((anime) => (
+                  <Option name={anime.name} value={anime.name}>
+                    {anime.name}
+                  </Option>
+                ))}
+              </Select>
+              {inputEpisode.map((input, index) => (
+                <InputText
+                  key={`${input.name}-${index}`}
+                  name={input.name}
+                  placeholder={input.placeholder}
+                  label={input.label}
+                  type={input.type ?? ""}
+                  autofocus={index === 0}
+                />
+              ))}
+              <Button text="Enviar" />
+            </form>
+          </FormProvider>
+        </Box>
         <h2>Adicionar moderador:</h2>
-        <Box></Box>
+        <Box>
+          <FormProvider {...methodsModerator}>
+            <form onSubmit={methodsModerator.handleSubmit(onSubmit)}>
+              {inputModerator.map((input, index) => (
+                <InputText
+                  key={`${input.name}-${index}`}
+                  name={input.name}
+                  placeholder={input.placeholder}
+                  label={input.label}
+                  type={input?.type ?? ""}
+                  autofocus={index === 0}
+                />
+              ))}
+              <Button text="Enviar" />
+            </form>
+          </FormProvider>
+        </Box>
         <Button text="Ver moderadores" />
       </Container>
     </>

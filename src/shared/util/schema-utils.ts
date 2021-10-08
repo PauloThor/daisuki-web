@@ -62,7 +62,7 @@ class SchemaUtils {
         .number()
         .integer(" - Insira um valor inteiro")
         .required(" - Campo obrigatório"),
-      videourl: yup.string().matches(URL).required(" - Campo obrigatório"),
+      videoUrl: yup.string().matches(URL).required(" - Campo obrigatório"),
       image: yup.mixed().transform((value) => value[0]),
     });
   }
