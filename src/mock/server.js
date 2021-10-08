@@ -18,11 +18,15 @@ export function makeServer({ environment = "test" }) {
         return schema.animes.all();
       });
 
-      this.get("/animes/:id", (schema, request) => {
-        let id = request.params.id;
+      this.get(
+        "/animes/:id",
+        (schema, request) => {
+          let id = request.params.id;
 
-        return schema.animes.find(id);
-      });
+          return schema.animes.find(id);
+        },
+        { timing: 1000 }
+      );
 
       this.get("/animes/:id/episodes", (schema, request) => {
         let id = request.params.id;

@@ -20,7 +20,9 @@ interface UserProviderProps {
 const UserContext = createContext<UserData>({} as UserData);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
-  const [token, setToken] = useState<string>(localStorage.getItem("@Daisuki:token") ?? "");
+  const [token, setToken] = useState<string>(
+    localStorage.getItem("@Daisuki:token") ?? ""
+  );
 
   const [user, setUser] = useState({});
 
