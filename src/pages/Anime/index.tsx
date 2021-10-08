@@ -16,17 +16,17 @@ import Button from "../../components/Button";
 import { ModalSynopsis } from "../../components/ModalSynopsis";
 import NotFound from "../NotFound";
 import { daisukiApi } from "../../services/api";
-import { AnimeProps } from "../../model/anime";
+import { Anime } from "../../model/anime";
 import { Episode } from "../../model/episode";
 import { ParamProps } from "../../model/param";
 import FavIcon from "../../assets/img/fav-icon.svg";
 
-const Anime = () => {
+const AnimePage = () => {
   const param: ParamProps = useParams();
   const history = useHistory();
   const { Panel } = Collapse;
 
-  const [anime, setAnime] = useState<AnimeProps>();
+  const [anime, setAnime] = useState<Anime>();
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [isInvalidLink, setIsInvalidLink] = useState<boolean>(false);
@@ -135,7 +135,7 @@ const Anime = () => {
                   <p>
                     {anime.is_movie
                       ? `Lançamento: ${new Intl.DateTimeFormat("pt-BR").format(
-                          new Date(anime.created_at)
+                          new Date(anime.created_at || "")
                         )}`
                       : `Status: ${
                           anime.is_completed ? "Encerrado" : "Em lançamento"
@@ -186,7 +186,11 @@ const Anime = () => {
                           <li
                             className="card-episode"
                             key={epi.id}
-                            onClick={() => handleToEpisode(epi.episode_number)}
+                            onClick={() =>
+                              handleToEpisode(
+                                epi.episode_number ? epi.episode_number : 1
+                              )
+                            }
                           >
                             {anime.is_movie
                               ? anime.name
@@ -204,7 +208,11 @@ const Anime = () => {
                   <li
                     className="card-episode"
                     key={epi.id}
-                    onClick={() => handleToEpisode(epi.episode_number)}
+                    onClick={() =>
+                      handleToEpisode(
+                        epi.episode_number ? epi.episode_number : 1
+                      )
+                    }
                   >
                     {anime.is_movie
                       ? `${anime.name} - Filme`
@@ -218,7 +226,7 @@ const Anime = () => {
             <ModalSynopsis
               handleModalSynopsis={handleModalSynopsis}
               isModalSynopsisVisible={isModalSynopsisVisible}
-              synopsis={anime.synopsis}
+              synopsis={anime.synopsis || ""}
             />
           </Container>
         </>
@@ -229,4 +237,4 @@ const Anime = () => {
   );
 };
 
-export default Anime;
+export default AnimePage;

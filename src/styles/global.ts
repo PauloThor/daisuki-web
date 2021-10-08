@@ -46,6 +46,7 @@ export const GlobalStyle = createGlobalStyle`
         outline: none;
     }
 
+<<<<<<< HEAD
     .ant-dropdown-menu {
         background-color: transparent;
     }
@@ -79,4 +80,6 @@ export const GlobalStyle = createGlobalStyle`
             background-color: ${Color.MAIN};
         }
     } 
+=======
+>>>>>>> develop
 `;

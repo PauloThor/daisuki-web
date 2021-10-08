@@ -4,7 +4,7 @@ import Register from "../../pages/Register";
 import Login from "../../pages/Login";
 import NotFound from "../../pages/NotFound";
 import Route from "./route";
-import Anime from "../../pages/Anime";
+import AnimePage from "../../pages/Anime";
 
 const Routes = () => {
   return (
@@ -12,7 +12,7 @@ const Routes = () => {
       <Route exact path="/" component={Home} />
       <Route path="/register" component={Register} />
       <Route path="/login" component={Login} />
-      <Route path="/animes/:id" component={Anime} />
+      <Route path="/animes/:id" component={AnimePage} />
       <Route path="*" component={NotFound} />
     </Switch>
   );

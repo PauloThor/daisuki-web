@@ -1,13 +1,14 @@
-export interface AnimeProps {
-  id?: number;
-  name: string;
-  synopsis: string;
-  image_url: string;
-  total_episodes: number;
-  is_movie: boolean;
-  is_dubbed: boolean;
-  is_completed: boolean;
-  created_at: Date;
-}
+import { Episode } from "./episode";
 
-//TODO adicionar demais atributos
+export interface Anime {
+  id?: number;
+  name?: string;
+  synopsis?: string;
+  image_url?: string;
+  total_episodes?: number;
+  is_movie?: boolean;
+  is_dubbed?: boolean;
+  is_completed?: boolean;
+  episodes?: Episode[];
+  created_at?: string;
+}
