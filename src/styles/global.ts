@@ -46,7 +46,4 @@ export const GlobalStyle = createGlobalStyle`
         outline: none;
     }
 
-    .ant-dropdown-menu {
-        background-color: transparent;
-    }
 `;
