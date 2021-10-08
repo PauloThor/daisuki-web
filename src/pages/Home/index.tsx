@@ -112,6 +112,11 @@ const Home = () => {
         </Section>
         <Section>
           <Title>Últimos animes adicionados</Title>
+          <Carousel>
+            {latestAnimes.map((anime) => (
+              <AnimeCard key={anime.id} anime={anime} />
+            ))}
+          </Carousel>
         </Section>
       </Main>
     </>

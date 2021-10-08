@@ -74,3 +74,8 @@ export const ReleasesList = styled.ul`
     margin: 0 4px 8px;
   }
 `;
+
+export const Footer = styled.footer`
+  border-top: 1px solid red;
+  
+`;
