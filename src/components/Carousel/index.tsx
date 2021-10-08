@@ -12,11 +12,11 @@ const Carousel = ({ children }: Props) => {
       items: 5,
     },
     smallDesktop: {
-      breakpoint: { max: 1300, min: 1024 },
+      breakpoint: { max: 1300, min: 768 },
       items: 4,
     },
     tablet: {
-      breakpoint: { max: 1024, min: 464 },
+      breakpoint: { max: 768, min: 464 },
       items: 3,
     },
     mobile: {
@@ -28,10 +28,8 @@ const Carousel = ({ children }: Props) => {
     <CarouselStyled
       responsive={responsive}
       infinite
-      autoPlay
-      autoPlaySpeed={4000}
+      removeArrowOnDeviceType={["tablet", "mobile"]}
       keyBoardControl
-      arrows={false}
     >
       {children}
     </CarouselStyled>

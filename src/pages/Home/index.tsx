@@ -15,7 +15,9 @@ import {
   Section,
   Title,
   ReleasesList,
+  Footer
 } from "./styles";
+import BackTop from "../../components/BackTop";
 
 const episode = {
   episode_number: 2,
@@ -119,6 +121,8 @@ const Home = () => {
           </Carousel>
         </Section>
       </Main>
+      <Footer/>
+      <BackTop/>
     </>
   );
 };

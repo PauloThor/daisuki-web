@@ -42,13 +42,20 @@ export const Image = styled.div`
   }
 `;
 
-export const Main = styled.main``;
+export const Main = styled.main`
+  margin-bottom: 16px;
+
+  @media (min-width: 768px) {
+    margin-bottom: 24px;
+  }
+`;
 
 export const Title = styled.h2`
   font-size: 1.125rem;
   color: ${Color.TEXT_MAIN};
   font-weight: 700;
   margin: 16px 0;
+
   @media (min-width: 768px) {
     font-size: 1.5rem;
     margin: 24px 0;
@@ -76,6 +83,6 @@ export const ReleasesList = styled.ul`
 `;
 
 export const Footer = styled.footer`
-  border-top: 1px solid red;
-  
+  border-top: 1px solid ${Color.MAIN_LIGHT};
+  height: 100px;
 `;
