@@ -1,8 +1,10 @@
+import { useState } from "react";
 import Header from "../../components/Header";
 import bannerImg from "../../assets/img/banner.png";
 import EpisodeCard from "../../components/EpisodeCard";
 import Pagination from "../../components/Pagination";
 import AnimeCard from "../../components/AnimeCard";
+import { daisukiApi } from "../../services/api";
 import {
   Banner,
   Text,
@@ -12,7 +14,6 @@ import {
   Title,
   ReleasesList,
 } from "./styles";
-import { useState } from "react";
 
 const episode = {
   episode_number: 2,
@@ -68,6 +69,7 @@ const Home = () => {
   const handleChange = (page: number) => {
     setCurrentPage(page);
   };
+  daisukiApi.get("/animes/most-popular").then((res) => console.log(res.data));
   return (
     <>
       <Header />
