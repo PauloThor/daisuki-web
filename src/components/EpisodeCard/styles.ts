@@ -10,6 +10,7 @@ export const StyledLink = styled(Link)`
   position: relative;
   display: block;
   width: fit-content;
+  transition: 0.3s ease-in-out;
 
   img {
     width: 290px;
@@ -32,6 +33,10 @@ export const StyledLink = styled(Link)`
     font-size: 1rem;
     text-align: center;
     background-color: rgba(26, 26, 26, 0.9);
+  }
+
+  &:hover, &:focus {
+    filter: grayscale(0.8);
   }
 `;
 

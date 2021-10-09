@@ -7,18 +7,20 @@ import {
   StyledMenuSubItem,
 } from "./styles";
 import { SubItem } from "../../model/menu-item";
+import mock from "../../assets/img/avatar-laiane.png";
 
 interface DropdownItemProps {
   title: string;
   items?: SubItem[];
+  hasAvatar?: boolean;
 }
 
-const DropdownItem = ({ title, items }: DropdownItemProps) => {
+const DropdownItem = ({ title, items, hasAvatar }: DropdownItemProps) => {
   const menu = (
     <Menu style={MenuStyles}>
       {items?.map((item, index) => (
         <StyledMenuSubItem key={`${item.name}-${index}`}>
-          <a target="_blank" rel="noopener noreferrer" href={item.path}>
+          <a rel="noopener noreferrer" href={item.path}>
             {item.name}
           </a>
         </StyledMenuSubItem>
@@ -30,7 +32,11 @@ const DropdownItem = ({ title, items }: DropdownItemProps) => {
     <MenuContainer>
       <Dropdown overlay={menu}>
         <MenuItem onClick={(e) => e.preventDefault()} href="/">
-          <MenuLabel>{title}</MenuLabel>
+          {!hasAvatar ? (
+            <MenuLabel>{title}</MenuLabel>
+          ) : (
+            <img src={mock} alt="avatar" />
+          )}
         </MenuItem>
       </Dropdown>
     </MenuContainer>
