@@ -114,12 +114,16 @@ class MenuUtils {
       path: "/my-account",
     },
     {
-      name: "Cadastrar",
-      path: "/register",
+      name: "Favoritos",
+      path: "/favorites",
     },
     {
-      name: "Entrar",
-      path: "/login",
+      name: "Histórico",
+      path: "/history",
+    },
+    {
+      name: "Sair",
+      path: "",
     },
   ];
 }
