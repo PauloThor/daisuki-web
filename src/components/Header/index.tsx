@@ -92,7 +92,7 @@ const Header = ({ isAuth = true }: HeaderProps) => {
 
   return (
     <Container>
-      <Link to="/">
+      <Link to="/" className="link-logo">
         <img src={Logo} alt="logo" />
       </Link>
       <HeaderItem>
@@ -124,7 +124,6 @@ const Header = ({ isAuth = true }: HeaderProps) => {
       {!isAuth ? (
         <GiHamburgerMenu
           size={35}
-          color="white"
           className="hamburger-menu"
           onClick={handleOpenMenu}
         />

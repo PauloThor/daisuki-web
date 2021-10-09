@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Menu } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 export const Container = styled.header`
   background-color: ${Color.MAIN_LIGHT};
@@ -26,9 +27,25 @@ export const Container = styled.header`
   }
 
   .hamburger-menu {
+    color: ${Color.TEXT_MAIN};
+    cursor: pointer;
+
     @media (min-width: 1024px) {
       display: none;
     }
+
+    &:hover,
+    &:focus {
+      color: ${Color.HIGHLIGHT};
+    }
+  }
+
+  @media (max-width: 350px) {
+    .link-logo {
+      padding-right: 10px;
+    }
+
+    padding: 15px;
   }
 `;
 
@@ -153,3 +170,5 @@ export const MobileAuth = styled.div`
     }
   }
 `;
+
+export const StyledHamburger = styled(GiHamburgerMenu)``;

@@ -1,5 +1,6 @@
 import { Menu, Dropdown } from "antd";
 import {
+  avatarStyles,
   MenuContainer,
   MenuItem,
   MenuLabel,
@@ -7,7 +8,7 @@ import {
   StyledMenuSubItem,
 } from "./styles";
 import { SubItem } from "../../model/menu-item";
-import mock from "../../assets/img/avatar-laiane.png";
+import DefaultAvatar from "../../assets/img/default-user-avatar.png";
 
 interface DropdownItemProps {
   title: string;
@@ -17,7 +18,7 @@ interface DropdownItemProps {
 
 const DropdownItem = ({ title, items, hasAvatar }: DropdownItemProps) => {
   const menu = (
-    <Menu style={MenuStyles}>
+    <Menu style={hasAvatar ? { ...MenuStyles, ...avatarStyles } : MenuStyles}>
       {items?.map((item, index) => (
         <StyledMenuSubItem key={`${item.name}-${index}`}>
           <a rel="noopener noreferrer" href={item.path}>
@@ -35,7 +36,7 @@ const DropdownItem = ({ title, items, hasAvatar }: DropdownItemProps) => {
           {!hasAvatar ? (
             <MenuLabel>{title}</MenuLabel>
           ) : (
-            <img src={mock} alt="avatar" />
+            <img src={DefaultAvatar} alt="avatar" />
           )}
         </MenuItem>
       </Dropdown>
