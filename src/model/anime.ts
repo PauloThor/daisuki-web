@@ -11,4 +11,5 @@ export interface Anime {
   is_completed?: boolean;
   episodes?: Episode[];
   created_at?: string;
+  rating?: number;
 }
