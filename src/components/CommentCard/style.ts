@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { Color } from "./../../model/enums/theme-colors";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { Button, Popover } from "antd";
 
 interface CommentProp {
   visible?: boolean;
+  image?: string;
 }
 
 export const Container = styled.div`
@@ -14,7 +16,7 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div<CommentProp>`
-  width: calc(${({ visible }) => visible && "100% - 120px"});
+  width: calc(${({ visible }) => visible && "100% - 140px"});
 
   @media (max-width: 550px) {
     width: ${({ visible }) => visible && "70%"};
@@ -26,6 +28,19 @@ export const ProfilePicture = styled.img`
   height: 48px;
   border-radius: 50%;
   margin-right: 14px;
+
+  @media (max-width: 425px) {
+    width: 36px;
+    height: 36px;
+  }
+`;
+
+export const DefaultProfilePicture = styled.div`
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-right: 14px;
+  background-color: ${Color.SECONDARY};
 
   @media (max-width: 425px) {
     width: 36px;
@@ -87,5 +102,52 @@ export const DropDown = styled.div`
   &:focus {
     background-color: ${Color.MAIN_LIGHT};
     transition: 300ms;
+  }
+`;
+
+export const ButtonStyle = styled(Button)`
+  /* .ant-popover-inner-content {
+    background-color: ${Color.MAIN};
+    color: ${Color.MAIN};
+  }
+
+  .ant-popover-arrow {
+    display: none; 
+  }*/
+
+  /* .ant-popover-inner-content {
+    background-color: ${Color.MAIN};
+    color: ${Color.MAIN};
+  } */
+`;
+
+export const PopDrop = styled(Popover)`
+  /* .ant-btn .ant-btn-link .ant-popover-open {
+    background-color: ${Color.MAIN};
+    color: ${Color.MAIN};
+  } */
+
+  /* .ant-popover .ant-popover-placement-top {
+    background-color: ${Color.MAIN};
+    color: ${Color.MAIN};
+  } */
+
+  /* .ant-popover-inner-content {
+    background-color: ${Color.MAIN};
+    color: ${Color.MAIN};
+  } */
+
+  /* .ant-popover-arrow {
+    display: none;
+  } */
+
+  /* .ant-popover-content.ant-popover-arrow.ant-popover-inner.ant-popover-inner-content {
+    background-color: ${Color.MAIN};
+    color: ${Color.MAIN};
+  } */
+
+  .ant-popover-inner-content {
+    background-color: ${Color.MAIN};
+    color: ${Color.MAIN};
   }
 `;

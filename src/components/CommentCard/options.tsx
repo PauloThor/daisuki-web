@@ -1,6 +1,5 @@
-import { OptionContainer, Options } from "./style";
+import { OptionContainer, Options, ButtonStyle, PopDrop } from "./style";
 import { useState } from "react";
-import { Popover, Button } from "antd";
 
 const OptionsMenu = () => {
   const [visible, setVisible] = useState(false);
@@ -15,16 +14,16 @@ const OptionsMenu = () => {
 
   return (
     <OptionContainer>
-      <Popover
+      <PopDrop
         content={<a onClick={handleDeleteComment}>Excluir</a>}
         trigger="click"
         visible={visible}
         onVisibleChange={handleVisibleChange}
       >
-        <Button type="link">
+        <ButtonStyle type="link">
           <Options />
-        </Button>
-      </Popover>
+        </ButtonStyle>
+      </PopDrop>
     </OptionContainer>
   );
 };
