@@ -5,6 +5,12 @@ import EpisodeCard from "../../components/EpisodeCard";
 import Pagination from "../../components/Pagination";
 import AnimeCard from "../../components/AnimeCard";
 import Carousel from "../../components/Carousel";
+import rimuruImg from "../../assets/img/avatar-matheus.png";
+import umaruImg from "../../assets/img/avatar-laiane.png";
+import milimImg from "../../assets/img/avatar-emanuela.png";
+import bokutoImg from "../../assets/img/avatar-thor.png";
+import sailorImg from "../../assets/img/avatar-thaina.png";
+import BackTop from "../../components/BackTop";
 import { Anime } from "../../model/anime";
 import { daisukiApi } from "../../services/api";
 import {
@@ -15,9 +21,10 @@ import {
   Section,
   Title,
   ReleasesList,
-  Footer
+  Footer,
+  Developers,
+  FooterImg,
 } from "./styles";
-import BackTop from "../../components/BackTop";
 
 const episode = {
   episode_number: 2,
@@ -121,8 +128,64 @@ const Home = () => {
           </Carousel>
         </Section>
       </Main>
-      <Footer/>
-      <BackTop/>
+      <Footer>
+        <div>
+          <p>
+            Projeto realizado com fins didáticos. Os vídeos são somente prévias
+            dos episódios.
+            <br /> Todos os direitos de personagens e obras pertecem aos
+            respectivos proprietários.
+          </p>
+          <Developers>
+            <p>Aplicação desenvolvida por:</p>
+            <div>
+              <a
+                href="https://github.com/matheuspaivah2"
+                target="_blank"
+                rel="noreferrer"
+                title="Matheus Paiva"
+              >
+                <img src={rimuruImg} alt="Rimuru" />
+              </a>
+              <a
+                href="https://github.com/laianesuzart"
+                target="_blank"
+                rel="noreferrer"
+                title="Laiane Suzart"
+              >
+                <img src={umaruImg} alt="Umaru" />
+              </a>
+              <a
+                href="https://github.com/emanuelakenzie"
+                target="_blank"
+                rel="noreferrer"
+                title="Emanuela Quizini"
+              >
+                <img src={milimImg} alt="Milim" />
+              </a>
+              <a
+                href="https://github.com/PauloThor"
+                target="_blank"
+                rel="noreferrer"
+                title="Paulo Thor"
+              >
+                <img src={bokutoImg} alt="Bokuto" />
+              </a>
+              <a
+                href="https://github.com/thainaferreira"
+                target="_blank"
+                rel="noreferrer"
+                title="Thainá Ferreira"
+              >
+                <img src={sailorImg} alt="Sailor Moon" />
+              </a>
+            </div>
+            <p>NekoNekoMi - 2021</p>
+          </Developers>
+          <FooterImg />
+        </div>
+      </Footer>
+      <BackTop />
     </>
   );
 };
