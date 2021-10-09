@@ -23,6 +23,14 @@ export const CarouselStyled = styled(Carousel)`
     }
   }
 
+  .react-multiple-carousel__arrow--right {
+    right: calc(2% + 1px);
+  }
+
+  .react-multiple-carousel__arrow--left {
+    left: calc(2% + 1px);
+  }
+
   &:hover,
   &:focus {
     .react-multiple-carousel__arrow {

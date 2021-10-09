@@ -10,8 +10,9 @@ const Carousel = ({ children }: Props) => {
     desktop: {
       breakpoint: { max: 3000, min: 1300 },
       items: 5,
+      slidesToSlide: 5,
     },
-    smallDesktop: {
+    largeTablet: {
       breakpoint: { max: 1300, min: 768 },
       items: 4,
     },
