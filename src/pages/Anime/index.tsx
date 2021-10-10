@@ -14,6 +14,7 @@ import {
   AnimeData,
   HeaderAnimeData,
   AnimeCover,
+  AnimeEpisode,
 } from "./styles";
 import { useHistory, useParams } from "react-router";
 import { useEffect, useState } from "react";
@@ -190,8 +191,8 @@ const AnimePage = () => {
                     >
                       <StyledListEpisodes>
                         {list.map((epi) => (
-                          <li
-                            className="card-episode"
+                          <AnimeEpisode
+                            watched={false}
                             key={epi.id}
                             onClick={() =>
                               handleToEpisode(
@@ -202,7 +203,7 @@ const AnimePage = () => {
                             {anime.is_movie
                               ? anime.name
                               : `Episódio ${epi.episode_number}`}
-                          </li>
+                          </AnimeEpisode>
                         ))}
                       </StyledListEpisodes>
                     </Panel>
@@ -212,8 +213,8 @@ const AnimePage = () => {
             ) : (
               <ListEpisodes>
                 {episodes.map((epi) => (
-                  <li
-                    className="card-episode"
+                  <AnimeEpisode
+                    watched={false}
                     key={epi.id}
                     onClick={() =>
                       handleToEpisode(
@@ -224,7 +225,7 @@ const AnimePage = () => {
                     {anime.is_movie
                       ? `${anime.name} - Filme`
                       : `Episódio ${epi.episode_number}`}
-                  </li>
+                  </AnimeEpisode>
                 ))}
               </ListEpisodes>
             )}

@@ -8,6 +8,10 @@ interface HeaderAnimeDataProps {
   favIcon: string;
 }
 
+interface EpisodeProps {
+  watched: boolean;
+}
+
 export const Container = styled.main`
   width: 100%;
   max-width: 1600px;
@@ -80,11 +84,12 @@ export const AnimeCover = styled.div`
   img {
     margin-bottom: 15px;
     width: 100%;
+    object-fit: cover;
 
     @media (min-width: 768px) {
       margin-bottom: 0;
-      width: 20rem;
-      height: 30rem;
+      width: 270px;
+      height: 400px;
     }
   }
 
@@ -125,10 +130,6 @@ export const Details = styled.div`
     font-size: 1rem;
     font-family: ${Font.MAIN};
     color: ${Color.TEXT_MAIN};
-
-    @media (min-width: 768px) {
-      font-size: 1.1rem;
-    }
   }
 `;
 
@@ -143,32 +144,33 @@ export const ListEpisodes = styled.ul`
     padding-bottom: 1.5rem;
   }
 
-  .card-episode {
-    background-color: ${Color.MAIN};
-    height: 2.5rem;
-    font-size: 1.1rem;
-    padding: 1rem 0.5rem;
-    color: ${Color.TEXT_MAIN};
-
-    display: flex;
-    align-items: center;
-
-    cursor: pointer;
-    transition: filter 0.2s;
-
-    &:hover {
-      filter: brightness(0.8);
-    }
-
-    @media (min-width: 768px) {
-      height: 3.5rem;
-      padding: 1.5rem 1rem;
-      font-size: 1.3rem;
-    }
-  }
-
   li + li {
     margin-top: 4px;
+  }
+`;
+
+export const AnimeEpisode = styled.li<EpisodeProps>`
+  background-color: ${({ watched }) =>
+    watched ? Color.MAIN_LIGHT : Color.MAIN};
+  height: 2.5rem;
+  font-size: 1rem;
+  padding: 1rem 0.5rem;
+  color: ${Color.TEXT_MAIN};
+
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+
+  @media (min-width: 768px) {
+    height: 3.5rem;
+    padding: 1.5rem 1rem;
+    font-size: 1.3rem;
   }
 `;
 
@@ -221,6 +223,7 @@ export const Categories = styled.div`
   display: none;
   gap: 1rem;
   margin-top: 15px;
+  font-size: 1rem;
 
   @media (min-width: 768px) {
     display: flex;
@@ -241,11 +244,11 @@ export const Category = styled(Link)`
 `;
 
 export const Synopsis = styled.p`
-  max-height: 15rem;
-  max-width: 65rem;
+  max-height: 11rem;
   margin-top: auto;
   overflow: auto;
   display: none;
+  font-size: 1rem;
 
   &::-webkit-scrollbar {
     width: 10px;
