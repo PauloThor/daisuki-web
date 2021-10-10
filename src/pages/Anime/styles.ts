@@ -241,6 +241,12 @@ export const Category = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  transition: filter 0.2s;
+  &:hover {
+    color: ${Color.TEXT_MAIN};
+    filter: brightness(0.8);
+  }
 `;
 
 export const Synopsis = styled.p`
