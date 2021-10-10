@@ -114,6 +114,10 @@ export const RateContainer = styled.div`
       color: #a4ccf4;
     }
   }
+
+  .ant-rate-text {
+    font-weight: bolder;
+  }
 `;
 
 export const Details = styled.div`
@@ -170,7 +174,6 @@ export const AnimeEpisode = styled.li<EpisodeProps>`
   @media (min-width: 768px) {
     height: 3.5rem;
     padding: 1.5rem 1rem;
-    font-size: 1.3rem;
   }
 `;
 
@@ -241,6 +244,12 @@ export const Category = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  transition: filter 0.2s;
+  &:hover {
+    color: ${Color.TEXT_MAIN};
+    filter: brightness(0.8);
+  }
 `;
 
 export const Synopsis = styled.p`
