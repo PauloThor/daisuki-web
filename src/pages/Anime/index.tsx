@@ -149,9 +149,9 @@ const AnimePage = () => {
                         }`}
                   </p>
                   <Categories>
-                    <Category>Ação</Category>
-                    <Category>Shõnen</Category>
-                    <Category>Aventura</Category>
+                    <Category to="">Ação</Category>
+                    <Category to="">Shõnen</Category>
+                    <Category to="">Aventura</Category>
                   </Categories>
                   <Synopsis>
                     <strong> Sinopse:</strong> {anime.synopsis}

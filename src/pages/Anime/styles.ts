@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Font } from "../../model/enums/theme-fonts";
 import { Color } from "../../model/enums/theme-colors";
 import { Collapse } from "antd";
+import { Link } from "react-router-dom";
 
 interface HeaderAnimeDataProps {
   favIcon: string;
@@ -147,7 +148,7 @@ export const ListEpisodes = styled.ul`
     height: 2.5rem;
     font-size: 1.1rem;
     padding: 1rem 0.5rem;
-    color: white;
+    color: ${Color.TEXT_MAIN};
 
     display: flex;
     align-items: center;
@@ -184,7 +185,7 @@ export const StyledCollapse = styled(Collapse)`
   width: 95%;
   margin: 0 auto;
   margin-top: 20px;
-  color: white;
+  color: ${Color.TEXT_MAIN};
 
   .ant-collapse-header {
     border: 2px solid ${Color.MAIN_LIGHT};
@@ -226,12 +227,13 @@ export const Categories = styled.div`
   }
 `;
 
-export const Category = styled.div`
+export const Category = styled(Link)`
   padding: 0.5rem;
   height: 1.8rem;
   border: 1px solid ${Color.TEXT_MAIN};
   border-radius: 3px;
   font-size: 1rem;
+  color: ${Color.TEXT_MAIN};
 
   display: flex;
   justify-content: center;
