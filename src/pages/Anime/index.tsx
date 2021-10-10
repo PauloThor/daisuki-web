@@ -74,7 +74,7 @@ const AnimePage = () => {
   }, []);
 
   // TODO integrar com a nota do anime quando o backend ficar pronto.
-  const [animeRate, setAnimeRate] = useState(3.8);
+  const [animeRate, setAnimeRate] = useState(4.73);
 
   const handleRate = (value: number) => {
     setAnimeRate(value);
@@ -125,7 +125,7 @@ const AnimePage = () => {
                   <button type="button" />
                 </HeaderAnimeData>
                 <RateContainer>
-                  <Rate onChange={handleRate} value={animeRate} />
+                  <Rate onChange={handleRate} value={animeRate} allowHalf />
                   {animeRate ? (
                     <span className="ant-rate-text">
                       {animeRate.toFixed(2)}
