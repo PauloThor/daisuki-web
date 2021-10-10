@@ -34,6 +34,24 @@ class SchemaUtils {
       password: yup.string().min(8, " - Mínimo de 8 caracteres"),
     });
   }
+
+  static updatePassword() {
+    return yup.object({
+      currentPassword: yup
+        .string()
+        .min(8, " - Mínimo de 8 caracteres")
+        .required(" - Campo obrigatório"),
+      newPassword: yup
+        .string()
+        .min(8, " - Mínimo de 8 caracteres")
+        .required(" - Campo obrigatório"),
+      confirmPassword: yup
+        .string()
+        .min(8, "")
+        .required("")
+        .oneOf([yup.ref("newPassword")], ""),
+    });
+  }
 }
 
 export default SchemaUtils;

@@ -33,6 +33,10 @@ export const StyledMenuSubItem = styled(Menu.Item)`
   background-color: ${Color.MAIN_LIGHT};
   color: ${Color.TEXT_MAIN};
 
+  label {
+    cursor: pointer;
+  }
+
   &:hover {
     background-color: ${Color.MAIN_LIGHT};
     color: ${Color.HIGHLIGHT_DARK};
