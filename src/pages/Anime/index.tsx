@@ -7,6 +7,14 @@ import {
   SpinContainer,
   StyledCollapse,
   StyledListEpisodes,
+  Synopsis,
+  Categories,
+  Details,
+  RateContainer,
+  AnimeData,
+  HeaderAnimeData,
+  AnimeCover,
+  AnimeEpisode,
 } from "./styles";
 import { useHistory, useParams } from "react-router";
 import { useEffect, useState } from "react";
@@ -111,13 +119,13 @@ const AnimePage = () => {
         <>
           <Header />
           <Container>
-            <InfoAnime favIcon={FavIcon}>
-              <div className="container-data">
-                <div className="header">
+            <InfoAnime>
+              <AnimeData>
+                <HeaderAnimeData favIcon={FavIcon}>
                   <h1>{anime.name}</h1>
                   <button type="button" />
-                </div>
-                <div className="rate-container">
+                </HeaderAnimeData>
+                <RateContainer>
                   <Rate
                     tooltips={desc}
                     onChange={handleRate}
@@ -128,8 +136,8 @@ const AnimePage = () => {
                   ) : (
                     ""
                   )}
-                </div>
-                <div className="details">
+                </RateContainer>
+                <Details>
                   <p>Áudio: {anime.is_dubbed ? "Português" : "Japonês"}</p>
                   <p>Episódios: {anime.total_episodes}</p>
                   <p>
@@ -141,24 +149,24 @@ const AnimePage = () => {
                           anime.is_completed ? "Encerrado" : "Em lançamento"
                         }`}
                   </p>
-                  <div className="categories">
-                    <Category>Ação</Category>
-                    <Category>Shõnen</Category>
-                    <Category>Aventura</Category>
-                  </div>
-                  <p className="synopsis">
+                  <Categories>
+                    <Category to="">Ação</Category>
+                    <Category to="">Shõnen</Category>
+                    <Category to="">Aventura</Category>
+                  </Categories>
+                  <Synopsis>
                     <strong> Sinopse:</strong> {anime.synopsis}
-                  </p>
-                </div>
-              </div>
-              <div className="container-image">
+                  </Synopsis>
+                </Details>
+              </AnimeData>
+              <AnimeCover>
                 <img src={anime.image_url} alt="anime cover" />
                 <Button
                   text="Ver Sinopse"
                   margin="0 8px"
                   handleClick={handleModalSynopsis}
                 />
-              </div>
+              </AnimeCover>
             </InfoAnime>
 
             {episodes.length > 24 ? (
@@ -183,8 +191,8 @@ const AnimePage = () => {
                     >
                       <StyledListEpisodes>
                         {list.map((epi) => (
-                          <li
-                            className="card-episode"
+                          <AnimeEpisode
+                            watched={false}
                             key={epi.id}
                             onClick={() =>
                               handleToEpisode(
@@ -195,7 +203,7 @@ const AnimePage = () => {
                             {anime.is_movie
                               ? anime.name
                               : `Episódio ${epi.episode_number}`}
-                          </li>
+                          </AnimeEpisode>
                         ))}
                       </StyledListEpisodes>
                     </Panel>
@@ -205,8 +213,8 @@ const AnimePage = () => {
             ) : (
               <ListEpisodes>
                 {episodes.map((epi) => (
-                  <li
-                    className="card-episode"
+                  <AnimeEpisode
+                    watched={false}
                     key={epi.id}
                     onClick={() =>
                       handleToEpisode(
@@ -217,7 +225,7 @@ const AnimePage = () => {
                     {anime.is_movie
                       ? `${anime.name} - Filme`
                       : `Episódio ${epi.episode_number}`}
-                  </li>
+                  </AnimeEpisode>
                 ))}
               </ListEpisodes>
             )}
