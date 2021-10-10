@@ -13,8 +13,8 @@ const Favorites = ({ onClose, list }: FavoritesProps) => {
     <Container>
       <CloseIcon size={30} onClick={onClose} />
       <Banner style={{ marginBottom: "1.5rem" }}>
-        <img alt="header" src={BannerImage} />
         <Text>Favoritos</Text>
+        <img alt="header" src={BannerImage} />
       </Banner>
       <Options>
         {list.map((favorite) => (
