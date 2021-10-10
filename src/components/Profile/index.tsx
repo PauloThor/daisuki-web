@@ -1,12 +1,33 @@
+import { useState } from "react";
 import DefaultAvatar from "../../assets/img/default-user-avatar.png";
 import { useUser } from "../../hooks/User";
-import { AvatarContainer, Banner, Container, Options } from "./styles";
+import UpdateForm from "../UpdateForm";
+import {
+  AvatarContainer,
+  Banner,
+  CloseIcon,
+  Container,
+  Options,
+  StyledModal,
+  Text,
+} from "./styles";
 
-const Profile = () => {
+interface ProfileProps {
+  onClose: () => void;
+}
+
+const Profile = ({ onClose }: ProfileProps) => {
+  const [formOpen, setFormOpen] = useState<boolean>(false);
+
+  const handleOpenForm = () => setFormOpen(!formOpen);
+
   const { user } = useUser();
   return (
     <Container>
-      <Banner></Banner>
+      <CloseIcon size={30} onClick={onClose} />
+      <Banner>
+        <Text>Minha conta</Text>
+      </Banner>
       <AvatarContainer>
         <img alt="avatar" src={DefaultAvatar} />
         <p>{user?.username ?? "Umaru-chan"}</p>
@@ -15,9 +36,12 @@ const Profile = () => {
         <p>Editar nome de usuário</p>
         <p>Alterar foto de perfil</p>
         <p>Mudar endereço de e-mail</p>
-        <p>Alterar senha</p>
+        <p onClick={handleOpenForm}>Alterar senha</p>
         <p>Excluir conta</p>
       </Options>
+      <StyledModal visible={formOpen} onCancel={handleOpenForm}>
+        <UpdateForm />
+      </StyledModal>
     </Container>
   );
 };

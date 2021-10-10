@@ -7,6 +7,7 @@ import {
   MobileItem,
   MobileMenu,
   MobileSubMenu,
+  ProfileContainer,
   ProfileLink,
   StyledLink,
 } from "./styles";
@@ -23,6 +24,7 @@ import { Link, useHistory } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
 import { TiArrowSortedDown } from "react-icons/ti";
+import Profile from "../Profile";
 
 interface HeaderProps {
   isAuth?: boolean;
@@ -30,10 +32,14 @@ interface HeaderProps {
 
 const Header = ({ isAuth = true }: HeaderProps) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [profileOpen, setProfileOpen] = useState<boolean>(false);
 
   const history = useHistory();
 
   const handleOpenMenu = () => setMenuOpen(!menuOpen);
+  const handleOpenProfile = () => {
+    setProfileOpen(!profileOpen);
+  };
 
   const handlePath = (path: string) => history.push(path);
 
@@ -90,6 +96,14 @@ const Header = ({ isAuth = true }: HeaderProps) => {
     </MobileMenu>
   );
 
+  const avatarMenuItems = [
+    {
+      name: "Minha conta",
+      event: handleOpenProfile,
+    },
+    ...MenuUtils.account,
+  ];
+
   return (
     <Container>
       <Link to="/" className="link-logo">
@@ -116,7 +130,7 @@ const Header = ({ isAuth = true }: HeaderProps) => {
           <DropdownItem
             title="avatar"
             hasAvatar
-            items={MenuUtils.account}
+            items={avatarMenuItems}
             key={"desktop-dropdown-1"}
           />
         </HeaderItem>
@@ -135,13 +149,18 @@ const Header = ({ isAuth = true }: HeaderProps) => {
           <DropdownItem
             title="avatar"
             hasAvatar
-            items={MenuUtils.account}
+            items={avatarMenuItems}
             key={"mobile-dropdown-1"}
           />
         </MobileAuth>
       )}
 
       {menuOpen && renderMobileMenu()}
+      {profileOpen && (
+        <ProfileContainer>
+          <Profile onClose={handleOpenProfile} />
+        </ProfileContainer>
+      )}
     </Container>
   );
 };
