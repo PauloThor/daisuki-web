@@ -172,3 +172,18 @@ export const MobileAuth = styled.div`
 `;
 
 export const StyledHamburger = styled(GiHamburgerMenu)``;
+
+export const ProfileContainer = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 4;
+  animation: fromTop 1s;
+
+  @keyframes fromTop {
+    from {
+      top: -30px;
+      opacity: 0;
+    }
+  }
+`;

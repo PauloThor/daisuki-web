@@ -21,9 +21,13 @@ const DropdownItem = ({ title, items, hasAvatar }: DropdownItemProps) => {
     <Menu style={hasAvatar ? { ...MenuStyles, ...avatarStyles } : MenuStyles}>
       {items?.map((item, index) => (
         <StyledMenuSubItem key={`${item.name}-${index}`}>
-          <a rel="noopener noreferrer" href={item.path}>
-            {item.name}
-          </a>
+          {!item.event ? (
+            <a rel="noopener noreferrer" href={item.path}>
+              {item.name}
+            </a>
+          ) : (
+            <label onClick={item.event}>{item.name}</label>
+          )}
         </StyledMenuSubItem>
       ))}
     </Menu>

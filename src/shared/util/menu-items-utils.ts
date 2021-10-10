@@ -110,14 +110,6 @@ class MenuUtils {
 
   static account = [
     {
-      name: "Minha conta",
-      path: "/my-account",
-    },
-    {
-      name: "Favoritos",
-      path: "/favorites",
-    },
-    {
       name: "Histórico",
       path: "/history",
     },
