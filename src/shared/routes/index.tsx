@@ -5,6 +5,7 @@ import Login from "../../pages/Login";
 import NotFound from "../../pages/NotFound";
 import Route from "./route";
 import AnimePage from "../../pages/Anime";
+import Styleguide from "../../pages/Styleguide";
 
 const Routes = () => {
   return (
@@ -13,6 +14,7 @@ const Routes = () => {
       <Route path="/register" component={Register} />
       <Route path="/login" component={Login} />
       <Route path="/animes/:id" component={AnimePage} />
+      <Route exact path="/styleguide" component={Styleguide} />
       <Route path="*" component={NotFound} />
     </Switch>
   );

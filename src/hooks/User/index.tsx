@@ -7,10 +7,18 @@ interface LoginData {
   password: string;
 }
 
+interface UserProps {
+  email?: string;
+  avatarUrl?: string;
+  isAuth?: boolean;
+  username?: string;
+}
+
 interface UserData {
   token: string;
   login: (data: LoginData, history: History) => void;
   logout: () => void;
+  user: UserProps;
 }
 
 interface UserProviderProps {
@@ -44,7 +52,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   return (
-    <UserContext.Provider value={{ token, login, logout }}>
+    <UserContext.Provider value={{ token, login, logout, user }}>
       {children}
     </UserContext.Provider>
   );
