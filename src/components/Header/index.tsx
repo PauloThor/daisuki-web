@@ -25,6 +25,8 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
 import { TiArrowSortedDown } from "react-icons/ti";
 import Profile from "../Profile";
+import Favorites from "../Favorites";
+import MockUtils from "../../shared/util/mock-utils";
 
 interface HeaderProps {
   isAuth?: boolean;
@@ -33,13 +35,13 @@ interface HeaderProps {
 const Header = ({ isAuth = true }: HeaderProps) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [profileOpen, setProfileOpen] = useState<boolean>(false);
+  const [favoritesOpen, setFavoritesOpen] = useState<boolean>(false);
 
   const history = useHistory();
 
   const handleOpenMenu = () => setMenuOpen(!menuOpen);
-  const handleOpenProfile = () => {
-    setProfileOpen(!profileOpen);
-  };
+  const handleOpenProfile = () => setProfileOpen(!profileOpen);
+  const handleOpenFavorites = () => setFavoritesOpen(!favoritesOpen);
 
   const handlePath = (path: string) => history.push(path);
 
@@ -101,6 +103,10 @@ const Header = ({ isAuth = true }: HeaderProps) => {
       name: "Minha conta",
       event: handleOpenProfile,
     },
+    {
+      name: "Favoritos",
+      event: handleOpenFavorites,
+    },
     ...MenuUtils.account,
   ];
 
@@ -159,6 +165,11 @@ const Header = ({ isAuth = true }: HeaderProps) => {
       {profileOpen && (
         <ProfileContainer>
           <Profile onClose={handleOpenProfile} />
+        </ProfileContainer>
+      )}
+      {favoritesOpen && (
+        <ProfileContainer>
+          <Favorites onClose={handleOpenFavorites} list={MockUtils.favorites} />
         </ProfileContainer>
       )}
     </Container>

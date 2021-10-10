@@ -11,6 +11,7 @@ import {
   StyledModal,
   Text,
 } from "./styles";
+import BannerImage from "../../assets/img/profile-header.png";
 
 interface ProfileProps {
   onClose: () => void;
@@ -27,6 +28,7 @@ const Profile = ({ onClose }: ProfileProps) => {
       <CloseIcon size={30} onClick={onClose} />
       <Banner>
         <Text>Minha conta</Text>
+        <img alt="header" src={BannerImage} />
       </Banner>
       <AvatarContainer>
         <img alt="avatar" src={DefaultAvatar} />

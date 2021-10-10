@@ -22,8 +22,10 @@ export const Banner = styled.header`
   height: 124px;
   padding: 10px;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
-
 export const AvatarContainer = styled.section`
   display: flex;
   flex-direction: column;
@@ -41,7 +43,7 @@ export const Options = styled.section`
 
   p {
     background-color: ${Color.MAIN};
-    padding: 5px;
+    padding: 5px 10px;
     cursor: pointer;
     transition: 0.3s ease-in;
 

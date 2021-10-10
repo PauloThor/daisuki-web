@@ -1,7 +1,5 @@
-import Favorites from "../../components/Favorites";
-
-const Styleguide = () => {
-  const mock = [
+class MockUtils {
+  static favorites = [
     {
       name: "Hunter x Hunter",
       onPress: () => console.log(),
@@ -19,12 +17,6 @@ const Styleguide = () => {
       onPress: () => console.log(),
     },
   ];
+}
 
-  return (
-    <div>
-      <Favorites onClose={() => console.log()} list={mock} />
-    </div>
-  );
-};
-
-export default Styleguide;
+export default MockUtils;
