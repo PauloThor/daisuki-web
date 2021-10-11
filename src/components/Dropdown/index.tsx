@@ -1,5 +1,6 @@
 import { Menu, Dropdown } from "antd";
 import {
+  avatarStyles,
   MenuContainer,
   MenuItem,
   MenuLabel,
@@ -7,20 +8,26 @@ import {
   StyledMenuSubItem,
 } from "./styles";
 import { SubItem } from "../../model/menu-item";
+import DefaultAvatar from "../../assets/img/default-user-avatar.png";
 
 interface DropdownItemProps {
   title: string;
   items?: SubItem[];
+  hasAvatar?: boolean;
 }
 
-const DropdownItem = ({ title, items }: DropdownItemProps) => {
+const DropdownItem = ({ title, items, hasAvatar }: DropdownItemProps) => {
   const menu = (
-    <Menu style={MenuStyles}>
+    <Menu style={hasAvatar ? { ...MenuStyles, ...avatarStyles } : MenuStyles}>
       {items?.map((item, index) => (
         <StyledMenuSubItem key={`${item.name}-${index}`}>
-          <a target="_blank" rel="noopener noreferrer" href={item.path}>
-            {item.name}
-          </a>
+          {!item.event ? (
+            <a rel="noopener noreferrer" href={item.path}>
+              {item.name}
+            </a>
+          ) : (
+            <label onClick={item.event}>{item.name}</label>
+          )}
         </StyledMenuSubItem>
       ))}
     </Menu>
@@ -30,7 +37,11 @@ const DropdownItem = ({ title, items }: DropdownItemProps) => {
     <MenuContainer>
       <Dropdown overlay={menu}>
         <MenuItem onClick={(e) => e.preventDefault()} href="/">
-          <MenuLabel>{title}</MenuLabel>
+          {!hasAvatar ? (
+            <MenuLabel>{title}</MenuLabel>
+          ) : (
+            <img src={DefaultAvatar} alt="avatar" />
+          )}
         </MenuItem>
       </Dropdown>
     </MenuContainer>

@@ -1,4 +1,16 @@
-import { Container, Divider, HeaderItem, ProfileLink } from "./styles";
+import {
+  Container,
+  Divider,
+  HeaderItem,
+  Item,
+  MobileAuth,
+  MobileItem,
+  MobileMenu,
+  MobileSubMenu,
+  ProfileContainer,
+  ProfileLink,
+  StyledLink,
+} from "./styles";
 import Logo from "../../assets/img/logo.svg";
 import DropdownItem from "../Dropdown";
 import InputText from "../InputText";
@@ -8,15 +20,31 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import SchemaUtils from "../../shared/util/schema-utils";
 import MenuUtils from "../../shared/util/menu-items-utils";
 
-import mock from "../../assets/img/avatar-thor.png";
-import { Link } from "react-router-dom";
-import MenuMobile from "../MenuMobile";
+import { Link, useHistory } from "react-router-dom";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { useState } from "react";
+import { TiArrowSortedDown } from "react-icons/ti";
+import Profile from "../Profile";
+import Favorites from "../Favorites";
+import MockUtils from "../../shared/util/mock-utils";
 
 interface HeaderProps {
   isAuth?: boolean;
 }
 
-const Header = ({ isAuth = false }: HeaderProps) => {
+const Header = ({ isAuth = true }: HeaderProps) => {
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [profileOpen, setProfileOpen] = useState<boolean>(false);
+  const [favoritesOpen, setFavoritesOpen] = useState<boolean>(false);
+
+  const history = useHistory();
+
+  const handleOpenMenu = () => setMenuOpen(!menuOpen);
+  const handleOpenProfile = () => setProfileOpen(!profileOpen);
+  const handleOpenFavorites = () => setFavoritesOpen(!favoritesOpen);
+
+  const handlePath = (path: string) => history.push(path);
+
   const methods = useForm({
     resolver: yupResolver(SchemaUtils.register()),
     mode: "all",
@@ -24,9 +52,67 @@ const Header = ({ isAuth = false }: HeaderProps) => {
 
   const onSubmit = (data: any) => console.log(data);
 
+  const renderMobileMenu = () => (
+    <MobileMenu onClick={() => console.log()} mode="inline">
+      <MobileSubMenu key="submobile1" title="Animes">
+        {MenuUtils.animes.map((item, index) => (
+          <MobileItem
+            key={`anime-mobile-${index}`}
+            onClick={() => handlePath(item.path)}
+          >
+            {item.name}
+          </MobileItem>
+        ))}
+      </MobileSubMenu>
+      <MobileSubMenu key="submobile2" title="Filmes">
+        {MenuUtils.movies.map((item, index) => (
+          <MobileItem
+            key={`movie-mobile-${index}`}
+            onClick={() => handlePath(item.path)}
+          >
+            {item.name}
+          </MobileItem>
+        ))}
+      </MobileSubMenu>
+      <MobileSubMenu key="submobile3" title="Gênero">
+        {MenuUtils.genders.map((item, index) => (
+          <MobileItem
+            key={`gender-mobile-${index}`}
+            onClick={() => handlePath(item.path)}
+          >
+            {item.name}
+          </MobileItem>
+        ))}
+      </MobileSubMenu>
+      {!isAuth && (
+        <>
+          <StyledLink to="/register">
+            <div style={{ width: "23px" }} />
+            <Item key="signup-mobile-1" title="Cadastrar" />
+          </StyledLink>
+          <StyledLink to="/login">
+            <Item key="login-mobile-1" title="Entrar" />
+          </StyledLink>
+        </>
+      )}
+    </MobileMenu>
+  );
+
+  const avatarMenuItems = [
+    {
+      name: "Minha conta",
+      event: handleOpenProfile,
+    },
+    {
+      name: "Favoritos",
+      event: handleOpenFavorites,
+    },
+    ...MenuUtils.account,
+  ];
+
   return (
     <Container>
-      <Link to="/">
+      <Link to="/" className="link-logo">
         <img src={Logo} alt="logo" />
       </Link>
       <HeaderItem>
@@ -47,10 +133,45 @@ const Header = ({ isAuth = false }: HeaderProps) => {
         </HeaderItem>
       ) : (
         <HeaderItem>
-          <img src={mock} alt="avatar" />
+          <DropdownItem
+            title="avatar"
+            hasAvatar
+            items={avatarMenuItems}
+            key={"desktop-dropdown-1"}
+          />
         </HeaderItem>
       )}
-      <MenuMobile />
+      {!isAuth ? (
+        <GiHamburgerMenu
+          size={35}
+          className="hamburger-menu"
+          onClick={handleOpenMenu}
+        />
+      ) : (
+        <MobileAuth>
+          <label onClick={handleOpenMenu}>
+            Navegar <TiArrowSortedDown size={20} />
+          </label>
+          <DropdownItem
+            title="avatar"
+            hasAvatar
+            items={avatarMenuItems}
+            key={"mobile-dropdown-1"}
+          />
+        </MobileAuth>
+      )}
+
+      {menuOpen && renderMobileMenu()}
+      {profileOpen && (
+        <ProfileContainer>
+          <Profile onClose={handleOpenProfile} />
+        </ProfileContainer>
+      )}
+      {favoritesOpen && (
+        <ProfileContainer>
+          <Favorites onClose={handleOpenFavorites} list={MockUtils.favorites} />
+        </ProfileContainer>
+      )}
     </Container>
   );
 };

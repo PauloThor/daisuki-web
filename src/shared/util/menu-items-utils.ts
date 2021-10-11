@@ -62,6 +62,61 @@ class MenuUtils {
       name: "Fantasia",
       path: "/animes/fantasy",
     },
+    {
+      name: "Ficção científica",
+      path: "/animes/fiction",
+    },
+    {
+      name: "Gourmet",
+      path: "/animes/gourmet",
+    },
+    {
+      name: "Horror",
+      path: "/animes/horror",
+    },
+    {
+      name: "Josei",
+      path: "/animes/josei",
+    },
+    {
+      name: "Mecha",
+      path: "/animes/mecha",
+    },
+    {
+      name: "Mistério",
+      path: "/animes/mistery",
+    },
+    {
+      name: "Romance",
+      path: "/animes/romance",
+    },
+    {
+      name: "Seinen",
+      path: "/animes/seinen",
+    },
+    {
+      name: "Slice of life",
+      path: "/animes/slice",
+    },
+    {
+      name: "Sobrenatural",
+      path: "/animes/supernatural",
+    },
+    {
+      name: "Suspense",
+      path: "/animes/thriller",
+    },
+  ];
+
+  static account = [
+    {
+      name: "Histórico",
+      path: "/history",
+    },
+    {
+      name: "Sair",
+      path: "",
+    },
   ];
 }
 

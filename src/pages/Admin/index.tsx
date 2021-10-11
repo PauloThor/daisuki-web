@@ -11,6 +11,7 @@ import animes from "../../mock/animes.json";
 import { useState } from "react";
 import { SelectValue } from "antd/lib/select";
 import * as yup from "yup";
+import { toast } from "react-hot-toast";
 
 interface FormAnime {
   animeName: string;
@@ -137,11 +138,6 @@ const Admin = () => {
   const onSubmitEpisode = (data: FormEpisode) => {
     console.log(data);
     // return toastify
-
-    if (!anime) {
-      return console.log("- Selecione um anime");
-    }
-
     const output = {
       anime: anime,
       episodeNumber: data.episodeNumber,
