@@ -51,21 +51,18 @@ class SchemaUtils {
         .integer("Insira um valor inteiro")
         .required(" - Campo obrigatório"),
       isDubbed: yup.boolean(),
-      image: yup.mixed().transform((value) => value[0]),
+      image: yup.string().required(" - Campo obrigatório"),
     });
   }
 
   static episode() {
     return yup.object({
-      // required(" - Selecione um anime")
-      anime: yup.string(),
-      // .required(" - Campo obrigatório")
-      episodeNumber: yup.string(),
+      episodeNumber: yup.string().required(" - Campo obrigatório"),
       // TODO: validar a url do videoUrl
       // .matches(URL)
       // .required(" - Campo obrigatório")
-      videoUrl: yup.string(),
-      image: yup.mixed().transform((value) => value[0]),
+      videoUrl: yup.string().required(" - Campo obrigatório"),
+      image: yup.string().required(" - Campo obrigatório"),
     });
   }
 

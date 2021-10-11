@@ -3,14 +3,14 @@ import Button from "../../components/Button";
 import InputText from "../../components/InputText";
 import { Container, Box } from "./styles";
 import { InputTypes } from "../../model/enums/input-types";
-import { Checkbox, Select, Upload, Button as AntButton } from "antd";
+import { Checkbox, Select } from "antd";
 import SchemaUtils from "../../shared/util/schema-utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, FormProvider } from "react-hook-form";
 import animes from "../../mock/animes.json";
-import { UploadOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { SelectValue } from "antd/lib/select";
+import * as yup from "yup";
 
 interface FormAnime {
   animeName: string;
@@ -19,14 +19,14 @@ interface FormAnime {
   isDubbed: boolean;
   isMovie: boolean;
   categories: SelectValue;
-  image: File;
+  image: string;
 }
 
 interface FormEpisode {
   anime: SelectValue;
   episodeNumber: number;
   videoUrl: string;
-  image: File;
+  image: string;
 }
 
 interface FormModerator {
@@ -58,6 +58,12 @@ const Admin = () => {
       label: "Total de episódios*",
       type: InputTypes.NUMBER,
     },
+    {
+      name: "image",
+      placeholder: "Imagem URL",
+      label: "Imagem do anime*",
+      type: InputTypes.TEXT,
+    },
   ];
 
   const inputModerator = [
@@ -81,7 +87,23 @@ const Admin = () => {
       label: "Vídeo url*",
       type: InputTypes.TEXT,
     },
+    {
+      name: "image",
+      placeholder: "Imagem URL",
+      label: "Imagem do episódio*",
+      type: InputTypes.TEXT,
+    },
   ];
+
+  const nha = yup.object({
+    anime: yup.string().transform(() => anime),
+    episodeNumber: yup.string().required(" - Campo obrigatório"),
+    // TODO: validar a url do videoUrl
+    // .matches(URL)
+    // .required(" - Campo obrigatório")
+    videoUrl: yup.string().required(" - Campo obrigatório"),
+    image: yup.string().required(" - Campo obrigatório"),
+  });
 
   const methodsAnime = useForm({
     resolver: yupResolver(SchemaUtils.anime()),
@@ -94,7 +116,7 @@ const Admin = () => {
   });
 
   const methodsEpisode = useForm({
-    resolver: yupResolver(SchemaUtils.episode()),
+    resolver: yupResolver(nha),
     mode: "all",
   });
 
@@ -114,6 +136,12 @@ const Admin = () => {
 
   const onSubmitEpisode = (data: FormEpisode) => {
     console.log(data);
+    // return toastify
+
+    if (!anime) {
+      return console.log("- Selecione um anime");
+    }
+
     const output = {
       anime: anime,
       episodeNumber: data.episodeNumber,
@@ -176,11 +204,6 @@ const Admin = () => {
                   </Option>
                 ))}
               </Select>
-              <Upload>
-                <AntButton icon={<UploadOutlined />}>
-                  Escolha uma imagem
-                </AntButton>
-              </Upload>
 
               <Button text="Enviar" />
             </form>
@@ -211,11 +234,7 @@ const Admin = () => {
                   autofocus={index === 0}
                 />
               ))}
-              <Upload>
-                <AntButton icon={<UploadOutlined />}>
-                  Escolha uma imagem
-                </AntButton>
-              </Upload>
+
               <Button text="Enviar" />
             </form>
           </FormProvider>
