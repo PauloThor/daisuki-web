@@ -9,30 +9,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, FormProvider } from "react-hook-form";
 import animes from "../../mock/animes.json";
 import { useState } from "react";
+import { FormAnime, FormEpisode, FormModerator } from "../../model/admin-forms";
 import { SelectValue } from "antd/lib/select";
-import * as yup from "yup";
 import { toast } from "react-hot-toast";
-
-interface FormAnime {
-  animeName: string;
-  sinopse: string;
-  episodesNumber: number;
-  isDubbed: boolean;
-  isMovie: boolean;
-  categories: SelectValue;
-  image: string;
-}
-
-interface FormEpisode {
-  anime: SelectValue;
-  episodeNumber: number;
-  videoUrl: string;
-  image: string;
-}
-
-interface FormModerator {
-  email: string;
-}
 
 const Admin = () => {
   const [categories, setCategories] = useState<SelectValue>([]);
@@ -96,16 +75,6 @@ const Admin = () => {
     },
   ];
 
-  const nha = yup.object({
-    anime: yup.string().transform(() => anime),
-    episodeNumber: yup.string().required(" - Campo obrigatório"),
-    // TODO: validar a url do videoUrl
-    // .matches(URL)
-    // .required(" - Campo obrigatório")
-    videoUrl: yup.string().required(" - Campo obrigatório"),
-    image: yup.string().required(" - Campo obrigatório"),
-  });
-
   const methodsAnime = useForm({
     resolver: yupResolver(SchemaUtils.anime()),
     mode: "all",
@@ -117,7 +86,7 @@ const Admin = () => {
   });
 
   const methodsEpisode = useForm({
-    resolver: yupResolver(nha),
+    resolver: yupResolver(SchemaUtils.episode()),
     mode: "all",
   });
 
@@ -137,7 +106,6 @@ const Admin = () => {
 
   const onSubmitEpisode = (data: FormEpisode) => {
     console.log(data);
-    // return toastify
 
     if (!anime) {
       return toast.error("- Selecione um anime");
