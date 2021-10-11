@@ -3,6 +3,7 @@ import Home from "../../pages/Home";
 import Register from "../../pages/Register";
 import Login from "../../pages/Login";
 import NotFound from "../../pages/NotFound";
+import Admin from "../../pages/Admin";
 import Route from "./route";
 import AnimePage from "../../pages/Anime";
 import Styleguide from "../../pages/Styleguide";
@@ -13,6 +14,7 @@ const Routes = () => {
       <Route exact path="/" component={Home} />
       <Route path="/register" component={Register} />
       <Route path="/login" component={Login} />
+      <Route path="/admin" component={Admin} />
       <Route path="/animes/:id" component={AnimePage} />
       <Route exact path="/styleguide" component={Styleguide} />
       <Route path="*" component={NotFound} />

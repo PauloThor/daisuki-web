@@ -5,4 +5,7 @@ export enum InputTypes {
   USER = "usuário",
   DEFAULT = "default",
   SEARCH = "search",
+  FILE = "file",
+  NUMBER = "number",
+  CHECKBOX = "checkbox",
 }
