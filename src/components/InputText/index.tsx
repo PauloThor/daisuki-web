@@ -95,6 +95,17 @@ const InputText = ({
     setValue(name, MaskFormats[mask]);
   };
 
+  const choiceType = (type: string) => {
+    if (type === InputTypes.PASSWORD) {
+      return InputTypes.PASSWORD;
+    }
+    if (type === InputTypes.NUMBER) {
+      return InputTypes.NUMBER;
+    }
+
+    return InputTypes.TEXT;
+  };
+
   useEffect(() => {
     if (defaultValue) {
       handleSetMask(defaultValue);
@@ -124,11 +135,7 @@ const InputText = ({
                 }
               }}
               placeholder={placeholder}
-              type={
-                type === InputTypes.PASSWORD
-                  ? InputTypes.PASSWORD
-                  : InputTypes.TEXT
-              }
+              type={choiceType(type)}
               autoFocus={autofocus}
             />
           </InputWrapper>

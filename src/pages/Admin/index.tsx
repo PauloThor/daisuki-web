@@ -3,11 +3,12 @@ import Button from "../../components/Button";
 import InputText from "../../components/InputText";
 import { Container, Box } from "./styles";
 import { InputTypes } from "../../model/enums/input-types";
-import { Checkbox, Select } from "antd";
+import { Checkbox, Select, Upload, Button as AntButton } from "antd";
 import SchemaUtils from "../../shared/util/schema-utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, FormProvider } from "react-hook-form";
 import animes from "../../mock/animes.json";
+import { UploadOutlined } from "@ant-design/icons";
 
 interface FormAnime {
   name: string;
@@ -50,13 +51,6 @@ const Admin = () => {
       type: InputTypes.NUMBER,
     },
   ];
-
-  const fileInput = {
-    name: "image",
-    placeholder: "Imagem",
-    label: "Imagem",
-    type: InputTypes.FILE,
-  };
 
   const inputModerator = [
     {
@@ -102,6 +96,8 @@ const Admin = () => {
 
   const { Option } = Select;
 
+  const teste = ["Shoujo", "Shounen", "Aventura", "Ação"].sort();
+
   return (
     <>
       <Header />
@@ -112,7 +108,7 @@ const Admin = () => {
             <form onSubmit={methodsAnime.handleSubmit(onSubmit)}>
               {inputAnime.map((input, index) => (
                 <InputText
-                  key={`${input.name}-${index}`}
+                  key={`${input.name}-anime-${index}`}
                   name={input.name}
                   placeholder={input.placeholder}
                   label={input.label}
@@ -126,6 +122,11 @@ const Admin = () => {
               <Checkbox name="movie" onChange={(e) => e.target.checked}>
                 Filme
               </Checkbox>
+              <Upload>
+                <AntButton icon={<UploadOutlined />}>
+                  Escolha uma imagem
+                </AntButton>
+              </Upload>
 
               <Button text="Enviar" />
             </form>
@@ -136,15 +137,19 @@ const Admin = () => {
           <FormProvider {...methodsEpisode}>
             <form onSubmit={methodsEpisode.handleSubmit(onSubmit)}>
               <Select>
-                {animes.map((anime) => (
-                  <Option name={anime.name} value={anime.name}>
+                {animes.map((anime, index) => (
+                  <Option
+                    name={anime.name}
+                    value={anime.name}
+                    key={`${anime.name}-anime-${index}`}
+                  >
                     {anime.name}
                   </Option>
                 ))}
               </Select>
               {inputEpisode.map((input, index) => (
                 <InputText
-                  key={`${input.name}-${index}`}
+                  key={`${input.name}-episode-${index}`}
                   name={input.name}
                   placeholder={input.placeholder}
                   label={input.label}
@@ -152,6 +157,11 @@ const Admin = () => {
                   autofocus={index === 0}
                 />
               ))}
+              <Upload>
+                <AntButton icon={<UploadOutlined />}>
+                  Escolha uma imagem
+                </AntButton>
+              </Upload>
               <Button text="Enviar" />
             </form>
           </FormProvider>
@@ -162,7 +172,7 @@ const Admin = () => {
             <form onSubmit={methodsModerator.handleSubmit(onSubmit)}>
               {inputModerator.map((input, index) => (
                 <InputText
-                  key={`${input.name}-${index}`}
+                  key={`${input.name}-moderator-${index}`}
                   name={input.name}
                   placeholder={input.placeholder}
                   label={input.label}
