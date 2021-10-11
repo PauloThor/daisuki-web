@@ -57,13 +57,14 @@ class SchemaUtils {
 
   static episode() {
     return yup.object({
-      // anime: yup.string().required(" - Selecione um anime"),
-      episodeNumber: yup
-        .number()
-        .integer(" - Insira um valor inteiro")
-        .required(" - Campo obrigatório"),
+      // required(" - Selecione um anime")
+      anime: yup.string(),
+      // .required(" - Campo obrigatório")
+      episodeNumber: yup.string(),
+      // TODO: validar a url do videoUrl
       // .matches(URL)
-      videoUrl: yup.string().required(" - Campo obrigatório"),
+      // .required(" - Campo obrigatório")
+      videoUrl: yup.string(),
       image: yup.mixed().transform((value) => value[0]),
     });
   }
