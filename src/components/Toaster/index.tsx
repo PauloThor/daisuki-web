@@ -1,4 +1,5 @@
 import { Toaster as HotToaster } from "react-hot-toast";
+import { Color } from "../../model/enums/theme-colors"
 
 const Toaster = () => {
   return (
@@ -6,13 +7,13 @@ const Toaster = () => {
       toastOptions={{
         success: {
           style: {
-            background: "#A4CCF4",
-            color: "#141414",
+            background: Color.TEXT_SECONDARY,
+            color: Color.MAIN_DARK,
           },
         },
         error: {
           style: {
-            background: "#B4184C",
+            background: Color.HIGHLIGHT_DARK,
             color: "#FAFAFA",
           },
         },
