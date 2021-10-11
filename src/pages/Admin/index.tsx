@@ -138,6 +138,11 @@ const Admin = () => {
   const onSubmitEpisode = (data: FormEpisode) => {
     console.log(data);
     // return toastify
+
+    if (!anime) {
+      return toast.error("- Selecione um anime");
+    }
+
     const output = {
       anime: anime,
       episodeNumber: data.episodeNumber,
