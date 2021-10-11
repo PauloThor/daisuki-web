@@ -9,20 +9,23 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, FormProvider } from "react-hook-form";
 import animes from "../../mock/animes.json";
 import { UploadOutlined } from "@ant-design/icons";
+import { useFormContext } from "react-hook-form";
+import { useState } from "react";
 
 interface FormAnime {
-  name: string;
+  animeName: string;
   sinopse: string;
-  movie: boolean;
   episodesNumber: number;
-  dubbed: boolean;
+  isDubbed: boolean;
+  isMovie: boolean;
+  categories: string[];
   image: File;
 }
 
 interface FormEpisode {
-  select: string;
+  anime: string;
   episodeNumber: number;
-  videoUri: string;
+  videoUrl: string;
   image: File;
 }
 
@@ -31,6 +34,11 @@ interface FormModerator {
 }
 
 const Admin = () => {
+  const [categories, setCategories] = useState<any>([]);
+  const [isDubbed, setIsDubbed] = useState(false);
+  const [isMovie, setIsMovie] = useState(false);
+  const [anime, setAnime] = useState<any>("");
+
   const inputAnime = [
     {
       name: "animeName",
@@ -62,7 +70,7 @@ const Admin = () => {
   ];
   const inputEpisode = [
     {
-      name: "episodenumber",
+      name: "episodeNumber",
       placeholder: "número",
       label: "Número*",
       type: InputTypes.NUMBER,
@@ -90,11 +98,38 @@ const Admin = () => {
     mode: "all",
   });
 
-  const onSubmit = (data: FormAnime) => {
+  const onSubmitAnime = (data: FormAnime) => {
     console.log(data);
+    const output = {
+      animeName: data.animeName,
+      sinopse: data.sinopse,
+      episodesNumber: data.episodesNumber,
+      isDubbed: isDubbed,
+      isMovie: isMovie,
+      categories: categories,
+      image: data.image,
+    };
+    console.log(output);
+  };
+
+  const onSubmitEpisode = (data: FormEpisode) => {
+    console.log(data);
+    // const output = {
+    //   anime: anime,
+    //   episodeNumber: data.episodeNumber,
+    //   videoUrl: data.videoUrl,
+    //   image: data.image,
+    // };
+    // console.log(output);
   };
 
   const { Option } = Select;
+  // const {
+  //   register,
+  //   getValues,
+  //   formState: { errors, dirtyFields },
+  //   setValue,
+  // } = useFormContext();
 
   const teste = ["Shoujo", "Shounen", "Aventura", "Ação"].sort();
 
@@ -105,7 +140,7 @@ const Admin = () => {
         <h2>Adicionar anime:</h2>
         <Box>
           <FormProvider {...methodsAnime}>
-            <form onSubmit={methodsAnime.handleSubmit(onSubmit)}>
+            <form onSubmit={methodsAnime.handleSubmit(onSubmitAnime)}>
               {inputAnime.map((input, index) => (
                 <InputText
                   key={`${input.name}-anime-${index}`}
@@ -116,12 +151,29 @@ const Admin = () => {
                   autofocus={index === 0}
                 />
               ))}
-              <Checkbox name="dubbed" onChange={(e) => e.target.checked}>
+              <Checkbox
+                name="isDubbed"
+                onChange={(e) => setIsDubbed(e.target.checked)}
+              >
                 Dublado
               </Checkbox>
-              <Checkbox name="movie" onChange={(e) => e.target.checked}>
+              <Checkbox
+                name="isMovie"
+                onChange={(e) => setIsMovie(e.target.checked)}
+              >
                 Filme
               </Checkbox>
+              <Select mode="multiple" onChange={(e) => setCategories(e)}>
+                {teste.map((category, index) => (
+                  <Option
+                    name={category}
+                    value={category}
+                    key={`${category}-category-${index}`}
+                  >
+                    {category}
+                  </Option>
+                ))}
+              </Select>
               <Upload>
                 <AntButton icon={<UploadOutlined />}>
                   Escolha uma imagem
@@ -135,8 +187,8 @@ const Admin = () => {
         <h2>Adicionar episódio:</h2>
         <Box>
           <FormProvider {...methodsEpisode}>
-            <form onSubmit={methodsEpisode.handleSubmit(onSubmit)}>
-              <Select>
+            <form onSubmit={methodsEpisode.handleSubmit(onSubmitEpisode)}>
+              <Select onChange={(e) => console.log(e)}>
                 {animes.map((anime, index) => (
                   <Option
                     name={anime.name}
@@ -169,7 +221,7 @@ const Admin = () => {
         <h2>Adicionar moderador:</h2>
         <Box>
           <FormProvider {...methodsModerator}>
-            <form onSubmit={methodsModerator.handleSubmit(onSubmit)}>
+            <form onSubmit={methodsModerator.handleSubmit(onSubmitAnime)}>
               {inputModerator.map((input, index) => (
                 <InputText
                   key={`${input.name}-moderator-${index}`}
