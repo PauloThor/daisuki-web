@@ -7,6 +7,7 @@ import {
   CheckboxStyled,
   SelectStyled,
   FormStyled,
+  AnimeOptionsStyled,
 } from "./styles";
 import { InputTypes } from "../../model/enums/input-types";
 import { Checkbox, Select } from "antd";
@@ -98,6 +99,9 @@ const Admin = () => {
 
   const onSubmitAnime = (data: FormAnime) => {
     console.log(data);
+    if (!categories) {
+      return toast.error("- Selecione pelo menos uma categoria");
+    }
     const output = {
       animeName: data.animeName,
       sinopse: data.sinopse,
@@ -156,18 +160,20 @@ const Admin = () => {
                   autofocus={index === 0}
                 />
               ))}
-              <CheckboxStyled
-                name="isDubbed"
-                onChange={(e) => setIsDubbed(e.target.checked)}
-              >
-                Dublado
-              </CheckboxStyled>
-              <CheckboxStyled
-                name="isMovie"
-                onChange={(e) => setIsMovie(e.target.checked)}
-              >
-                Filme
-              </CheckboxStyled>
+              <AnimeOptionsStyled>
+                <CheckboxStyled
+                  name="isDubbed"
+                  onChange={(e) => setIsDubbed(e.target.checked)}
+                >
+                  Dublado
+                </CheckboxStyled>
+                <CheckboxStyled
+                  name="isMovie"
+                  onChange={(e) => setIsMovie(e.target.checked)}
+                >
+                  Filme
+                </CheckboxStyled>
+              </AnimeOptionsStyled>
               <SelectStyled mode="multiple" onChange={(e) => setCategories(e)}>
                 {teste.map((category, index) => (
                   <Option
@@ -179,7 +185,6 @@ const Admin = () => {
                   </Option>
                 ))}
               </SelectStyled>
-
               <Button text="Enviar" />
             </FormStyled>
           </FormProvider>
