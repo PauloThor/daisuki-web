@@ -177,7 +177,7 @@ export const ProfileContainer = styled.div`
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 4;
+  z-index: 1001;
   animation: fromTop 1s;
 
   @keyframes fromTop {
