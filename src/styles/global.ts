@@ -51,4 +51,51 @@ export const GlobalStyle = createGlobalStyle`
     background-color: ${Color.HIGHLIGHT_DARK};
     }
 
+    .ant-popover-buttons {
+    display: flex;
+    justify-content: center;
+  }
+
+  .ant-popover-inner-content {
+    background: ${Color.MAIN};
+
+    .anticon svg {
+      display: none;
+  }
+  }
+
+  .ant-popover-message-title {
+      color: ${Color.TEXT_MAIN};
+      padding: 0;
+      text-align: center;
+      font-size: 16px;
+  }
+
+  .ant-btn {
+      width: 80px;
+      height: 44px;
+      margin: 0;
+      background-color: ${Color.SECONDARY};
+      border: none;
+      font-size: 18px;
+      font-weight: 700;
+
+      &:hover {
+        background-color: ${Color.SECONDARY};
+          color: ${Color.HIGHLIGHT_DARK};
+      }
+  }
+
+  .ant-popover-buttons button {
+      margin: 0;
+  }
+
+  .ant-btn-primary {
+      background-color: ${Color.HIGHLIGHT_DARK};
+
+      &:hover {
+          background-color: ${Color.HIGHLIGHT};
+          color: ${Color.MAIN_DARK};
+      }
+  }
 `;

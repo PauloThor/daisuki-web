@@ -1,6 +1,6 @@
 import { Favorite } from "../../model/favorite";
 import { Banner, CloseIcon, Container, Text } from "../Profile/styles";
-import { Item, Options, UnfavoriteIcon } from "./styles";
+import { Item, Options, Pop, UnfavoriteIcon } from "./styles";
 import BannerImage from "../../assets/img/profile-header.png";
 
 interface FavoritesProps {
@@ -20,7 +20,14 @@ const Favorites = ({ onClose, list }: FavoritesProps) => {
         {list.map((favorite) => (
           <Item>
             <p>{favorite.name}</p>
-            <UnfavoriteIcon size={30} />
+            <Pop
+              title="Remover dos favoritos?"
+              onConfirm={() => console.log("a")}
+              okText="Sim"
+              cancelText="Não"
+            >
+              <UnfavoriteIcon size={30} />
+            </Pop>
           </Item>
         ))}
       </Options>
