@@ -75,14 +75,16 @@ export const GlobalStyle = createGlobalStyle`
       width: 80px;
       height: 44px;
       margin: 0;
-      background-color: ${Color.SECONDARY};
+      background-color: ${Color.HIGHLIGHT_DARK};
+      color: ${Color.TEXT_MAIN};
       border: none;
       font-size: 18px;
       font-weight: 700;
 
       &:hover {
-        background-color: ${Color.SECONDARY};
-          color: ${Color.HIGHLIGHT_DARK};
+        background-color: ${Color.HIGHLIGHT_DARK};
+          color: ${Color.TEXT_MAIN};
+          opacity: 0.8;
       }
   }
 
@@ -91,10 +93,11 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .ant-btn-primary {
-      background-color: ${Color.HIGHLIGHT_DARK};
+      background-color: ${Color.SECONDARY};
+      color: ${Color.MAIN_DARK};
 
       &:hover {
-          background-color: ${Color.HIGHLIGHT};
+          background-color: ${Color.SECONDARY};
           color: ${Color.MAIN_DARK};
       }
   }
