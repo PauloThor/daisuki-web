@@ -175,7 +175,7 @@ export const StyledHamburger = styled(GiHamburgerMenu)``;
 
 export const ProfileContainer = styled.div`
   position: absolute;
-  right: 0;
+  left: 0;
   top: 0;
   z-index: 4;
   animation: fromTop 1s;

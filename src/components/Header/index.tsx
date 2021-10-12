@@ -40,8 +40,14 @@ const Header = ({ isAuth = true }: HeaderProps) => {
   const history = useHistory();
 
   const handleOpenMenu = () => setMenuOpen(!menuOpen);
-  const handleOpenProfile = () => setProfileOpen(!profileOpen);
-  const handleOpenFavorites = () => setFavoritesOpen(!favoritesOpen);
+  const handleOpenProfile = () => {
+    setProfileOpen(!profileOpen);
+    setFavoritesOpen(false);
+  };
+  const handleOpenFavorites = () => {
+    setFavoritesOpen(!favoritesOpen);
+    setProfileOpen(false);
+  };
 
   const handlePath = (path: string) => history.push(path);
 
