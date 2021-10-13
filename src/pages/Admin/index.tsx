@@ -8,6 +8,7 @@ import {
   SelectStyled,
   FormStyled,
   AnimeOptionsStyled,
+  FormMod
 } from "./styles";
 import { InputTypes } from "../../model/enums/input-types";
 import { Checkbox, Select } from "antd";
@@ -222,7 +223,7 @@ const Admin = () => {
         <Box>
           <h2>Adicionar moderador:</h2>
           <FormProvider {...methodsModerator}>
-            <FormStyled
+            <FormMod
               onSubmit={methodsModerator.handleSubmit(onSubmitModerator)}
             >
               {inputModerator.map((input, index) => (
@@ -235,8 +236,8 @@ const Admin = () => {
                   autofocus={index === 0}
                 />
               ))}
-              <Button text="Enviar" />
-            </FormStyled>
+              <Button text="Enviar" margin="0.5rem 0 0.5rem 8px"/>
+            </FormMod>
           </FormProvider>
         </Box>
         <Button text="Ver moderadores" />

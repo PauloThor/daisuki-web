@@ -3,22 +3,24 @@ import { Color } from "../../model/enums/theme-colors";
 import { Checkbox, Select } from "antd";
 
 export const Container = styled.div`
-  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  max-width: 1170px;
+  margin: 0 auto;
 
   h2 {
-    margin: 15px 0px 15px 0px;
+    margin: 16px 0 8px;
     color: ${Color.TEXT_MAIN};
+
+    @media (min-width: 900px) {
+      margin: 24px 0 8px;
+    }
   }
 
-  button {
-    margin: 15px 0px 10px 0px;
-  }
-
-  @media (min-width: 768px) {
+  @media (min-width: 900px) {
+    padding: 0 20px 8px;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -28,15 +30,17 @@ export const Container = styled.div`
 
 export const Box = styled.div`
   width: 90%;
+  max-width: 400px;
 
-  @media (min-width: 768px) {
-    width: 45%;
+  @media (min-width: 900px) {
+    width: 49%;
+    max-width: 570px;
   }
 `;
 
 export const FormStyled = styled.form`
   background-color: ${Color.MAIN};
-  padding: 25px;
+  padding: 16px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -52,9 +56,6 @@ export const FormStyled = styled.form`
     margin-bottom: 5px;
   }
 
-  @media (min-width: 768px) {
-    padding: 25px 50px 25px 50px;
-  }
 `;
 
 export const AnimeOptionsStyled = styled.div`
@@ -72,4 +73,20 @@ export const CheckboxStyled = styled(Checkbox)`
 
 export const SelectStyled = styled(Select)`
   width: 100%;
+`;
+
+export const FormMod = styled.form`
+  background-color: ${Color.MAIN};
+  padding: 16px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: 900px) {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
 `;
