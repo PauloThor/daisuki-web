@@ -1,7 +1,14 @@
 import Header from "../../components/Header";
 import Button from "../../components/Button";
 import InputText from "../../components/InputText";
-import { Container, Box } from "./styles";
+import {
+  Container,
+  Box,
+  CheckboxStyled,
+  SelectStyled,
+  FormStyled,
+  AnimeOptionsStyled,
+} from "./styles";
 import { InputTypes } from "../../model/enums/input-types";
 import { Checkbox, Select } from "antd";
 import SchemaUtils from "../../shared/util/schema-utils";
@@ -92,6 +99,9 @@ const Admin = () => {
 
   const onSubmitAnime = (data: FormAnime) => {
     console.log(data);
+    if (!categories) {
+      return toast.error("- Selecione pelo menos uma categoria");
+    }
     const output = {
       animeName: data.animeName,
       sinopse: data.sinopse,
@@ -136,10 +146,10 @@ const Admin = () => {
     <>
       <Header />
       <Container>
-        <h2>Adicionar anime:</h2>
         <Box>
+          <h2>Adicionar anime:</h2>
           <FormProvider {...methodsAnime}>
-            <form onSubmit={methodsAnime.handleSubmit(onSubmitAnime)}>
+            <FormStyled onSubmit={methodsAnime.handleSubmit(onSubmitAnime)}>
               {inputAnime.map((input, index) => (
                 <InputText
                   key={`${input.name}-anime-${index}`}
@@ -150,19 +160,21 @@ const Admin = () => {
                   autofocus={index === 0}
                 />
               ))}
-              <Checkbox
-                name="isDubbed"
-                onChange={(e) => setIsDubbed(e.target.checked)}
-              >
-                Dublado
-              </Checkbox>
-              <Checkbox
-                name="isMovie"
-                onChange={(e) => setIsMovie(e.target.checked)}
-              >
-                Filme
-              </Checkbox>
-              <Select mode="multiple" onChange={(e) => setCategories(e)}>
+              <AnimeOptionsStyled>
+                <CheckboxStyled
+                  name="isDubbed"
+                  onChange={(e) => setIsDubbed(e.target.checked)}
+                >
+                  Dublado
+                </CheckboxStyled>
+                <CheckboxStyled
+                  name="isMovie"
+                  onChange={(e) => setIsMovie(e.target.checked)}
+                >
+                  Filme
+                </CheckboxStyled>
+              </AnimeOptionsStyled>
+              <SelectStyled mode="multiple" onChange={(e) => setCategories(e)}>
                 {teste.map((category, index) => (
                   <Option
                     name={category}
@@ -172,17 +184,16 @@ const Admin = () => {
                     {category}
                   </Option>
                 ))}
-              </Select>
-
+              </SelectStyled>
               <Button text="Enviar" />
-            </form>
+            </FormStyled>
           </FormProvider>
         </Box>
-        <h2>Adicionar episódio:</h2>
         <Box>
+          <h2>Adicionar episódio:</h2>
           <FormProvider {...methodsEpisode}>
-            <form onSubmit={methodsEpisode.handleSubmit(onSubmitEpisode)}>
-              <Select onChange={(e) => setAnime(e)}>
+            <FormStyled onSubmit={methodsEpisode.handleSubmit(onSubmitEpisode)}>
+              <SelectStyled onChange={(e) => setAnime(e)}>
                 {animes.map((anime, index) => (
                   <Option
                     name={anime.name}
@@ -192,7 +203,7 @@ const Admin = () => {
                     {anime.name}
                   </Option>
                 ))}
-              </Select>
+              </SelectStyled>
               {inputEpisode.map((input, index) => (
                 <InputText
                   key={`${input.name}-episode-${index}`}
@@ -205,13 +216,15 @@ const Admin = () => {
               ))}
 
               <Button text="Enviar" />
-            </form>
+            </FormStyled>
           </FormProvider>
         </Box>
-        <h2>Adicionar moderador:</h2>
         <Box>
+          <h2>Adicionar moderador:</h2>
           <FormProvider {...methodsModerator}>
-            <form onSubmit={methodsModerator.handleSubmit(onSubmitModerator)}>
+            <FormStyled
+              onSubmit={methodsModerator.handleSubmit(onSubmitModerator)}
+            >
               {inputModerator.map((input, index) => (
                 <InputText
                   key={`${input.name}-moderator-${index}`}
@@ -223,7 +236,7 @@ const Admin = () => {
                 />
               ))}
               <Button text="Enviar" />
-            </form>
+            </FormStyled>
           </FormProvider>
         </Box>
         <Button text="Ver moderadores" />
