@@ -70,6 +70,14 @@ export const Input = styled.input`
     color: ${Color.TEXT_MAIN};
     opacity: 0.7;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+
+    &::placeholder {
+      opacity: 0;
+    }
+  }
 `;
 
 export const InputLabel = styled.label<InputWrapperProps>`

@@ -10,7 +10,7 @@ import {
   AnimeOptionsStyled,
   FormMod,
   FormEpi,
-  Wrapper
+  Wrapper,
 } from "./styles";
 import { InputTypes } from "../../model/enums/input-types";
 import { Select } from "antd";
@@ -32,29 +32,11 @@ const Admin = () => {
 
   const inputAnime = [
     {
-      name: "animeName",
-      placeholder: "Nome do anime",
-      label: "Nome do anime*",
-      type: InputTypes.TEXT,
-    },
-    {
       name: "sinopse",
       placeholder: "Uma sinopse bem legal...",
       label: "Sinopse*",
       type: InputTypes.TEXT,
-    },
-    {
-      name: "episodesNumber",
-      placeholder: "Número de episódios",
-      label: "Total de episódios*",
-      type: InputTypes.TEXT,
-    },
-    {
-      name: "image",
-      placeholder: "Imagem URL",
-      label: "Imagem do anime*",
-      type: InputTypes.TEXT,
-    },
+    }
   ];
 
   const inputModerator = [
@@ -151,29 +133,36 @@ const Admin = () => {
               onSubmit={methodsAnime.handleSubmit(onSubmitAnime)}
               autoComplete="off"
             >
-              {inputAnime.map((input, index) => (
+              <InputText
+                name="animeName"
+                placeholder="Nome do anime"
+                label="Nome do anime*"
+                type={InputTypes.TEXT}
+              />
+              <textarea name="" id="" cols={30} rows={6}></textarea>
+              <CheckboxStyled
+                  name="isMovie"
+                  onChange={(e) => setIsMovie(e.target.checked)}
+                >
+                  Filme
+                </CheckboxStyled>
+      
                 <InputText
-                  key={`${input.name}-anime-${index}`}
-                  name={input.name}
-                  placeholder={input.placeholder}
-                  label={input.label}
-                  type={input?.type ?? ""}
-                />
-              ))}
-              <AnimeOptionsStyled>
+                name="episodesNumber"
+                placeholder="12"
+                label="Total de episódios*"
+                type={InputTypes.TEXT}
+                disabled={isMovie}
+              />
+
                 <CheckboxStyled
                   name="isDubbed"
                   onChange={(e) => setIsDubbed(e.target.checked)}
                 >
                   Dublado
                 </CheckboxStyled>
-                <CheckboxStyled
-                  name="isMovie"
-                  onChange={(e) => setIsMovie(e.target.checked)}
-                >
-                  Filme
-                </CheckboxStyled>
-              </AnimeOptionsStyled>
+                
+            
               <SelectStyled
                 placeholder="Selecione os gêneros"
                 mode="multiple"
@@ -221,13 +210,13 @@ const Admin = () => {
                   placeholder={input.placeholder}
                   label={input.label}
                   type={input.type ?? ""}
+                  maxWidth={index === 0 ? "120px" : "initial"}
                 />
               ))}
               <Wrapper>
-              <InputFile/>
-              <Button text="Enviar" />
+                <InputFile />
+                <Button text="Enviar" />
               </Wrapper>
-                
             </FormEpi>
           </FormProvider>
         </Box>

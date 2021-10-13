@@ -55,7 +55,6 @@ export const FormStyled = styled.form`
   * {
     margin-bottom: 5px;
   }
-
 `;
 
 export const AnimeOptionsStyled = styled.div`
@@ -102,7 +101,7 @@ export const FormEpi = styled.form`
 `;
 
 export const Wrapper = styled.div`
-width: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,5 +110,4 @@ width: 100%;
     flex-direction: row;
     justify-content: space-between;
   }
-
 `;
