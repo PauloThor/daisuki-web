@@ -40,13 +40,13 @@ class SchemaUtils {
 
   static anime() {
     return yup.object({
-      animeName: yup.string().required(" - Campo obrigatório"),
-      sinopse: yup
+      name: yup.string().required(" - Campo obrigatório"),
+      synopsis: yup
         .string()
         .min(20, " - Mínimo de 20 caracteres")
         .required(" - campo obrigatório"),
       isMovie: yup.boolean(),
-      episodesNumber: yup
+      totalEpisodes: yup
         .number()
         .integer("Insira um valor inteiro")
         .required(" - Campo obrigatório"),

@@ -124,7 +124,7 @@ const Admin = () => {
               autoComplete="off"
             >
               <InputText
-                name="animeName"
+                name="name"
                 placeholder="Nome do anime"
                 label="Nome do anime*"
                 type={InputTypes.TEXT}

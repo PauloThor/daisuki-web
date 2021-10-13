@@ -12,7 +12,6 @@ const InputFile = () => {
         id="image"
         name="image"
         accept="image/png, image/jpeg"
-        required
       />
     </>
   );
