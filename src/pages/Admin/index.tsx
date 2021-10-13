@@ -11,7 +11,7 @@ import {
   FormMod
 } from "./styles";
 import { InputTypes } from "../../model/enums/input-types";
-import { Checkbox, Select } from "antd";
+import { Select } from "antd";
 import SchemaUtils from "../../shared/util/schema-utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, FormProvider } from "react-hook-form";
@@ -71,7 +71,7 @@ const Admin = () => {
     },
     {
       name: "videoUrl",
-      placeholder: "https://example.com",
+      placeholder: "https://streamable.com/z8xs0a",
       label: "Vídeo url*",
       type: InputTypes.TEXT,
     },
@@ -175,7 +175,7 @@ const Admin = () => {
                   Filme
                 </CheckboxStyled>
               </AnimeOptionsStyled>
-              <SelectStyled mode="multiple" onChange={(e) => setCategories(e)}>
+              <SelectStyled placeholder="Selecione os gêneros" mode="multiple" onChange={(e) => setCategories(e)}>
                 {teste.map((category, index) => (
                   <Option
                     name={category}
@@ -194,7 +194,7 @@ const Admin = () => {
           <h2>Adicionar episódio:</h2>
           <FormProvider {...methodsEpisode}>
             <FormStyled onSubmit={methodsEpisode.handleSubmit(onSubmitEpisode)}>
-              <SelectStyled onChange={(e) => setAnime(e)}>
+              <SelectStyled placeholder="Selecione o anime" onChange={(e) => setAnime(e)}>
                 {animes.map((anime, index) => (
                   <Option
                     name={anime.name}
