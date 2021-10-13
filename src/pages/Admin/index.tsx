@@ -7,10 +7,9 @@ import {
   CheckboxStyled,
   SelectStyled,
   FormStyled,
-  AnimeOptionsStyled,
   FormMod,
-  FormEpi,
   Wrapper,
+  TextArea
 } from "./styles";
 import { InputTypes } from "../../model/enums/input-types";
 import { Select } from "antd";
@@ -29,15 +28,6 @@ const Admin = () => {
   const [isDubbed, setIsDubbed] = useState(false);
   const [isMovie, setIsMovie] = useState(false);
   const [anime, setAnime] = useState<SelectValue>("");
-
-  const inputAnime = [
-    {
-      name: "sinopse",
-      placeholder: "Uma sinopse bem legal...",
-      label: "Sinopse*",
-      type: InputTypes.TEXT,
-    }
-  ];
 
   const inputModerator = [
     {
@@ -139,30 +129,30 @@ const Admin = () => {
                 label="Nome do anime*"
                 type={InputTypes.TEXT}
               />
-              <textarea name="" id="" cols={30} rows={6}></textarea>
+              <TextArea>
+              <label htmlFor="synopsis">Sinopse*</label>
+              <textarea name="synopsis" id="synopsis"  cols={30} rows={6} placeholder=" Uma sinopse bem legal..."/>
+              </TextArea>
               <CheckboxStyled
-                  name="isMovie"
-                  onChange={(e) => setIsMovie(e.target.checked)}
-                >
-                  Filme
-                </CheckboxStyled>
-      
-                <InputText
-                name="episodesNumber"
+                name="isMovie"
+                onChange={(e) => setIsMovie(e.target.checked)}
+              >
+                Filme
+              </CheckboxStyled>
+              <InputText
+                name="totalEpisodes"
                 placeholder="12"
                 label="Total de episódios*"
                 type={InputTypes.TEXT}
                 disabled={isMovie}
+                maxWidth="120px"
               />
-
-                <CheckboxStyled
-                  name="isDubbed"
-                  onChange={(e) => setIsDubbed(e.target.checked)}
-                >
-                  Dublado
-                </CheckboxStyled>
-                
-            
+              <CheckboxStyled
+                name="isDubbed"
+                onChange={(e) => setIsDubbed(e.target.checked)}
+              >
+                Dublado
+              </CheckboxStyled>
               <SelectStyled
                 placeholder="Selecione os gêneros"
                 mode="multiple"
@@ -178,14 +168,17 @@ const Admin = () => {
                   </Option>
                 ))}
               </SelectStyled>
+              <Wrapper>
+                  <InputFile/>
               <Button text="Enviar" />
+              </Wrapper>
             </FormStyled>
           </FormProvider>
         </Box>
         <Box>
           <h2>Adicionar episódio:</h2>
           <FormProvider {...methodsEpisode}>
-            <FormEpi
+            <FormStyled
               onSubmit={methodsEpisode.handleSubmit(onSubmitEpisode)}
               autoComplete="off"
             >
@@ -217,7 +210,7 @@ const Admin = () => {
                 <InputFile />
                 <Button text="Enviar" />
               </Wrapper>
-            </FormEpi>
+            </FormStyled>
           </FormProvider>
         </Box>
         <Box>

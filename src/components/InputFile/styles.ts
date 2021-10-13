@@ -3,7 +3,7 @@ import { Color } from "../../model/enums/theme-colors";
 
 export const Label = styled.label`
   cursor: pointer;
-  width: 200px;
+  width: 100%;
   height: 40px;
   font-size: 1rem;
   background-color: ${Color.TEXT_SECONDARY};
