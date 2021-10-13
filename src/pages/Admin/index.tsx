@@ -9,6 +9,8 @@ import {
   FormStyled,
   AnimeOptionsStyled,
   FormMod,
+  FormEpi,
+  Wrapper
 } from "./styles";
 import { InputTypes } from "../../model/enums/input-types";
 import { Select } from "antd";
@@ -66,7 +68,7 @@ const Admin = () => {
   const inputEpisode = [
     {
       name: "episodeNumber",
-      placeholder: "número",
+      placeholder: "1",
       label: "Número*",
       type: InputTypes.NUMBER,
     },
@@ -156,7 +158,6 @@ const Admin = () => {
                   placeholder={input.placeholder}
                   label={input.label}
                   type={input?.type ?? ""}
-                  autofocus={index === 0}
                 />
               ))}
               <AnimeOptionsStyled>
@@ -195,7 +196,7 @@ const Admin = () => {
         <Box>
           <h2>Adicionar episódio:</h2>
           <FormProvider {...methodsEpisode}>
-            <FormStyled
+            <FormEpi
               onSubmit={methodsEpisode.handleSubmit(onSubmitEpisode)}
               autoComplete="off"
             >
@@ -220,12 +221,14 @@ const Admin = () => {
                   placeholder={input.placeholder}
                   label={input.label}
                   type={input.type ?? ""}
-                  autofocus={index === 0}
                 />
               ))}
+              <Wrapper>
               <InputFile/>
               <Button text="Enviar" />
-            </FormStyled>
+              </Wrapper>
+                
+            </FormEpi>
           </FormProvider>
         </Box>
         <Box>
@@ -242,7 +245,6 @@ const Admin = () => {
                   placeholder={input.placeholder}
                   label={input.label}
                   type={input?.type ?? ""}
-                  autofocus={index === 0}
                 />
               ))}
               <Button text="Enviar" margin="0.5rem 0 0.5rem 8px" />

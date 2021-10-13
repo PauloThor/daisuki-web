@@ -90,3 +90,26 @@ export const FormMod = styled.form`
     justify-content: space-between;
   }
 `;
+
+export const FormEpi = styled.form`
+  background-color: ${Color.MAIN};
+  padding: 16px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Wrapper = styled.div`
+width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 900px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+`;
