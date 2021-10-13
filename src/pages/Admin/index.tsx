@@ -88,23 +88,22 @@ const Admin = () => {
     animeFormData.append("is_dubbed", isDubbed ? "true" : "");
     animeFormData.append("is_movie", isMovie ? "true" : "");
     animeFormData.append("genres", genres.join(","));
-    animeFormData.append("image", data.image[0]);
+    animeFormData.append("image", data.image[0], data.image[0].name);
 
-    daisukiApi
-      .post("/animes", animeFormData, {
+    async function fetch() {
+      await daisukiApi.post("/animes", animeFormData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
-      })
-      .then((res) => {
-        console.log(res.data);
-        toast.success("Anime adicionado!");
-      })
-      .catch((e) => {
-        console.log(e);
-        toast.error("Tente novamente =c");
       });
+    }
+    const myPromise = fetch();
+    toast.promise(myPromise, {
+      loading: "Enviando...",
+      success: "Anime adicionado!",
+      error: "Tente novamente =c",
+    });
   };
 
   const onSubmitEpisode = (data: FormEpisode) => {
