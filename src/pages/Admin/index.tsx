@@ -9,7 +9,7 @@ import {
   FormStyled,
   FormMod,
   Wrapper,
-  TextArea
+  TextArea,
 } from "./styles";
 import { InputTypes } from "../../model/enums/input-types";
 import { Select } from "antd";
@@ -79,7 +79,7 @@ const Admin = () => {
       isDubbed: isDubbed,
       isMovie: isMovie,
       genres: genres,
-      // image: data.image,
+      image: data.image[0],
     };
     console.log(output);
   };
@@ -130,8 +130,14 @@ const Admin = () => {
                 type={InputTypes.TEXT}
               />
               <TextArea>
-              <label htmlFor="synopsis">Sinopse*</label>
-              <textarea name="synopsis" id="synopsis"  cols={30} rows={6} placeholder=" Uma sinopse bem legal..."/>
+                <label htmlFor="synopsis">Sinopse*</label>
+                <textarea
+                  name="synopsis"
+                  id="synopsis"
+                  cols={30}
+                  rows={6}
+                  placeholder=" Uma sinopse bem legal..."
+                />
               </TextArea>
               <CheckboxStyled
                 name="isMovie"
@@ -169,8 +175,8 @@ const Admin = () => {
                 ))}
               </SelectStyled>
               <Wrapper>
-                  <InputFile/>
-              <Button text="Enviar" />
+                <InputFile name="image" />
+                <Button text="Enviar" />
               </Wrapper>
             </FormStyled>
           </FormProvider>
@@ -207,7 +213,7 @@ const Admin = () => {
                 />
               ))}
               <Wrapper>
-                <InputFile />
+                <InputFile name="image" />
                 <Button text="Enviar" />
               </Wrapper>
             </FormStyled>

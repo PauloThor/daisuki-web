@@ -7,7 +7,7 @@ export interface FormAnime {
   isDubbed: boolean;
   isMovie: boolean;
   genres: SelectValue;
-  image: File;
+  image: FileList;
 }
 
 export interface FormEpisode {

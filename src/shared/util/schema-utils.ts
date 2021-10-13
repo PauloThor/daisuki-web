@@ -52,12 +52,7 @@ class SchemaUtils {
         .integer(" - Insira um valor inteiro")
         .required(" - Campo obrigatório"),
       isDubbed: yup.boolean().default(false),
-      image: yup
-        .mixed()
-        .required("Você precisa enviar uma imagem")
-        .test("fileSize", "A imagem é muito grande", (value) => {
-          return value && value[0].size <= 500000;
-        }),
+      image: yup.mixed().required("Você precisa enviar uma imagem"),
     });
   }
 
