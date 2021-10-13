@@ -44,35 +44,38 @@ export const FormStyled = styled.form`
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1 1 auto;
-
-  input[name="sinopse"] {
-    height: 100px;
-  }
-
-  * {
-    margin-bottom: 5px;
-  }
-
-`;
-
-export const AnimeOptionsStyled = styled.div`
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-around;
 `;
 
 export const CheckboxStyled = styled(Checkbox)`
-  align-items: center;
-  font-size: 16px;
+  font-size: 1rem;
   color: ${Color.TEXT_MAIN};
+  margin: 0.2rem 0;
+
+  .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: ${Color.HIGHLIGHT};
+    border-color: ${Color.HIGHLIGHT};
+  }
+
+  &:hover,
+  &:focus {
+    .ant-checkbox-checked::after,
+    .ant-checkbox-inner {
+      border-color: ${Color.HIGHLIGHT_DARK};
+    }
+  }
+
+  @media (min-width: 900px) {
+    margin: 0.5rem 0;
+  }
 `;
 
 export const SelectStyled = styled(Select)`
   width: 100%;
+  margin: 0.2rem 0;
+
+  @media (min-width: 900px) {
+    margin: 0.5rem 0;
+  }
 `;
 
 export const FormMod = styled.form`
@@ -88,5 +91,52 @@ export const FormMod = styled.form`
     flex-direction: row;
     align-items: flex-end;
     justify-content: space-between;
+  }
+`;
+
+export const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 900px) {
+    flex-direction: row;
+    justify-content: space-between;
+
+    > label {
+      max-width: 200px;
+    }
+  }
+`;
+
+export const TextArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0.2rem 0;
+
+  @media (min-width: 900px) {
+    margin: 0.5rem 0;
+  }
+
+  > label {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  > textarea {
+    background-color: transparent;
+    border-radius: 8px;
+    outline: none;
+    border-color: ${Color.MAIN_DARK};
+
+    &::placeholder {
+      color: ${Color.TEXT_MAIN};
+      opacity: 0.7;
+    }
+
+    &:focus {
+      border-color: ${Color.TEXT_SECONDARY};
+    }
   }
 `;

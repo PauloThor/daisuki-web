@@ -1,13 +1,13 @@
 import { SelectValue } from "antd/lib/select";
 
 export interface FormAnime {
-  animeName: string;
-  sinopse: string;
-  episodesNumber: number;
+  name: string;
+  synopsis: string;
+  totalEpisodes: number;
   isDubbed: boolean;
   isMovie: boolean;
-  categories: SelectValue;
-  image: string;
+  genres: SelectValue;
+  image: FileList;
 }
 
 export interface FormEpisode {

@@ -1,59 +1,38 @@
+import { useState } from "react";
+import { useForm, FormProvider } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Select } from "antd";
+import { SelectValue } from "antd/lib/select";
+import { toast } from "react-hot-toast";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
 import InputText from "../../components/InputText";
+import InputFile from "../../components/InputFile";
 import {
   Container,
   Box,
   CheckboxStyled,
   SelectStyled,
   FormStyled,
-  AnimeOptionsStyled,
   FormMod,
+  Wrapper,
+  TextArea,
 } from "./styles";
+import { useUser } from "../../hooks/User";
 import { InputTypes } from "../../model/enums/input-types";
-import { Select } from "antd";
-import SchemaUtils from "../../shared/util/schema-utils";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, FormProvider } from "react-hook-form";
-import animes from "../../mock/animes.json";
-import { useState } from "react";
 import { FormAnime, FormEpisode, FormModerator } from "../../model/admin-forms";
-import { SelectValue } from "antd/lib/select";
-import { toast } from "react-hot-toast";
-import InputFile from "../../components/InputFile";
+import SchemaUtils from "../../shared/util/schema-utils";
+import { daisukiApi } from "../../services/api";
+import animes from "../../mock/animes.json";
 
 const Admin = () => {
-  const [categories, setCategories] = useState<SelectValue>([]);
+  const [genres, setGenres] = useState<SelectValue | any>([]);
   const [isDubbed, setIsDubbed] = useState(false);
   const [isMovie, setIsMovie] = useState(false);
+  const [synopsis, setSynopsis] = useState<string>("");
   const [anime, setAnime] = useState<SelectValue>("");
 
-  const inputAnime = [
-    {
-      name: "animeName",
-      placeholder: "Nome do anime",
-      label: "Nome do anime*",
-      type: InputTypes.TEXT,
-    },
-    {
-      name: "sinopse",
-      placeholder: "Uma sinopse bem legal...",
-      label: "Sinopse*",
-      type: InputTypes.TEXT,
-    },
-    {
-      name: "episodesNumber",
-      placeholder: "Número de episódios",
-      label: "Total de episódios*",
-      type: InputTypes.NUMBER,
-    },
-    {
-      name: "image",
-      placeholder: "Imagem URL",
-      label: "Imagem do anime*",
-      type: InputTypes.TEXT,
-    },
-  ];
+  const { token } = useUser();
 
   const inputModerator = [
     {
@@ -66,9 +45,9 @@ const Admin = () => {
   const inputEpisode = [
     {
       name: "episodeNumber",
-      placeholder: "número",
+      placeholder: "1",
       label: "Número*",
-      type: InputTypes.NUMBER,
+      type: InputTypes.TEXT,
     },
     {
       name: "videoUrl",
@@ -83,31 +62,48 @@ const Admin = () => {
     mode: "all",
   });
 
-  const methodsModerator = useForm({
-    resolver: yupResolver(SchemaUtils.moderator()),
-    mode: "all",
-  });
-
   const methodsEpisode = useForm({
     resolver: yupResolver(SchemaUtils.episode()),
     mode: "all",
   });
 
+  const methodsModerator = useForm({
+    resolver: yupResolver(SchemaUtils.moderator()),
+    mode: "all",
+  });
+
   const onSubmitAnime = (data: FormAnime) => {
-    console.log(data);
-    if (!categories) {
-      return toast.error("- Selecione pelo menos uma categoria");
+    if (!genres[0]) {
+      return toast.error("Selecione pelo menos um gênero");
     }
-    const output = {
-      animeName: data.animeName,
-      sinopse: data.sinopse,
-      episodesNumber: data.episodesNumber,
-      isDubbed: isDubbed,
-      isMovie: isMovie,
-      categories: categories,
-      image: data.image,
-    };
-    console.log(output);
+
+    const animeFormData = new FormData();
+
+    animeFormData.append("name", data.name);
+    animeFormData.append("synopsis", synopsis);
+    animeFormData.append(
+      "total_episodes",
+      isMovie ? "1" : String(data.totalEpisodes)
+    );
+    animeFormData.append("is_dubbed", isDubbed ? "true" : "");
+    animeFormData.append("is_movie", isMovie ? "true" : "");
+    animeFormData.append("genres", genres.join(","));
+    animeFormData.append("image", data.image[0], data.image[0].name);
+
+    async function fetch() {
+      await daisukiApi.post("/animes", animeFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
+    const myPromise = fetch();
+    toast.promise(myPromise, {
+      loading: "Enviando...",
+      success: "Anime adicionado!",
+      error: "Tente novamente =c",
+    });
   };
 
   const onSubmitEpisode = (data: FormEpisode) => {
@@ -149,46 +145,63 @@ const Admin = () => {
               onSubmit={methodsAnime.handleSubmit(onSubmitAnime)}
               autoComplete="off"
             >
-              {inputAnime.map((input, index) => (
-                <InputText
-                  key={`${input.name}-anime-${index}`}
-                  name={input.name}
-                  placeholder={input.placeholder}
-                  label={input.label}
-                  type={input?.type ?? ""}
-                  autofocus={index === 0}
+              <InputText
+                name="name"
+                placeholder="Nome do anime"
+                label="Nome do anime*"
+                type={InputTypes.TEXT}
+              />
+              <TextArea>
+                <label htmlFor="synopsis">Sinopse*</label>
+                <textarea
+                  value={synopsis}
+                  onChange={(e) => setSynopsis(e.target.value)}
+                  name="synopsis"
+                  id="synopsis"
+                  cols={30}
+                  rows={6}
+                  placeholder=" Uma sinopse bem legal..."
                 />
-              ))}
-              <AnimeOptionsStyled>
-                <CheckboxStyled
-                  name="isDubbed"
-                  onChange={(e) => setIsDubbed(e.target.checked)}
-                >
-                  Dublado
-                </CheckboxStyled>
-                <CheckboxStyled
-                  name="isMovie"
-                  onChange={(e) => setIsMovie(e.target.checked)}
-                >
-                  Filme
-                </CheckboxStyled>
-              </AnimeOptionsStyled>
+              </TextArea>
+              <CheckboxStyled
+                name="isMovie"
+                onChange={(e) => setIsMovie(e.target.checked)}
+              >
+                Filme
+              </CheckboxStyled>
+              <InputText
+                name="totalEpisodes"
+                placeholder="12"
+                label="Total de episódios*"
+                type={InputTypes.TEXT}
+                disabled={isMovie}
+                maxWidth="120px"
+              />
+              <CheckboxStyled
+                name="isDubbed"
+                onChange={(e) => setIsDubbed(e.target.checked)}
+              >
+                Dublado
+              </CheckboxStyled>
               <SelectStyled
                 placeholder="Selecione os gêneros"
                 mode="multiple"
-                onChange={(e) => setCategories(e)}
+                onChange={(e) => setGenres(e)}
               >
-                {teste.map((category, index) => (
+                {teste.map((genre, index) => (
                   <Option
-                    name={category}
-                    value={category}
-                    key={`${category}-category-${index}`}
+                    name={genre}
+                    value={genre}
+                    key={`${genre}-category-${index}`}
                   >
-                    {category}
+                    {genre}
                   </Option>
                 ))}
               </SelectStyled>
-              <Button text="Enviar" />
+              <Wrapper>
+                <InputFile name="image" />
+                <Button text="Enviar" />
+              </Wrapper>
             </FormStyled>
           </FormProvider>
         </Box>
@@ -220,11 +233,13 @@ const Admin = () => {
                   placeholder={input.placeholder}
                   label={input.label}
                   type={input.type ?? ""}
-                  autofocus={index === 0}
+                  maxWidth={index === 0 ? "120px" : "initial"}
                 />
               ))}
-              <InputFile/>
-              <Button text="Enviar" />
+              <Wrapper>
+                <InputFile name="image" />
+                <Button text="Enviar" />
+              </Wrapper>
             </FormStyled>
           </FormProvider>
         </Box>
@@ -242,7 +257,6 @@ const Admin = () => {
                   placeholder={input.placeholder}
                   label={input.label}
                   type={input?.type ?? ""}
-                  autofocus={index === 0}
                 />
               ))}
               <Button text="Enviar" margin="0.5rem 0 0.5rem 8px" />

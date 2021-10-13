@@ -3,7 +3,7 @@ import { Color } from "../../model/enums/theme-colors";
 
 export const Label = styled.label`
   cursor: pointer;
-  width: 200px;
+  width: 100%;
   height: 40px;
   font-size: 1rem;
   background-color: ${Color.TEXT_SECONDARY};
@@ -13,12 +13,8 @@ export const Label = styled.label`
   display: flex;
   align-items: center;
   gap: 4px;
-  margin: 0.2rem 0;
+  margin: 0.5rem 0;
   transition: 0.3s;
-
-  @media (min-width: 768px) {
-    margin: 0.5rem 0;
-  }
 
   svg {
     font-size: 1.5rem;

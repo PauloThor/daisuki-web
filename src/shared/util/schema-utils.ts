@@ -40,24 +40,25 @@ class SchemaUtils {
 
   static anime() {
     return yup.object({
-      animeName: yup.string().required(" - Campo obrigatório"),
-      sinopse: yup
-        .string()
-        .min(20, " - Mínimo de 20 caracteres")
-        .required(" - campo obrigatório"),
-      isMovie: yup.boolean(),
-      episodesNumber: yup
-        .number()
-        .integer("Insira um valor inteiro")
-        .required(" - Campo obrigatório"),
-      isDubbed: yup.boolean(),
-      image: yup.string().required(" - Campo obrigatório"),
+      name: yup.string().required(" - Campo obrigatório"),
+      // synopsis: yup
+      //   .string()
+      //   .required(" - campo obrigatório"),
+      // isMovie: yup.boolean().default(false),
+      totalEpisodes: yup.string(),
+        // .typeError(" - Insira um número")
+        // .integer(" - Insira um valor inteiro"),
+      // isDubbed: yup.boolean().default(false),
+      image: yup.mixed().required("Você precisa enviar uma imagem"),
     });
   }
 
   static episode() {
     return yup.object({
-      episodeNumber: yup.string().required(" - Campo obrigatório"),
+      episodeNumber: yup
+        .number()
+        .typeError(" - Insira um número")
+        .required(" - Campo obrigatório"),
       // TODO: validar a url do videoUrl
       // .matches(URL)
       // .required(" - Campo obrigatório")

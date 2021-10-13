@@ -7,6 +7,7 @@ interface InputWrapperProps {
   isValid?: boolean;
   hasError?: boolean;
   hasValue?: boolean;
+  maxWidth?: string;
 }
 
 export const InputContainer = styled.div`
@@ -43,6 +44,12 @@ export const InputWrapper = styled.div<InputWrapperProps>`
       : css`
           border-color: ${Color.MAIN_DARK};
         `}
+
+  ${(props) =>
+    props.maxWidth &&
+    css`
+      max-width: ${props.maxWidth};
+    `}
 `;
 
 export const Input = styled.input`
@@ -62,6 +69,14 @@ export const Input = styled.input`
   &::placeholder {
     color: ${Color.TEXT_MAIN};
     opacity: 0.7;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+
+    &::placeholder {
+      opacity: 0;
+    }
   }
 `;
 
