@@ -45,19 +45,28 @@ class SchemaUtils {
         .string()
         .min(20, " - Mínimo de 20 caracteres")
         .required(" - campo obrigatório"),
-      isMovie: yup.boolean(),
+      isMovie: yup.boolean().default(false),
       totalEpisodes: yup
         .number()
-        .integer("Insira um valor inteiro")
+        .typeError(" - Insira um número")
+        .integer(" - Insira um valor inteiro")
         .required(" - Campo obrigatório"),
-      isDubbed: yup.boolean(),
-      image: yup.string().required(" - Campo obrigatório"),
+      isDubbed: yup.boolean().default(false),
+      image: yup
+        .mixed()
+        .required("Você precisa enviar uma imagem")
+        .test("fileSize", "A imagem é muito grande", (value) => {
+          return value && value[0].size <= 500000;
+        }),
     });
   }
 
   static episode() {
     return yup.object({
-      episodeNumber: yup.string().required(" - Campo obrigatório"),
+      episodeNumber: yup
+        .number()
+        .typeError(" - Insira um número")
+        .required(" - Campo obrigatório"),
       // TODO: validar a url do videoUrl
       // .matches(URL)
       // .required(" - Campo obrigatório")

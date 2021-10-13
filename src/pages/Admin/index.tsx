@@ -24,7 +24,7 @@ import { toast } from "react-hot-toast";
 import InputFile from "../../components/InputFile";
 
 const Admin = () => {
-  const [categories, setCategories] = useState<SelectValue>([]);
+  const [genres, setGenres] = useState<SelectValue>([]);
   const [isDubbed, setIsDubbed] = useState(false);
   const [isMovie, setIsMovie] = useState(false);
   const [anime, setAnime] = useState<SelectValue>("");
@@ -69,17 +69,17 @@ const Admin = () => {
 
   const onSubmitAnime = (data: FormAnime) => {
     console.log(data);
-    if (!categories) {
-      return toast.error("- Selecione pelo menos uma categoria");
+    if (!genres) {
+      return toast.error("- Selecione pelo menos um gênero");
     }
     const output = {
-      animeName: data.animeName,
-      sinopse: data.sinopse,
-      episodesNumber: data.episodesNumber,
+      name: data.name,
+      synopsis: data.synopsis,
+      totalEpisodes: data.totalEpisodes,
       isDubbed: isDubbed,
       isMovie: isMovie,
-      categories: categories,
-      image: data.image,
+      genres: genres,
+      // image: data.image,
     };
     console.log(output);
   };
@@ -156,15 +156,15 @@ const Admin = () => {
               <SelectStyled
                 placeholder="Selecione os gêneros"
                 mode="multiple"
-                onChange={(e) => setCategories(e)}
+                onChange={(e) => setGenres(e)}
               >
-                {teste.map((category, index) => (
+                {teste.map((genre, index) => (
                   <Option
-                    name={category}
-                    value={category}
-                    key={`${category}-category-${index}`}
+                    name={genre}
+                    value={genre}
+                    key={`${genre}-category-${index}`}
                   >
-                    {category}
+                    {genre}
                   </Option>
                 ))}
               </SelectStyled>
