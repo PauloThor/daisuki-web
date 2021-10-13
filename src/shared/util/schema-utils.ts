@@ -41,17 +41,14 @@ class SchemaUtils {
   static anime() {
     return yup.object({
       name: yup.string().required(" - Campo obrigatório"),
-      synopsis: yup
-        .string()
-        .min(20, " - Mínimo de 20 caracteres")
-        .required(" - campo obrigatório"),
-      isMovie: yup.boolean().default(false),
-      totalEpisodes: yup
-        .number()
-        .typeError(" - Insira um número")
-        .integer(" - Insira um valor inteiro")
-        .required(" - Campo obrigatório"),
-      isDubbed: yup.boolean().default(false),
+      // synopsis: yup
+      //   .string()
+      //   .required(" - campo obrigatório"),
+      // isMovie: yup.boolean().default(false),
+      totalEpisodes: yup.string(),
+        // .typeError(" - Insira um número")
+        // .integer(" - Insira um valor inteiro"),
+      // isDubbed: yup.boolean().default(false),
       image: yup.mixed().required("Você precisa enviar uma imagem"),
     });
   }

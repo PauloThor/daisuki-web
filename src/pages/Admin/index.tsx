@@ -1,6 +1,13 @@
+import { useState } from "react";
+import { useForm, FormProvider } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Select } from "antd";
+import { SelectValue } from "antd/lib/select";
+import { toast } from "react-hot-toast";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
 import InputText from "../../components/InputText";
+import InputFile from "../../components/InputFile";
 import {
   Container,
   Box,
@@ -11,23 +18,21 @@ import {
   Wrapper,
   TextArea,
 } from "./styles";
+import { useUser } from "../../hooks/User";
 import { InputTypes } from "../../model/enums/input-types";
-import { Select } from "antd";
-import SchemaUtils from "../../shared/util/schema-utils";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, FormProvider } from "react-hook-form";
-import animes from "../../mock/animes.json";
-import { useState } from "react";
 import { FormAnime, FormEpisode, FormModerator } from "../../model/admin-forms";
-import { SelectValue } from "antd/lib/select";
-import { toast } from "react-hot-toast";
-import InputFile from "../../components/InputFile";
+import SchemaUtils from "../../shared/util/schema-utils";
+import { daisukiApi } from "../../services/api";
+import animes from "../../mock/animes.json";
 
 const Admin = () => {
-  const [genres, setGenres] = useState<SelectValue>([]);
+  const [genres, setGenres] = useState<SelectValue | any>([]);
   const [isDubbed, setIsDubbed] = useState(false);
   const [isMovie, setIsMovie] = useState(false);
+  const [synopsis, setSynopsis] = useState<string>("");
   const [anime, setAnime] = useState<SelectValue>("");
+
+  const { token } = useUser();
 
   const inputModerator = [
     {
@@ -68,20 +73,38 @@ const Admin = () => {
   });
 
   const onSubmitAnime = (data: FormAnime) => {
-    console.log(data);
-    if (!genres) {
-      return toast.error("- Selecione pelo menos um gênero");
+    if (!genres[0]) {
+      return toast.error("Selecione pelo menos um gênero");
     }
-    const output = {
-      name: data.name,
-      synopsis: data.synopsis,
-      totalEpisodes: data.totalEpisodes,
-      isDubbed: isDubbed,
-      isMovie: isMovie,
-      genres: genres,
-      image: data.image[0],
-    };
-    console.log(output);
+
+    const animeFormData = new FormData();
+
+    animeFormData.append("name", data.name);
+    animeFormData.append("synopsis", synopsis);
+    animeFormData.append(
+      "total_episodes",
+      isMovie ? "1" : String(data.totalEpisodes)
+    );
+    animeFormData.append("is_dubbed", isDubbed ? "true" : "");
+    animeFormData.append("is_movie", isMovie ? "true" : "");
+    animeFormData.append("genres", genres.join(","));
+    animeFormData.append("image", data.image[0]);
+
+    daisukiApi
+      .post("/animes", animeFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        toast.success("Anime adicionado!");
+      })
+      .catch((e) => {
+        console.log(e);
+        toast.error("Tente novamente =c");
+      });
   };
 
   const onSubmitEpisode = (data: FormEpisode) => {
@@ -132,6 +155,8 @@ const Admin = () => {
               <TextArea>
                 <label htmlFor="synopsis">Sinopse*</label>
                 <textarea
+                  value={synopsis}
+                  onChange={(e) => setSynopsis(e.target.value)}
                   name="synopsis"
                   id="synopsis"
                   cols={30}
