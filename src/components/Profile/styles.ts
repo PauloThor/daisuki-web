@@ -11,10 +11,6 @@ export const Container = styled.div`
   max-width: 401px;
   border-radius: 8px;
   position: relative;
-
-  @media (min-width: 400px) {
-    max-height: 571px;
-  }
 `;
 
 export const Banner = styled.header`
@@ -25,6 +21,16 @@ export const Banner = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  img {
+    max-width: 100px;
+  }
+
+  @media (min-width: 768px) {
+    img {
+      max-width: 156px;
+    }
+  }
 `;
 export const AvatarContainer = styled.section`
   display: flex;
@@ -59,6 +65,8 @@ export const Options = styled.section`
 
   p:last-child {
     color: red;
+    position: absolute;
+    bottom: 20px;
     &:hover {
       text-decoration: underline;
     }

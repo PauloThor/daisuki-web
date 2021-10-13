@@ -174,10 +174,10 @@ export const MobileAuth = styled.div`
 export const StyledHamburger = styled(GiHamburgerMenu)``;
 
 export const ProfileContainer = styled.div`
-  position: absolute;
-  right: 0;
+  position: fixed;
+  left: 0;
   top: 0;
-  z-index: 4;
+  z-index: 1001;
   animation: fromTop 1s;
 
   @keyframes fromTop {
