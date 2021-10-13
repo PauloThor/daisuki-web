@@ -20,6 +20,8 @@ interface InputTextProps {
   defaultValue?: string;
   type?: InputTypeProps;
   autofocus?: boolean;
+  disabled?: boolean;
+  maxWidth?: string;
 }
 
 const inputTypeOptions = {
@@ -41,8 +43,10 @@ const InputText = ({
   mask = Mask.DEFAULT,
   defaultValue,
   label,
+  maxWidth,
   type = InputTypes.DEFAULT,
   autofocus = false,
+  disabled = false,
 }: InputTextProps) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
@@ -122,7 +126,7 @@ const InputText = ({
             {label}
             {validationProps.hasError && `${errors[name].message}`}
           </InputLabel>
-          <InputWrapper {...validationProps}>
+          <InputWrapper {...validationProps} maxWidth={maxWidth}>
             {inputTypeOptions[type]}
             <Input
               {...register(name)}
@@ -137,6 +141,7 @@ const InputText = ({
               placeholder={placeholder}
               type={choiceType(type)}
               autoFocus={autofocus}
+              disabled={disabled}
             />
           </InputWrapper>
         </>

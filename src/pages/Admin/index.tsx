@@ -47,7 +47,7 @@ const Admin = () => {
       name: "episodesNumber",
       placeholder: "Número de episódios",
       label: "Total de episódios*",
-      type: InputTypes.NUMBER,
+      type: InputTypes.TEXT,
     },
     {
       name: "image",
@@ -70,7 +70,7 @@ const Admin = () => {
       name: "episodeNumber",
       placeholder: "1",
       label: "Número*",
-      type: InputTypes.NUMBER,
+      type: InputTypes.TEXT,
     },
     {
       name: "videoUrl",
@@ -85,13 +85,13 @@ const Admin = () => {
     mode: "all",
   });
 
-  const methodsModerator = useForm({
-    resolver: yupResolver(SchemaUtils.moderator()),
+  const methodsEpisode = useForm({
+    resolver: yupResolver(SchemaUtils.episode()),
     mode: "all",
   });
 
-  const methodsEpisode = useForm({
-    resolver: yupResolver(SchemaUtils.episode()),
+  const methodsModerator = useForm({
+    resolver: yupResolver(SchemaUtils.moderator()),
     mode: "all",
   });
 
