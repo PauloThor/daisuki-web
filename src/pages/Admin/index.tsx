@@ -146,8 +146,8 @@ const Admin = () => {
     <>
       <Header />
       <Container>
-        <h2>Adicionar anime:</h2>
         <Box>
+          <h2>Adicionar anime:</h2>
           <FormProvider {...methodsAnime}>
             <FormStyled onSubmit={methodsAnime.handleSubmit(onSubmitAnime)}>
               {inputAnime.map((input, index) => (
@@ -189,8 +189,8 @@ const Admin = () => {
             </FormStyled>
           </FormProvider>
         </Box>
-        <h2>Adicionar episódio:</h2>
         <Box>
+          <h2>Adicionar episódio:</h2>
           <FormProvider {...methodsEpisode}>
             <FormStyled onSubmit={methodsEpisode.handleSubmit(onSubmitEpisode)}>
               <SelectStyled onChange={(e) => setAnime(e)}>
@@ -219,8 +219,8 @@ const Admin = () => {
             </FormStyled>
           </FormProvider>
         </Box>
-        <h2>Adicionar moderador:</h2>
         <Box>
+          <h2>Adicionar moderador:</h2>
           <FormProvider {...methodsModerator}>
             <FormStyled
               onSubmit={methodsModerator.handleSubmit(onSubmitModerator)}

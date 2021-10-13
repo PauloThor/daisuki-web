@@ -17,16 +17,27 @@ export const Container = styled.div`
   button {
     margin: 15px 0px 10px 0px;
   }
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: start;
+  }
 `;
 
 export const Box = styled.div`
   width: 90%;
-  background-color: ${Color.MAIN};
-  padding: 25px;
-  border-radius: 10px;
+
+  @media (min-width: 768px) {
+    width: 45%;
+  }
 `;
 
 export const FormStyled = styled.form`
+  background-color: ${Color.MAIN};
+  padding: 25px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,6 +50,10 @@ export const FormStyled = styled.form`
 
   * {
     margin-bottom: 5px;
+  }
+
+  @media (min-width: 768px) {
+    padding: 25px 50px 25px 50px;
   }
 `;
 
