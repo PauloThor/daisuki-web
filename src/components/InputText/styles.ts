@@ -51,6 +51,13 @@ export const Input = styled.input`
   font-family: ${Font.MAIN};
   padding: 0.5rem 1rem;
   border: none;
+  flex-grow: 1;
+
+  &:-webkit-autofill {
+    box-shadow: 0 0 0 50px ${Color.MAIN} inset;
+    -webkit-box-shadow: 0 0 0 50px ${Color.MAIN} inset;
+    -webkit-text-fill-color: ${Color.TEXT_MAIN};
+  }
 
   &::placeholder {
     color: ${Color.TEXT_MAIN};

@@ -8,9 +8,10 @@ import {
   SelectStyled,
   FormStyled,
   AnimeOptionsStyled,
+  FormMod,
 } from "./styles";
 import { InputTypes } from "../../model/enums/input-types";
-import { Checkbox, Select } from "antd";
+import { Select } from "antd";
 import SchemaUtils from "../../shared/util/schema-utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, FormProvider } from "react-hook-form";
@@ -19,6 +20,7 @@ import { useState } from "react";
 import { FormAnime, FormEpisode, FormModerator } from "../../model/admin-forms";
 import { SelectValue } from "antd/lib/select";
 import { toast } from "react-hot-toast";
+import InputFile from "../../components/InputFile";
 
 const Admin = () => {
   const [categories, setCategories] = useState<SelectValue>([]);
@@ -70,14 +72,8 @@ const Admin = () => {
     },
     {
       name: "videoUrl",
-      placeholder: "https://example.com",
+      placeholder: "https://streamable.com/z8xs0a",
       label: "Vídeo url*",
-      type: InputTypes.TEXT,
-    },
-    {
-      name: "image",
-      placeholder: "Imagem URL",
-      label: "Imagem do episódio*",
       type: InputTypes.TEXT,
     },
   ];
@@ -149,7 +145,10 @@ const Admin = () => {
         <Box>
           <h2>Adicionar anime:</h2>
           <FormProvider {...methodsAnime}>
-            <FormStyled onSubmit={methodsAnime.handleSubmit(onSubmitAnime)}>
+            <FormStyled
+              onSubmit={methodsAnime.handleSubmit(onSubmitAnime)}
+              autoComplete="off"
+            >
               {inputAnime.map((input, index) => (
                 <InputText
                   key={`${input.name}-anime-${index}`}
@@ -174,7 +173,11 @@ const Admin = () => {
                   Filme
                 </CheckboxStyled>
               </AnimeOptionsStyled>
-              <SelectStyled mode="multiple" onChange={(e) => setCategories(e)}>
+              <SelectStyled
+                placeholder="Selecione os gêneros"
+                mode="multiple"
+                onChange={(e) => setCategories(e)}
+              >
                 {teste.map((category, index) => (
                   <Option
                     name={category}
@@ -192,8 +195,14 @@ const Admin = () => {
         <Box>
           <h2>Adicionar episódio:</h2>
           <FormProvider {...methodsEpisode}>
-            <FormStyled onSubmit={methodsEpisode.handleSubmit(onSubmitEpisode)}>
-              <SelectStyled onChange={(e) => setAnime(e)}>
+            <FormStyled
+              onSubmit={methodsEpisode.handleSubmit(onSubmitEpisode)}
+              autoComplete="off"
+            >
+              <SelectStyled
+                placeholder="Selecione o anime"
+                onChange={(e) => setAnime(e)}
+              >
                 {animes.map((anime, index) => (
                   <Option
                     name={anime.name}
@@ -214,7 +223,7 @@ const Admin = () => {
                   autofocus={index === 0}
                 />
               ))}
-
+              <InputFile/>
               <Button text="Enviar" />
             </FormStyled>
           </FormProvider>
@@ -222,8 +231,9 @@ const Admin = () => {
         <Box>
           <h2>Adicionar moderador:</h2>
           <FormProvider {...methodsModerator}>
-            <FormStyled
+            <FormMod
               onSubmit={methodsModerator.handleSubmit(onSubmitModerator)}
+              autoComplete="off"
             >
               {inputModerator.map((input, index) => (
                 <InputText
@@ -235,8 +245,8 @@ const Admin = () => {
                   autofocus={index === 0}
                 />
               ))}
-              <Button text="Enviar" />
-            </FormStyled>
+              <Button text="Enviar" margin="0.5rem 0 0.5rem 8px" />
+            </FormMod>
           </FormProvider>
         </Box>
         <Button text="Ver moderadores" />
