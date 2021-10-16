@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Spin } from "antd";
 import Header from "../../components/Header";
 import bannerImg from "../../assets/img/banner.png";
 import EpisodeCard from "../../components/EpisodeCard";
@@ -25,35 +26,51 @@ import {
   Footer,
   Developers,
   FooterImg,
+  SpinContainer,
 } from "./styles";
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [total, setTotal] = useState<number>(0)
+  const [total, setTotal] = useState<number>(0);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [popularAnimes, setPopularAnimes] = useState<Anime[]>([]);
   const [latestAnimes, setLatestAnimes] = useState<Anime[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const requireData = async () => {
+    await daisukiApi
+      .get("/episodes")
+      .then((res) => {
+        setTotal(res.data.total);
+        setEpisodes(res.data.data);
+      })
+      .catch((err) => console.log(err));
+
+    await daisukiApi
+      .get("/animes/most-popular")
+      .then((res) => setPopularAnimes(res.data))
+      .catch((err) => console.log(err));
+
+    await daisukiApi
+      .get("/animes/latest")
+      .then((res) => setLatestAnimes(res.data))
+      .catch((err) => console.log(err));
+
+    setLoading(false);
+  };
 
   const handleChange = (page: number) => {
-    daisukiApi.get(`/episodes?page=${page}`).then(res => {
-      setEpisodes(res.data.data)
-    }).catch(err => console.log(err))
+    daisukiApi
+      .get(`/episodes?page=${page}`)
+      .then((res) => {
+        setEpisodes(res.data.data);
+      })
+      .catch((err) => console.log(err));
     setCurrentPage(page);
   };
 
   useEffect(() => {
-    daisukiApi.get("/episodes").then(res => {
-      setTotal(res.data.total)
-      setEpisodes(res.data.data)
-    }).catch(err => console.log(err))
-    daisukiApi
-      .get("/animes/most-popular")
-      .then((res) => setPopularAnimes(res.data))
-      .catch((err) => console.log(err));
-    daisukiApi
-      .get("/animes/latest")
-      .then((res) => setLatestAnimes(res.data))
-      .catch((err) => console.log(err));
+    requireData();
   }, []);
 
   return (
@@ -69,40 +86,46 @@ const Home = () => {
           <img src={bannerImg} alt="Personagem Shuna" />
         </Image>
       </Banner>
-      <Main>
-        <Section>
-          <Title>Lançamentos</Title>
-          <ReleasesList>
-            {episodes.map((episode) => (
-              <li key={episode.id}>
-                <EpisodeCard episode={episode} />
-              </li>
-            ))}
-          </ReleasesList>
-          <Pagination
-            current={currentPage}
-            pageSize={12}
-            total={total}
-            onChange={handleChange}
-          />
-        </Section>
-        <Section>
-          <Title>Animes mais populares</Title>
-          <Carousel>
-            {popularAnimes.map((anime, index) => (
-              <AnimeCard key={index} anime={anime} rank={index + 1} />
-            ))}
-          </Carousel>
-        </Section>
-        <Section>
-          <Title>Últimos animes adicionados</Title>
-          <Carousel>
-            {latestAnimes.map((anime, index) => (
-              <AnimeCard key={index} anime={anime} />
-            ))}
-          </Carousel>
-        </Section>
-      </Main>
+      {loading ? (
+        <SpinContainer>
+          <Spin size="large" />
+        </SpinContainer>
+      ) : (
+        <Main>
+          <Section>
+            <Title>Lançamentos</Title>
+            <ReleasesList>
+              {episodes.map((episode) => (
+                <li key={episode.id}>
+                  <EpisodeCard episode={episode} />
+                </li>
+              ))}
+            </ReleasesList>
+            <Pagination
+              current={currentPage}
+              pageSize={12}
+              total={total}
+              onChange={handleChange}
+            />
+          </Section>
+          <Section>
+            <Title>Animes mais populares</Title>
+            <Carousel>
+              {popularAnimes.map((anime, index) => (
+                <AnimeCard key={index} anime={anime} rank={index + 1} />
+              ))}
+            </Carousel>
+          </Section>
+          <Section>
+            <Title>Últimos animes adicionados</Title>
+            <Carousel>
+              {latestAnimes.map((anime, index) => (
+                <AnimeCard key={index} anime={anime} />
+              ))}
+            </Carousel>
+          </Section>
+        </Main>
+      )}
       <Footer>
         <div>
           <p>

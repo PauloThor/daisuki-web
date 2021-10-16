@@ -151,3 +151,9 @@ export const FooterImg = styled.div`
     bottom: -8px;
   }
 `;
+
+export const SpinContainer = styled.div`
+  display: grid;
+  place-items: center;
+  height: 40vh;
+`;
