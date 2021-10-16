@@ -155,19 +155,17 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   useEffect(() => {
-    if (!token) {
-      return;
+    if (!!token) {
+      getFavorites(); //TODO acrescentar paginação no visual e atualizar aqui
+
+      const info: Info = jwt_decode(token);
+      setUser({
+        ...info.sub,
+        avatarUrl: info?.sub?.avatarUrl ?? null,
+        createdAt: info.sub.createdAt,
+        updatedAt: info.sub.updatedAt,
+      });
     }
-
-    getFavorites(); //TODO acrescentar paginação no visual e atualizar aqui
-
-    const info: Info = jwt_decode(token);
-    setUser({
-      ...info.sub,
-      avatarUrl: info?.sub?.avatarUrl ?? null,
-      createdAt: info.sub.createdAt,
-      updatedAt: info.sub.updatedAt,
-    });
     // eslint-disable-next-line
   }, []);
 

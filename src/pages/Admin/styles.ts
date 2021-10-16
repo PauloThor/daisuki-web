@@ -138,5 +138,59 @@ export const TextArea = styled.div`
     &:focus {
       border-color: ${Color.TEXT_SECONDARY};
     }
+
+    &::-webkit-scrollbar {
+      width: 2px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: #2a2a2a;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: ${Color.MAIN_LIGHT};
+
+      &:hover {
+        background-color: ${Color.MAIN};
+      }
+    }
+  }
+`;
+
+export const AddEpTitle = styled.h2`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  svg {
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: ${Color.HIGHLIGHT};
+    }
+  }
+`;
+
+export const AddModButton = styled.button`
+  width: 90%;
+  max-width: 400px;
+  font-size: 1.125rem;
+  background-color: transparent;
+  border: 1px solid ${Color.TEXT_SECONDARY};
+  border-radius: 8px;
+  padding: 10px 0;
+  margin: 24px auto;
+  transition: border-color 0.3s;
+
+  @media (min-width: 900px) {
+    font-size: 1.5rem;
+    align-self: flex-end;
+  }
+
+  &:hover,
+  &:focus {
+    border-color: ${Color.HIGHLIGHT};
   }
 `;
