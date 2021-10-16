@@ -39,7 +39,7 @@ const Header = ({ isAuth = true }: HeaderProps) => {
   const [favoritesOpen, setFavoritesOpen] = useState<boolean>(false);
 
   const history = useHistory();
-  const { favorites, logout, deleteFavorite } = useUser();
+  const { favorites, logout } = useUser();
 
   const handleOpenMenu = () => setMenuOpen(!menuOpen);
   const handleOpenProfile = () => {
@@ -133,7 +133,7 @@ const Header = ({ isAuth = true }: HeaderProps) => {
   const favoritesList = favorites.map((favorite: Anime) => {
     return {
       name: favorite.name,
-      onPress: () => deleteFavorite(favorite.id),
+      id: favorite.id,
     };
   });
 

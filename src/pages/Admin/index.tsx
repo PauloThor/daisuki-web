@@ -19,7 +19,7 @@ import {
   Wrapper,
   TextArea,
   AddEpTitle,
-  AddModButton
+  AddModButton,
 } from "./styles";
 import { useUser } from "../../hooks/User";
 import { InputTypes } from "../../model/enums/input-types";
@@ -35,6 +35,8 @@ const Admin = () => {
   const [synopsis, setSynopsis] = useState<string>("");
   const [animeList, setAnimeList] = useState<string[]>([]);
   const [anime, setAnime] = useState<SelectValue>("");
+  const [episodeImage, setEpisodeImage] = useState<File>();
+  const [animeImage, setAnimeImage] = useState<File>();
 
   const { token } = useUser();
 
@@ -77,7 +79,11 @@ const Admin = () => {
     formData.append("isMovie", isMovie ? "true" : "");
     formData.append("genres", genres.join(","));
     if (data.image[0]) {
-      formData.append("image", data.image[0], data.image[0].name);
+      formData.append(
+        "image",
+        data.image[0] ?? animeImage,
+        data.image[0].name ?? animeImage
+      );
     }
 
     async function fetch() {
@@ -113,9 +119,9 @@ const Admin = () => {
       anime: anime,
       episodeNumber: data.episodeNumber,
       videoUrl: data.videoUrl,
-      image: data.image[0],
+      image: data?.imageEpisode?.[0] ?? episodeImage,
     };
-
+    console.log("data", episodeImage);
     console.log(output);
 
     // async function fetch() {
@@ -155,6 +161,14 @@ const Admin = () => {
   useEffect(() => {
     getAnimeList();
   }, []);
+
+  const onUploadEpisodeImage = (file: any) => {
+    setEpisodeImage(file[0]);
+  };
+
+  const onUploadAnimeImage = (file: any) => {
+    setAnimeImage(file[0]);
+  };
 
   return (
     <>
@@ -218,7 +232,7 @@ const Admin = () => {
                 ))}
               </SelectStyled>
               <Wrapper>
-                <InputFile name="image" />
+                <InputFile name="image" onChange={onUploadAnimeImage} />
                 <Button text="Enviar" />
               </Wrapper>
             </FormStyled>
@@ -258,7 +272,10 @@ const Admin = () => {
                 type={InputTypes.TEXT}
               />
               <Wrapper>
-                <InputFile name="image"/>
+                <InputFile
+                  name="imageEpisode"
+                  onChange={onUploadEpisodeImage}
+                />
                 <Button text="Enviar" />
               </Wrapper>
             </FormStyled>

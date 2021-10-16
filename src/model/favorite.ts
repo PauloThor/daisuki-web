@@ -1,4 +1,4 @@
 export interface Favorite {
   name?: string;
-  onPress?: () => void;
+  id?: number;
 }
