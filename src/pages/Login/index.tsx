@@ -1,10 +1,11 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { InputTypes } from "../../model/enums/input-types";
 import SchemaUtils from "../../shared/util/schema-utils";
 import InputText from "../../components/InputText";
 import {
+  CheckboxContainer,
   Container,
   Form,
   FormContainer,
@@ -18,6 +19,9 @@ import Lottie from "react-lottie";
 import sailormoon from "../../assets/lottie/sailor-moon.json";
 import Logo from "../../assets/img/logo.svg";
 import Button from "../../components/Button";
+import { useUser } from "../../hooks/User";
+import { useState } from "react";
+import { CheckboxStyled } from "../Admin/styles";
 
 interface FormInput {
   email: string;
@@ -25,6 +29,10 @@ interface FormInput {
 }
 
 const Login = () => {
+  const [shouldRemember, setShouldRemember] = useState<boolean>(false);
+  const { login } = useUser();
+  const history = useHistory();
+
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -34,6 +42,8 @@ const Login = () => {
     },
   };
 
+  const handleRemember = () => setShouldRemember(!shouldRemember);
+
   const methods = useForm({
     resolver: yupResolver(SchemaUtils.login()),
     mode: "all",
@@ -41,6 +51,7 @@ const Login = () => {
 
   const onSubmit = (data: FormInput) => {
     console.log(data);
+    login({ ...data, remindMe: shouldRemember }, history);
   };
 
   const inputList = [
@@ -79,6 +90,14 @@ const Login = () => {
                   autofocus={index === 0}
                 />
               ))}
+              <CheckboxContainer>
+                <CheckboxStyled
+                  onChange={handleRemember}
+                  checked={shouldRemember}
+                >
+                  Lembrar de mim
+                </CheckboxStyled>
+              </CheckboxContainer>
               <Button text="Enviar" margin="8px 0" />
               <Subtitle>
                 <StyledLink to="/recover-password">
