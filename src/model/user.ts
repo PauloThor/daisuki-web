@@ -14,5 +14,5 @@ export interface UserInfo {
 
 export interface PasswordInfo {
   password: string;
-  passwordConfirm: string;
+  newPassword: string;
 }

@@ -24,7 +24,7 @@ interface UserData {
   postFavorite: (id: number) => void;
   deleteFavorite: (id?: number) => void;
   isLoading: boolean;
-  updatePassword: (data: PasswordInfo) => void;
+  updatePassword: (data: PasswordInfo, event?: () => void) => void;
 }
 
 interface UserProviderProps {
@@ -44,6 +44,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const headers = {
     headers: {
       "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const headersJson = {
+    headers: {
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   };
@@ -87,7 +94,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const getFavorites = async () => {
     const res = await daisukiApi.get(`/users/favorites`, headers);
-    console.log(res);
     const output = res.data.data.map((favorite: Anime) => {
       return {
         id: favorite.id,
@@ -111,8 +117,22 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     setIsLoading(false);
   };
 
-  const updatePassword = async (data: PasswordInfo) => {
-    await daisukiApi.patch("/users/updated-password", data, headers);
+  const updatePassword = (data: PasswordInfo, event?: () => void) => {
+    async function fetch() {
+      await daisukiApi
+        .patch("/users/update-password", data, headersJson)
+        .then(() => {
+          if (event) {
+            event();
+          }
+        });
+    }
+    const myPromise = fetch();
+    toast.promise(myPromise, {
+      loading: "Enviando...",
+      success: "Senha atualizada!",
+      error: "Você errou a senha",
+    });
   };
 
   useEffect(() => {

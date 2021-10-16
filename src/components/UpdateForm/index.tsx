@@ -5,6 +5,7 @@ import { Form } from "./styles";
 import InputText from "../InputText";
 import SchemaUtils from "../../shared/util/schema-utils";
 import Button from "../Button";
+import { useUser } from "../../hooks/User";
 
 interface FormInput {
   currentPassword: string;
@@ -12,14 +13,25 @@ interface FormInput {
   confirmPassword: string;
 }
 
-const UpdateForm = () => {
+interface UpdateFormProps {
+  handleOpenForm: () => void;
+}
+
+const UpdateForm = ({ handleOpenForm }: UpdateFormProps) => {
+  const { updatePassword } = useUser();
+
   const methods = useForm({
     resolver: yupResolver(SchemaUtils.updatePassword()),
     mode: "all",
   });
 
   const onSubmit = (data: FormInput) => {
-    console.log(data);
+    const output = {
+      password: data.currentPassword,
+      newPassword: data.newPassword,
+    };
+    updatePassword(output, handleOpenForm);
+    methods.reset();
   };
 
   const inputList = [

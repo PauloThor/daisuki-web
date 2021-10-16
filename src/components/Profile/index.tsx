@@ -43,7 +43,7 @@ const Profile = ({ onClose }: ProfileProps) => {
         <p>Excluir conta</p>
       </Options>
       <StyledModal visible={formOpen} onCancel={handleOpenForm}>
-        <UpdateForm />
+        <UpdateForm handleOpenForm={handleOpenForm} />
       </StyledModal>
     </Container>
   );
