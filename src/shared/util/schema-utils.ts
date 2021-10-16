@@ -60,7 +60,7 @@ class SchemaUtils {
         .string()
         .required(" - Campo obrigatório")
         .matches(/^https:\/\/streamable.com\/[a-z0-9]{6}$/, " - Url inválida"),
-      image: yup.mixed().required("Você precisa enviar uma imagem"),
+      imageEpisode: yup.mixed().required("Você precisa enviar uma imagem"),
     });
   }
 

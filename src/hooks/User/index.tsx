@@ -140,11 +140,14 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const updateUser = (data: IdentityInfo, event?: () => void) => {
     async function fetch() {
-      await daisukiApi.patch("/users/update", data, headersJson).then(() => {
+      setIsLoading(true);
+      await daisukiApi.patch("/users/update", data, headersJson).then((res) => {
+        setUser({ ...user, ...res });
         if (event) {
           event();
         }
       });
+      setIsLoading(false);
     }
     const myPromise = fetch();
     toast.promise(myPromise, {
@@ -154,17 +157,20 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     });
   };
 
+  const decodeToken = () => {
+    const info: Info = jwt_decode(token);
+    setUser({
+      ...info.sub,
+      avatarUrl: info?.sub?.avatarUrl ?? null,
+      createdAt: info.sub.createdAt,
+      updatedAt: info.sub.updatedAt,
+    });
+  };
+
   useEffect(() => {
     if (!!token) {
       getFavorites(); //TODO acrescentar paginação no visual e atualizar aqui
-
-      const info: Info = jwt_decode(token);
-      setUser({
-        ...info.sub,
-        avatarUrl: info?.sub?.avatarUrl ?? null,
-        createdAt: info.sub.createdAt,
-        updatedAt: info.sub.updatedAt,
-      });
+      decodeToken();
     }
     // eslint-disable-next-line
   }, []);

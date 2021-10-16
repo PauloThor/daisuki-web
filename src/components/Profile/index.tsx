@@ -26,7 +26,7 @@ const Profile = ({ onClose }: ProfileProps) => {
   const handleOpenPassword = () => setPasswordOpen(!passwordOpen);
   const handleOpenUsername = () => setUsernameOpen(!usernameOpen);
 
-  const { user } = useUser();
+  const { user, isLoading } = useUser();
 
   return (
     <Container>
@@ -37,7 +37,7 @@ const Profile = ({ onClose }: ProfileProps) => {
       </Banner>
       <AvatarContainer>
         <img alt="avatar" src={DefaultAvatar} />
-        <p>{user?.username ?? ""}</p>
+        {isLoading ? <div></div> : <p>{user?.username ?? ""}</p>}
       </AvatarContainer>
       <Options>
         <p onClick={handleOpenUsername}>Editar nome de usuário</p>
