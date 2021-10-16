@@ -30,6 +30,15 @@ class FormUtils {
       type: InputTypes.TEXT,
     },
   ];
+
+  static email = (placeholder: string) => [
+    {
+      name: "email",
+      placeholder,
+      label: "Novo endereço de e-mail*",
+      type: InputTypes.TEXT,
+    },
+  ];
 }
 
 export default FormUtils;

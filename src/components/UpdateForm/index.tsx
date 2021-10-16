@@ -18,7 +18,7 @@ interface PasswordFormInput {
 interface UpdateFormProps {
   handleOpenForm: () => void;
   list: FormProps[];
-  type: UpdateTypes.USERNAME | UpdateTypes.PASSWORD;
+  type: UpdateTypes.USERNAME | UpdateTypes.PASSWORD | UpdateTypes.EMAIL;
 }
 
 const UpdateForm = ({ handleOpenForm, list, type }: UpdateFormProps) => {
@@ -28,6 +28,8 @@ const UpdateForm = ({ handleOpenForm, list, type }: UpdateFormProps) => {
     resolver: yupResolver(
       type === UpdateTypes.PASSWORD
         ? SchemaUtils.updatePassword()
+        : type === UpdateTypes.EMAIL
+        ? SchemaUtils.updateEmail()
         : SchemaUtils.updateUsername()
     ),
     mode: "all",
@@ -41,15 +43,17 @@ const UpdateForm = ({ handleOpenForm, list, type }: UpdateFormProps) => {
     updatePassword(output, handleOpenForm);
   };
 
-  const submitUsername = (data: IdentityInfo) => {
+  const submitUser = (data: IdentityInfo) => {
     updateUser(data, handleOpenForm);
   };
 
   const onSubmit = (data: PasswordFormInput & IdentityInfo) => {
     const submitOptions = {
       [UpdateTypes.PASSWORD]: () => submitPassword(data),
-      [UpdateTypes.USERNAME]: () => submitUsername(data),
+      [UpdateTypes.USERNAME]: () => submitUser(data),
+      [UpdateTypes.EMAIL]: () => submitUser(data),
     };
+    console.log(data);
     submitOptions[type]();
     methods.reset();
   };
