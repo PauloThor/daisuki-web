@@ -21,7 +21,6 @@ const Toaster = () => {
           style: {
             background: Color.TEXT_MAIN,
             color: Color.MAIN_DARK,
-            minWidth: "200px",
           },
         },
       }}

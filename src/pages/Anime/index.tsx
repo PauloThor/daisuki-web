@@ -135,15 +135,15 @@ const AnimePage = () => {
                   )}
                 </RateContainer>
                 <Details>
-                  <p>Áudio: {anime.is_dubbed ? "Português" : "Japonês"}</p>
-                  <p>Episódios: {anime.total_episodes}</p>
+                  <p>Áudio: {anime.isDubbed ? "Português" : "Japonês"}</p>
+                  <p>Episódios: {anime.totalEpisodes}</p>
                   <p>
-                    {anime.is_movie
+                    {anime.isMovie
                       ? `Lançamento: ${new Intl.DateTimeFormat("pt-BR").format(
-                          new Date(anime.created_at || "")
+                          new Date(anime.createdAt || "")
                         )}`
                       : `Status: ${
-                          anime.is_completed ? "Encerrado" : "Em lançamento"
+                          anime.isCompleted ? "Encerrado" : "Em lançamento"
                         }`}
                   </p>
                   <Categories>
@@ -157,7 +157,7 @@ const AnimePage = () => {
                 </Details>
               </AnimeData>
               <AnimeCover>
-                <img src={anime.image_url} alt="anime cover" />
+                <img src={anime.imageUrl} alt="anime cover" />
                 <Button
                   text="Ver Sinopse"
                   margin="0 8px"
@@ -193,13 +193,13 @@ const AnimePage = () => {
                             key={epi.id}
                             onClick={() =>
                               handleToEpisode(
-                                epi.episode_number ? epi.episode_number : 1
+                                epi.episodeNumber ? epi.episodeNumber : 1
                               )
                             }
                           >
-                            {anime.is_movie
+                            {anime.isMovie
                               ? anime.name
-                              : `Episódio ${epi.episode_number}`}
+                              : `Episódio ${epi.episodeNumber}`}
                           </AnimeEpisode>
                         ))}
                       </StyledListEpisodes>
@@ -215,13 +215,13 @@ const AnimePage = () => {
                     key={epi.id}
                     onClick={() =>
                       handleToEpisode(
-                        epi.episode_number ? epi.episode_number : 1
+                        epi.episodeNumber ? epi.episodeNumber : 1
                       )
                     }
                   >
-                    {anime.is_movie
+                    {anime.isMovie
                       ? `${anime.name} - Filme`
-                      : `Episódio ${epi.episode_number}`}
+                      : `Episódio ${epi.episodeNumber}`}
                   </AnimeEpisode>
                 ))}
               </ListEpisodes>
