@@ -10,10 +10,10 @@ interface Props {
 }
 
 const AnimeCard = ({ anime, rank, showRating }: Props) => {
-  const { name, image_url, rating } = anime;
+  const { name, imageUrl, rating } = anime;
   return (
     <Container to={`/${StringUtils.urlMask(name)}`}>
-      <img src={image_url} alt={`${name}`} />
+      <img src={imageUrl} alt={`${name}`} />
       <Caption>{`${name}`}</Caption>
       {rank && <Rank>{rank}</Rank>}
       {showRating && (

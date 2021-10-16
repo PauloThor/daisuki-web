@@ -115,15 +115,15 @@ const Home = () => {
           <Title>Animes mais populares</Title>
           <Carousel>
             {popularAnimes.map((anime, index) => (
-              <AnimeCard key={anime.id} anime={anime} rank={index + 1} />
+              <AnimeCard key={index} anime={anime} rank={index + 1} />
             ))}
           </Carousel>
         </Section>
         <Section>
           <Title>Últimos animes adicionados</Title>
           <Carousel>
-            {latestAnimes.map((anime) => (
-              <AnimeCard key={anime.id} anime={anime} />
+            {latestAnimes.map((anime, index) => (
+              <AnimeCard key={index} anime={anime} />
             ))}
           </Carousel>
         </Section>
