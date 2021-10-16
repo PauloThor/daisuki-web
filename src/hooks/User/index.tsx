@@ -10,7 +10,7 @@ import { daisukiApi } from "../../services/api";
 import { Anime } from "../../model/anime";
 import { toast } from "react-hot-toast";
 import jwt_decode from "jwt-decode";
-import { Info } from "../../model/user";
+import { Info, UserInfo } from "../../model/user";
 
 interface LoginData {
   email: string;
@@ -54,7 +54,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   );
   const [favorites, setFavorites] = useState<Anime[]>([]);
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<UserInfo>({} as UserInfo);
 
   const headers = {
     headers: {

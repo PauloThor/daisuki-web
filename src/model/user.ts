@@ -1,8 +1,8 @@
 export interface Info {
-  sub: Sub;
+  sub: UserInfo;
 }
 
-interface Sub {
+export interface UserInfo {
   avatar_url?: string | null;
   created_at?: string;
   email?: string;
