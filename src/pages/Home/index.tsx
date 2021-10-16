@@ -29,16 +29,23 @@ import {
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [total, setTotal] = useState<number>(0)
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [popularAnimes, setPopularAnimes] = useState<Anime[]>([]);
   const [latestAnimes, setLatestAnimes] = useState<Anime[]>([]);
 
   const handleChange = (page: number) => {
+    daisukiApi.get(`/episodes?page=${page}`).then(res => {
+      setEpisodes(res.data.data)
+    }).catch(err => console.log(err))
     setCurrentPage(page);
   };
 
   useEffect(() => {
-    daisukiApi.get("/episodes")
+    daisukiApi.get("/episodes").then(res => {
+      setTotal(res.data.total)
+      setEpisodes(res.data.data)
+    }).catch(err => console.log(err))
     daisukiApi
       .get("/animes/most-popular")
       .then((res) => setPopularAnimes(res.data))
@@ -66,8 +73,8 @@ const Home = () => {
         <Section>
           <Title>Lançamentos</Title>
           <ReleasesList>
-            {episodes.map((episode, index) => (
-              <li key={index}>
+            {episodes.map((episode) => (
+              <li key={episode.id}>
                 <EpisodeCard episode={episode} />
               </li>
             ))}
@@ -75,7 +82,7 @@ const Home = () => {
           <Pagination
             current={currentPage}
             pageSize={12}
-            total={108}
+            total={total}
             onChange={handleChange}
           />
         </Section>
