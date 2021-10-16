@@ -1,10 +1,9 @@
-import { Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Home from "../../pages/Home";
 import Register from "../../pages/Register";
 import Login from "../../pages/Login";
 import NotFound from "../../pages/NotFound";
 import Admin from "../../pages/Admin";
-import Route from "./route";
 import AnimePage from "../../pages/Anime";
 import Styleguide from "../../pages/Styleguide";
 

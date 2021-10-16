@@ -9,6 +9,8 @@ import { History } from "history";
 import { daisukiApi } from "../../services/api";
 import { Anime } from "../../model/anime";
 import { toast } from "react-hot-toast";
+import jwt_decode from "jwt-decode";
+import { Info } from "../../model/user";
 
 interface LoginData {
   email: string;
@@ -37,6 +39,7 @@ interface UserData {
   user: UserProps;
   favorites: Anime[];
   postFavorite: (id: number) => void;
+  deleteFavorite: (id?: number) => void;
 }
 
 interface UserProviderProps {
@@ -47,7 +50,7 @@ const UserContext = createContext<UserData>({} as UserData);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [token, setToken] = useState<string>(
-    localStorage.getItem("@Daisuki:token") ?? ""
+    JSON.parse(localStorage.getItem("@Daisuki:token") ?? "")
   );
   const [favorites, setFavorites] = useState<Anime[]>([]);
 
@@ -97,12 +100,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     setToken("");
   };
 
-  const getFavorites = async (page: number, per_page: number) => {
-    const res = await daisukiApi.get(
-      `/users/favorites?page=${page}&per_page=${per_page}`,
-      headers
-    );
-    const output = res.data.map((favorite: Anime) => {
+  const getFavorites = async () => {
+    const res = await daisukiApi.get(`/users/favorites`, headers);
+    console.log(res);
+    const output = res.data.data.map((favorite: Anime) => {
       return {
         id: favorite.id,
         name: favorite.name,
@@ -115,7 +116,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     await daisukiApi.put(`/users/favorites/${id}`, headers);
   };
 
-  const deleteFavorite = async (id: number) => {
+  const deleteFavorite = async (id?: number) => {
+    if (!id) {
+      return;
+    }
     await daisukiApi.delete(`/users/favorites/${id}`, headers);
   };
 
@@ -124,13 +128,25 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       return;
     }
 
-    getFavorites(1, 10); //TODO acrescentar paginação no visual e atualizar aqui
+    getFavorites(); //TODO acrescentar paginação no visual e atualizar aqui
+
+    const info: Info = jwt_decode(token);
+    setUser(info.sub);
     // eslint-disable-next-line
   }, []);
 
   return (
     <UserContext.Provider
-      value={{ token, login, register, logout, user, favorites, postFavorite }}
+      value={{
+        token,
+        login,
+        register,
+        logout,
+        user,
+        favorites,
+        postFavorite,
+        deleteFavorite,
+      }}
     >
       {children}
     </UserContext.Provider>
