@@ -1,7 +1,6 @@
 import { Color } from "../../model/enums/theme-colors";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Checkbox } from "antd";
 
 export const FullContainer = styled.div`
   height: 100vh;
@@ -101,13 +100,12 @@ export const StyledLink = styled(Link)`
   }
 `;
 
-export const StyledCheckbox = styled(Checkbox)`
-  color: ${Color.TEXT_MAIN};
+export const CheckboxContainer = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: flex-end;
 
-  .ant-checkbox-checked,
-  .ant-checkbox-inner {
-    background-color: ${Color.HIGHLIGHT_DARK};
-    border-color: ${Color.HIGHLIGHT};
+  span {
+    font-size: 0.9rem;
   }
 `;

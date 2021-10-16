@@ -27,6 +27,7 @@ import { TiArrowSortedDown } from "react-icons/ti";
 import Profile from "../Profile";
 import Favorites from "../Favorites";
 import MockUtils from "../../shared/util/mock-utils";
+import { useUser } from "../../hooks/User";
 
 interface HeaderProps {
   isAuth?: boolean;
@@ -38,6 +39,7 @@ const Header = ({ isAuth = true }: HeaderProps) => {
   const [favoritesOpen, setFavoritesOpen] = useState<boolean>(false);
 
   const history = useHistory();
+  const { logout } = useUser();
 
   const handleOpenMenu = () => setMenuOpen(!menuOpen);
   const handleOpenProfile = () => {
@@ -47,6 +49,11 @@ const Header = ({ isAuth = true }: HeaderProps) => {
   const handleOpenFavorites = () => {
     setFavoritesOpen(!favoritesOpen);
     setProfileOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    history.push("/login");
   };
 
   const handlePath = (path: string) => history.push(path);
@@ -113,7 +120,14 @@ const Header = ({ isAuth = true }: HeaderProps) => {
       name: "Favoritos",
       event: handleOpenFavorites,
     },
-    ...MenuUtils.account,
+    {
+      name: "Histórico",
+      event: handleOpenFavorites,
+    },
+    {
+      name: "Sair",
+      event: handleLogout,
+    },
   ];
 
   return (

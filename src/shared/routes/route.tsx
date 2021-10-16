@@ -1,5 +1,5 @@
 import { Redirect, Route as ReactDOMRoute } from "react-router-dom";
-import { useUser } from "../../hooks/User"
+import { useUser } from "../../hooks/User";
 
 interface RouteProps {
   isPrivate?: boolean;
