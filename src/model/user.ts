@@ -3,11 +3,16 @@ export interface Info {
 }
 
 export interface UserInfo {
-  avatar_url?: string | null;
-  created_at?: string;
+  avatarUrl?: string | null;
+  createdAt?: string;
   email?: string;
   id?: number;
   permission?: string;
-  updated_at?: string;
+  updatedAt?: string;
   username?: string;
+}
+
+export interface PasswordInfo {
+  password: string;
+  passwordConfirm: string;
 }

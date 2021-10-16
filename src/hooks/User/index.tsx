@@ -10,36 +10,21 @@ import { daisukiApi } from "../../services/api";
 import { Anime } from "../../model/anime";
 import { toast } from "react-hot-toast";
 import jwt_decode from "jwt-decode";
-import { Info, UserInfo } from "../../model/user";
-
-interface LoginData {
-  email: string;
-  password: string;
-  remindMe: boolean;
-}
-
-interface RegisterData {
-  email: string;
-  password: string;
-  username: string;
-}
-
-interface UserProps {
-  email?: string;
-  avatarUrl?: string;
-  isAuth?: boolean;
-  username?: string;
-}
+import { Info, PasswordInfo, UserInfo } from "../../model/user";
+import { LoginData, RegisterData } from "../../model/account";
 
 interface UserData {
   token: string;
   login: (data: LoginData, history: History) => void;
   register: (data: RegisterData, history: History) => void;
   logout: () => void;
-  user: UserProps;
+  user: UserInfo;
   favorites: Anime[];
+  getFavorites: () => void;
   postFavorite: (id: number) => void;
   deleteFavorite: (id?: number) => void;
+  isLoading: boolean;
+  updatePassword: (data: PasswordInfo) => void;
 }
 
 interface UserProviderProps {
@@ -53,8 +38,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     JSON.parse(localStorage.getItem("@Daisuki:token") ?? "")
   );
   const [favorites, setFavorites] = useState<Anime[]>([]);
-
   const [user, setUser] = useState<UserInfo>({} as UserInfo);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const headers = {
     headers: {
@@ -120,7 +105,14 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     if (!id) {
       return;
     }
+    setIsLoading(true);
     await daisukiApi.delete(`/users/favorites/${id}`, headers);
+    getFavorites();
+    setIsLoading(false);
+  };
+
+  const updatePassword = async (data: PasswordInfo) => {
+    await daisukiApi.patch("/users/updated-password", data, headers);
   };
 
   useEffect(() => {
@@ -131,7 +123,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     getFavorites(); //TODO acrescentar paginação no visual e atualizar aqui
 
     const info: Info = jwt_decode(token);
-    setUser(info.sub);
+    setUser({
+      ...info.sub,
+      avatarUrl: info?.sub?.avatarUrl ?? null,
+      createdAt: info.sub.createdAt,
+      updatedAt: info.sub.updatedAt,
+    });
     // eslint-disable-next-line
   }, []);
 
@@ -145,7 +142,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         user,
         favorites,
         postFavorite,
+        getFavorites,
         deleteFavorite,
+        isLoading,
+        updatePassword,
       }}
     >
       {children}
