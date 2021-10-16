@@ -21,11 +21,11 @@ import {
 import { useUser } from "../../hooks/User";
 import { InputTypes } from "../../model/enums/input-types";
 import { FormAnime, FormEpisode, FormModerator } from "../../model/admin-forms";
-import SchemaUtils from "../../shared/util/schema-utils";
 import { daisukiApi } from "../../services/api";
+import { genres as allGenres } from "../../shared/util/genre-utils";
+import SchemaUtils from "../../shared/util/schema-utils";
 
 const Admin = () => {
-  const [allGenres, setAllGenres] = useState<string[]>([])
   const [genres, setGenres] = useState<SelectValue | any>([]);
   const [isDubbed, setIsDubbed] = useState(false);
   const [isMovie, setIsMovie] = useState(false);
@@ -74,7 +74,7 @@ const Admin = () => {
 
   const onSubmitAnime = (data: FormAnime) => {
     if (!genres[0]) {
-      return toast.error("Selecione pelo menos um gênero");
+      return toast.error("Selecione ao menos um gênero");
     }
 
     const animeFormData = new FormData();
@@ -88,7 +88,9 @@ const Admin = () => {
     animeFormData.append("isDubbed", isDubbed ? "true" : "");
     animeFormData.append("isMovie", isMovie ? "true" : "");
     animeFormData.append("genres", genres.join(","));
-    animeFormData.append("image", data?.image[0], data?.image[0]?.name);
+    if (data.image[0]) {
+      animeFormData.append("image", data.image[0], data.image[0].name);
+    }
 
     async function fetch() {
       await daisukiApi.post("/animes", animeFormData, {
@@ -127,7 +129,29 @@ const Admin = () => {
       videoUrl: data.videoUrl,
       image: data.image,
     };
-    console.log(output);
+    
+    // async function fetch() {
+    //   await daisukiApi.post("/animes", animeFormData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   });
+    // }
+    // const myPromise = fetch();
+    // toast.promise(
+    //   myPromise,
+    //   {
+    //     loading: "Enviando...",
+    //     success: "Anime adicionado!",
+    //     error: "Tente novamente =c",
+    //   },
+    //   {
+    //     style: {
+    //       minWidth: "200px",
+    //     },
+    //   }
+    // );
   };
 
   const onSubmitModerator = (data: FormModerator) => {
@@ -140,9 +164,7 @@ const Admin = () => {
 
   const { Option } = Select;
 
- useEffect(() => {
-
- }, [])
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -199,12 +221,8 @@ const Admin = () => {
                 mode="multiple"
                 onChange={(e) => setGenres(e)}
               >
-                {allGenres?.map((genre, index) => (
-                  <Option
-                    name={genre}
-                    value={genre}
-                    key={`${genre}-category-${index}`}
-                  >
+                {allGenres.map((genre) => (
+                  <Option name={genre} value={genre} key={genre}>
                     {genre}
                   </Option>
                 ))}

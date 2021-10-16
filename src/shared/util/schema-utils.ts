@@ -1,8 +1,5 @@
 import * as yup from "yup";
 
-// const URL =
-//   /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
-
 class SchemaUtils {
   static register() {
     return yup.object({
@@ -46,8 +43,8 @@ class SchemaUtils {
       //   .required(" - campo obrigatório"),
       // isMovie: yup.boolean().default(false),
       totalEpisodes: yup.string(),
-        // .typeError(" - Insira um número")
-        // .integer(" - Insira um valor inteiro"),
+      // .typeError(" - Insira um número")
+      // .integer(" - Insira um valor inteiro"),
       // isDubbed: yup.boolean().default(false),
       image: yup.mixed().required("Você precisa enviar uma imagem"),
     });
@@ -58,12 +55,12 @@ class SchemaUtils {
       episodeNumber: yup
         .number()
         .typeError(" - Insira um número")
-        .required(" - Campo obrigatório"),
-      // TODO: validar a url do videoUrl
-      // .matches(URL)
-      // .required(" - Campo obrigatório")
-      videoUrl: yup.string().required(" - Campo obrigatório"),
-      image: yup.string().required(" - Campo obrigatório"),
+        .integer(" - Insira um valor inteiro"),
+      videoUrl: yup
+        .string()
+        .required(" - Campo obrigatório")
+        .matches(/^https:\/\/streamable.com\/[a-z0-9]{6}$/, " - Url inválida"),
+      image: yup.mixed().required("Você precisa enviar uma imagem"),
     });
   }
 
