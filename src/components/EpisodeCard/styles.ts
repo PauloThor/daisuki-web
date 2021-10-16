@@ -35,8 +35,11 @@ export const StyledLink = styled(Link)`
     background-color: rgba(26, 26, 26, 0.9);
   }
 
-  &:hover, &:focus {
-    filter: grayscale(0.8);
+  &:hover,
+  &:focus {
+    img {
+      filter: grayscale(0.8);
+    }
   }
 `;
 

@@ -10,6 +10,7 @@ export interface Anime {
   isDubbed?: boolean;
   isCompleted?: boolean;
   episodes?: Episode[];
-  createdAt?: string;
   rating?: number;
+  createdAt?: string;
+  updatedAt?: string;
 }

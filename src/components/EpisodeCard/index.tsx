@@ -8,21 +8,23 @@ interface Props {
 }
 
 const EpisodeCard = ({ episode }: Props) => {
-  const { imageUrl, episode_number, createdAt, anime } = episode;
+  const { imageUrl, episodeNumber, createdAt, anime } = episode;
 
   return (
     <Container>
-      <StyledLink to={`/${StringUtils.urlMask(anime?.name)}/${episode_number}`}>
+      <StyledLink
+        to={`/animes/${StringUtils.urlMask(anime?.name)}/${episodeNumber}`}
+      >
         <img
           src={imageUrl}
           alt={`${anime?.name}${
-            !anime?.isMovie && `episódio ${episode_number}`
+            !anime?.isMovie && `episódio ${episodeNumber}`
           }`}
         />
         <div>
           {anime?.isMovie
             ? `${anime?.name}`
-            : `${anime?.name} - Episódio ${episode_number}`}
+            : `${anime?.name} - Episódio ${episodeNumber}`}
         </div>
       </StyledLink>
       <ReleaseInfo>

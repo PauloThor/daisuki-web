@@ -193,13 +193,13 @@ const AnimePage = () => {
                             key={epi.id}
                             onClick={() =>
                               handleToEpisode(
-                                epi.episode_number ? epi.episode_number : 1
+                                epi.episodeNumber ? epi.episodeNumber : 1
                               )
                             }
                           >
                             {anime.isMovie
                               ? anime.name
-                              : `Episódio ${epi.episode_number}`}
+                              : `Episódio ${epi.episodeNumber}`}
                           </AnimeEpisode>
                         ))}
                       </StyledListEpisodes>
@@ -215,13 +215,13 @@ const AnimePage = () => {
                     key={epi.id}
                     onClick={() =>
                       handleToEpisode(
-                        epi.episode_number ? epi.episode_number : 1
+                        epi.episodeNumber ? epi.episodeNumber : 1
                       )
                     }
                   >
                     {anime.isMovie
                       ? `${anime.name} - Filme`
-                      : `Episódio ${epi.episode_number}`}
+                      : `Episódio ${epi.episodeNumber}`}
                   </AnimeEpisode>
                 ))}
               </ListEpisodes>

@@ -40,7 +40,7 @@ const Header = ({ isAuth = true }: HeaderProps) => {
   const [favoritesOpen, setFavoritesOpen] = useState<boolean>(false);
 
   const history = useHistory();
-  const { favorites } = useUser();
+  const { favorites, logout } = useUser();
 
   const handleOpenMenu = () => setMenuOpen(!menuOpen);
   const handleOpenProfile = () => {
@@ -50,6 +50,11 @@ const Header = ({ isAuth = true }: HeaderProps) => {
   const handleOpenFavorites = () => {
     setFavoritesOpen(!favoritesOpen);
     setProfileOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    history.push("/login");
   };
 
   const handlePath = (path: string) => history.push(path);
@@ -116,7 +121,14 @@ const Header = ({ isAuth = true }: HeaderProps) => {
       name: "Favoritos",
       event: handleOpenFavorites,
     },
-    ...MenuUtils.account,
+    {
+      name: "Histórico",
+      event: handleOpenFavorites,
+    },
+    {
+      name: "Sair",
+      event: handleLogout,
+    },
   ];
 
   const favoritesList = favorites.map((favorite: Anime) => {

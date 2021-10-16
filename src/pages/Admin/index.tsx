@@ -23,7 +23,6 @@ import { InputTypes } from "../../model/enums/input-types";
 import { FormAnime, FormEpisode, FormModerator } from "../../model/admin-forms";
 import SchemaUtils from "../../shared/util/schema-utils";
 import { daisukiApi } from "../../services/api";
-import animes from "../../mock/animes.json";
 
 const Admin = () => {
   const [genres, setGenres] = useState<SelectValue | any>([]);
@@ -99,11 +98,19 @@ const Admin = () => {
       });
     }
     const myPromise = fetch();
-    toast.promise(myPromise, {
-      loading: "Enviando...",
-      success: "Anime adicionado!",
-      error: "Tente novamente =c",
-    });
+    toast.promise(
+      myPromise,
+      {
+        loading: "Enviando...",
+        success: "Anime adicionado!",
+        error: "Tente novamente =c",
+      },
+      {
+        style: {
+          minWidth: "200px",
+        },
+      }
+    );
   };
 
   const onSubmitEpisode = (data: FormEpisode) => {
@@ -216,7 +223,7 @@ const Admin = () => {
                 placeholder="Selecione o anime"
                 onChange={(e) => setAnime(e)}
               >
-                {animes.map((anime, index) => (
+                {/* {animes.map((anime, index) => (
                   <Option
                     name={anime.name}
                     value={anime.name}
@@ -224,7 +231,7 @@ const Admin = () => {
                   >
                     {anime.name}
                   </Option>
-                ))}
+                ))} */}
               </SelectStyled>
               {inputEpisode.map((input, index) => (
                 <InputText
