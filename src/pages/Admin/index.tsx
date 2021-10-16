@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Select } from "antd";
 import { SelectValue } from "antd/lib/select";
 import { toast } from "react-hot-toast";
+import { IoMdRefresh } from "react-icons/io";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
 import InputText from "../../components/InputText";
@@ -17,6 +18,7 @@ import {
   FormMod,
   Wrapper,
   TextArea,
+  AddEpTitle,
 } from "./styles";
 import { useUser } from "../../hooks/User";
 import { InputTypes } from "../../model/enums/input-types";
@@ -30,32 +32,17 @@ const Admin = () => {
   const [isDubbed, setIsDubbed] = useState(false);
   const [isMovie, setIsMovie] = useState(false);
   const [synopsis, setSynopsis] = useState<string>("");
+  const [animeList, setAnimeList] = useState<string[]>([]);
   const [anime, setAnime] = useState<SelectValue>("");
 
   const { token } = useUser();
 
-  const inputModerator = [
-    {
-      name: "email",
-      placeholder: "exemplo@mail.com",
-      label: "Email*",
-      type: InputTypes.EMAIL,
-    },
-  ];
-  const inputEpisode = [
-    {
-      name: "episodeNumber",
-      placeholder: "1",
-      label: "Número*",
-      type: InputTypes.TEXT,
-    },
-    {
-      name: "videoUrl",
-      placeholder: "https://streamable.com/z8xs0a",
-      label: "Vídeo url*",
-      type: InputTypes.TEXT,
-    },
-  ];
+  const getAnimeList = () => {
+    daisukiApi
+      .get("/animes/upload-list")
+      .then((res) => setAnimeList(res.data))
+      .catch((err) => console.log(err));
+  };
 
   const methodsAnime = useForm({
     resolver: yupResolver(SchemaUtils.anime()),
@@ -116,11 +103,11 @@ const Admin = () => {
     );
   };
 
-  const onSubmitEpisode = (data: FormEpisode) => {
+  const onSubmitEpisode = (data: any) => {
     console.log(data);
 
     if (!anime) {
-      return toast.error("- Selecione um anime");
+      return toast.error("Selecione um anime");
     }
 
     const output = {
@@ -129,7 +116,7 @@ const Admin = () => {
       videoUrl: data.videoUrl,
       image: data.image,
     };
-    
+
     // async function fetch() {
     //   await daisukiApi.post("/animes", animeFormData, {
     //     headers: {
@@ -164,7 +151,9 @@ const Admin = () => {
 
   const { Option } = Select;
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getAnimeList();
+  }, []);
 
   return (
     <>
@@ -235,7 +224,10 @@ const Admin = () => {
           </FormProvider>
         </Box>
         <Box>
-          <h2>Adicionar episódio:</h2>
+          <AddEpTitle>
+            Adicionar episódio:
+            <IoMdRefresh title="Atualizar animes" onClick={getAnimeList} />
+          </AddEpTitle>
           <FormProvider {...methodsEpisode}>
             <FormStyled
               onSubmit={methodsEpisode.handleSubmit(onSubmitEpisode)}
@@ -245,26 +237,25 @@ const Admin = () => {
                 placeholder="Selecione o anime"
                 onChange={(e) => setAnime(e)}
               >
-                {/* {animes.map((anime, index) => (
-                  <Option
-                    name={anime.name}
-                    value={anime.name}
-                    key={`${anime.name}-anime-${index}`}
-                  >
-                    {anime.name}
+                {animeList?.map((anime, index) => (
+                  <Option name={anime} value={anime} key={index}>
+                    {anime}
                   </Option>
-                ))} */}
+                ))}
               </SelectStyled>
-              {inputEpisode.map((input, index) => (
-                <InputText
-                  key={`${input.name}-episode-${index}`}
-                  name={input.name}
-                  placeholder={input.placeholder}
-                  label={input.label}
-                  type={input.type ?? ""}
-                  maxWidth={index === 0 ? "120px" : "initial"}
-                />
-              ))}
+              <InputText
+                name="episodeNumber"
+                placeholder="1"
+                label="Número*"
+                type={InputTypes.TEXT}
+                maxWidth="120px"
+              />
+              <InputText
+                name="videoUrl"
+                placeholder="https://streamable.com/z8xs0a"
+                label="Vídeo url*"
+                type={InputTypes.TEXT}
+              />
               <Wrapper>
                 <InputFile name="image" />
                 <Button text="Enviar" />
@@ -279,15 +270,12 @@ const Admin = () => {
               onSubmit={methodsModerator.handleSubmit(onSubmitModerator)}
               autoComplete="off"
             >
-              {inputModerator.map((input, index) => (
-                <InputText
-                  key={`${input.name}-moderator-${index}`}
-                  name={input.name}
-                  placeholder={input.placeholder}
-                  label={input.label}
-                  type={input?.type ?? ""}
-                />
-              ))}
+              <InputText
+                name="email"
+                placeholder="exemplo@mail.com"
+                label="Email*"
+                type={InputTypes.EMAIL}
+              />
               <Button text="Enviar" margin="0.5rem 0 0.5rem 8px" />
             </FormMod>
           </FormProvider>

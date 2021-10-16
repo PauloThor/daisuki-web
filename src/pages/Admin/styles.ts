@@ -140,19 +140,35 @@ export const TextArea = styled.div`
     }
 
     &::-webkit-scrollbar {
-    width: 2px;
-  }
+      width: 2px;
+    }
 
-  &::-webkit-scrollbar-track {
-    background-color: #2a2a2a;
-  }
+    &::-webkit-scrollbar-track {
+      background-color: #2a2a2a;
+    }
 
-  &::-webkit-scrollbar-thumb {
-    background-color: ${Color.MAIN_LIGHT};
+    &::-webkit-scrollbar-thumb {
+      background-color: ${Color.MAIN_LIGHT};
 
-    &:hover {
-      background-color: ${Color.MAIN};
+      &:hover {
+        background-color: ${Color.MAIN};
+      }
     }
   }
-  }
+`;
+
+export const AddEpTitle = styled.h2`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  svg {
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: ${Color.HIGHLIGHT};
+    }
+  }  
 `;
