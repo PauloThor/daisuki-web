@@ -1,6 +1,6 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { InputTypes } from "../../model/enums/input-types";
 import SchemaUtils from "../../shared/util/schema-utils";
 import InputText from "../../components/InputText";
@@ -30,7 +30,7 @@ interface FormInput {
 
 const Login = () => {
   const [shouldRemember, setShouldRemember] = useState<boolean>(false);
-  const { login } = useUser();
+  const { login, token } = useUser();
   const history = useHistory();
 
   const defaultOptions = {
@@ -68,6 +68,10 @@ const Login = () => {
       type: InputTypes.PASSWORD,
     },
   ];
+
+  if (!!token) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <FullContainer>

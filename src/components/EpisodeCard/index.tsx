@@ -12,7 +12,9 @@ const EpisodeCard = ({ episode }: Props) => {
 
   return (
     <Container>
-      <StyledLink to={`/animes/${StringUtils.urlMask(anime?.name)}/${episodeNumber}`}>
+      <StyledLink
+        to={`/animes/${StringUtils.urlMask(anime?.name)}/${episodeNumber}`}
+      >
         <img
           src={imageUrl}
           alt={`${anime?.name}${

@@ -26,8 +26,8 @@ import { useState } from "react";
 import { TiArrowSortedDown } from "react-icons/ti";
 import Profile from "../Profile";
 import Favorites from "../Favorites";
-import MockUtils from "../../shared/util/mock-utils";
 import { useUser } from "../../hooks/User";
+import { Anime } from "../../model/anime";
 
 interface HeaderProps {
   isAuth?: boolean;
@@ -39,7 +39,7 @@ const Header = ({ isAuth = true }: HeaderProps) => {
   const [favoritesOpen, setFavoritesOpen] = useState<boolean>(false);
 
   const history = useHistory();
-  const { logout } = useUser();
+  const { favorites, logout, deleteFavorite } = useUser();
 
   const handleOpenMenu = () => setMenuOpen(!menuOpen);
   const handleOpenProfile = () => {
@@ -130,6 +130,13 @@ const Header = ({ isAuth = true }: HeaderProps) => {
     },
   ];
 
+  const favoritesList = favorites.map((favorite: Anime) => {
+    return {
+      name: favorite.name,
+      onPress: () => deleteFavorite(favorite.id),
+    };
+  });
+
   return (
     <Container>
       <Link to="/" className="link-logo">
@@ -189,7 +196,7 @@ const Header = ({ isAuth = true }: HeaderProps) => {
       )}
       {favoritesOpen && (
         <ProfileContainer>
-          <Favorites onClose={handleOpenFavorites} list={MockUtils.favorites} />
+          <Favorites onClose={handleOpenFavorites} list={favoritesList} />
         </ProfileContainer>
       )}
     </Container>
