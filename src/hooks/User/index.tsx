@@ -36,7 +36,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const login = (data: LoginData, history: History) => {
     daisukiApi
-      .post("/users", data)
+      .post("/users/login", data)
       .then((res) => {
         localStorage.setItem("@Daisuki:token", JSON.stringify(res.data.access));
         setUser(res.data.user);

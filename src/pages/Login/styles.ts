@@ -1,6 +1,7 @@
 import { Color } from "../../model/enums/theme-colors";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { Checkbox } from "antd";
 
 export const FullContainer = styled.div`
   height: 100vh;
@@ -97,5 +98,16 @@ export const StyledLink = styled(Link)`
   &:focus {
     color: ${Color.TEXT_MAIN};
     transition: 0.5s;
+  }
+`;
+
+export const StyledCheckbox = styled(Checkbox)`
+  color: ${Color.TEXT_MAIN};
+  width: 100%;
+
+  .ant-checkbox-checked,
+  .ant-checkbox-inner {
+    background-color: ${Color.HIGHLIGHT_DARK};
+    border-color: ${Color.HIGHLIGHT};
   }
 `;
