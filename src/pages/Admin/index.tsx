@@ -19,6 +19,7 @@ import {
   Wrapper,
   TextArea,
   AddEpTitle,
+  AddModButton
 } from "./styles";
 import { useUser } from "../../hooks/User";
 import { InputTypes } from "../../model/enums/input-types";
@@ -64,23 +65,23 @@ const Admin = () => {
       return toast.error("Selecione ao menos um gênero");
     }
 
-    const animeFormData = new FormData();
+    const formData = new FormData();
 
-    animeFormData.append("name", data.name);
-    animeFormData.append("synopsis", synopsis.replaceAll(/"/g, "'"));
-    animeFormData.append(
+    formData.append("name", data.name);
+    formData.append("synopsis", synopsis.replaceAll(/"/g, "'"));
+    formData.append(
       "totalEpisodes",
       isMovie ? "1" : String(data.totalEpisodes)
     );
-    animeFormData.append("isDubbed", isDubbed ? "true" : "");
-    animeFormData.append("isMovie", isMovie ? "true" : "");
-    animeFormData.append("genres", genres.join(","));
+    formData.append("isDubbed", isDubbed ? "true" : "");
+    formData.append("isMovie", isMovie ? "true" : "");
+    formData.append("genres", genres.join(","));
     if (data.image[0]) {
-      animeFormData.append("image", data.image[0], data.image[0].name);
+      formData.append("image", data.image[0], data.image[0].name);
     }
 
     async function fetch() {
-      await daisukiApi.post("/animes", animeFormData, {
+      await daisukiApi.post("/animes", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -103,9 +104,7 @@ const Admin = () => {
     );
   };
 
-  const onSubmitEpisode = (data: any) => {
-    console.log(data);
-
+  const onSubmitEpisode = (data: FormEpisode) => {
     if (!anime) {
       return toast.error("Selecione um anime");
     }
@@ -114,11 +113,13 @@ const Admin = () => {
       anime: anime,
       episodeNumber: data.episodeNumber,
       videoUrl: data.videoUrl,
-      image: data.image,
+      image: data.image[0],
     };
 
+    console.log(output);
+
     // async function fetch() {
-    //   await daisukiApi.post("/animes", animeFormData, {
+    //   await daisukiApi.post("/episodes", formData, {
     //     headers: {
     //       "Content-Type": "multipart/form-data",
     //       Authorization: `Bearer ${token}`,
@@ -130,7 +131,7 @@ const Admin = () => {
     //   myPromise,
     //   {
     //     loading: "Enviando...",
-    //     success: "Anime adicionado!",
+    //     success: "Episódio adicionado!",
     //     error: "Tente novamente =c",
     //   },
     //   {
@@ -257,7 +258,7 @@ const Admin = () => {
                 type={InputTypes.TEXT}
               />
               <Wrapper>
-                <InputFile name="image" />
+                <InputFile name="image"/>
                 <Button text="Enviar" />
               </Wrapper>
             </FormStyled>
@@ -280,7 +281,7 @@ const Admin = () => {
             </FormMod>
           </FormProvider>
         </Box>
-        <Button text="Ver moderadores" />
+        <AddModButton>Ver moderadores</AddModButton>
       </Container>
     </>
   );
