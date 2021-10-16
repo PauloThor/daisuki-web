@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Select } from "antd";
@@ -25,6 +25,7 @@ import SchemaUtils from "../../shared/util/schema-utils";
 import { daisukiApi } from "../../services/api";
 
 const Admin = () => {
+  const [allGenres, setAllGenres] = useState<string[]>([])
   const [genres, setGenres] = useState<SelectValue | any>([]);
   const [isDubbed, setIsDubbed] = useState(false);
   const [isMovie, setIsMovie] = useState(false);
@@ -79,15 +80,15 @@ const Admin = () => {
     const animeFormData = new FormData();
 
     animeFormData.append("name", data.name);
-    animeFormData.append("synopsis", synopsis);
+    animeFormData.append("synopsis", synopsis.replaceAll(/"/g, "'"));
     animeFormData.append(
-      "total_episodes",
+      "totalEpisodes",
       isMovie ? "1" : String(data.totalEpisodes)
     );
-    animeFormData.append("is_dubbed", isDubbed ? "true" : "");
-    animeFormData.append("is_movie", isMovie ? "true" : "");
+    animeFormData.append("isDubbed", isDubbed ? "true" : "");
+    animeFormData.append("isMovie", isMovie ? "true" : "");
     animeFormData.append("genres", genres.join(","));
-    animeFormData.append("image", data.image[0], data.image[0].name);
+    animeFormData.append("image", data?.image[0], data?.image[0]?.name);
 
     async function fetch() {
       await daisukiApi.post("/animes", animeFormData, {
@@ -139,7 +140,9 @@ const Admin = () => {
 
   const { Option } = Select;
 
-  const teste = ["Shoujo", "Shounen", "Aventura", "Ação"].sort();
+ useEffect(() => {
+
+ }, [])
 
   return (
     <>
@@ -168,6 +171,7 @@ const Admin = () => {
                   cols={30}
                   rows={6}
                   placeholder=" Uma sinopse bem legal..."
+                  maxLength={1023}
                 />
               </TextArea>
               <CheckboxStyled
@@ -195,7 +199,7 @@ const Admin = () => {
                 mode="multiple"
                 onChange={(e) => setGenres(e)}
               >
-                {teste.map((genre, index) => (
+                {allGenres?.map((genre, index) => (
                   <Option
                     name={genre}
                     value={genre}

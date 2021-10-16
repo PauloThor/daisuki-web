@@ -138,5 +138,21 @@ export const TextArea = styled.div`
     &:focus {
       border-color: ${Color.TEXT_SECONDARY};
     }
+
+    &::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #2a2a2a;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${Color.MAIN_LIGHT};
+
+    &:hover {
+      background-color: ${Color.MAIN};
+    }
+  }
   }
 `;
