@@ -50,7 +50,7 @@ const UserContext = createContext<UserData>({} as UserData);
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [token, setToken] = useState<string>(
-    JSON.parse(localStorage.getItem("@Daisuki:token") ?? "")
+    localStorage.getItem("@Daisuki:token") ?? ""
   );
   const [favorites, setFavorites] = useState<Anime[]>([]);
 
@@ -124,14 +124,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   useEffect(() => {
-    if (!token) {
-      return;
+    if (!!token) {
+      getFavorites(); //TODO acrescentar paginação no visual e atualizar aqui
+
+      const info: Info = jwt_decode(token);
+      setUser(info.sub);
     }
-
-    getFavorites(); //TODO acrescentar paginação no visual e atualizar aqui
-
-    const info: Info = jwt_decode(token);
-    setUser(info.sub);
     // eslint-disable-next-line
   }, []);
 

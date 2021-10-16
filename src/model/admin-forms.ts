@@ -14,7 +14,7 @@ export interface FormEpisode {
   anime: SelectValue;
   episodeNumber: number;
   videoUrl: string;
-  image: string;
+  image: FileList;
 }
 
 export interface FormModerator {
