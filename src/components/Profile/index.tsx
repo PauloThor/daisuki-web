@@ -12,15 +12,19 @@ import {
   Text,
 } from "./styles";
 import BannerImage from "../../assets/img/profile-header.png";
+import FormUtils from "../../shared/util/form-utils";
+import { UpdateTypes } from "../../model/enums/update-form-types";
 
 interface ProfileProps {
   onClose: () => void;
 }
 
 const Profile = ({ onClose }: ProfileProps) => {
-  const [formOpen, setFormOpen] = useState<boolean>(false);
+  const [passwordOpen, setPasswordOpen] = useState<boolean>(false);
+  const [usernameOpen, setUsernameOpen] = useState<boolean>(false);
 
-  const handleOpenForm = () => setFormOpen(!formOpen);
+  const handleOpenPassword = () => setPasswordOpen(!passwordOpen);
+  const handleOpenUsername = () => setUsernameOpen(!usernameOpen);
 
   const { user } = useUser();
 
@@ -36,14 +40,25 @@ const Profile = ({ onClose }: ProfileProps) => {
         <p>{user?.username ?? ""}</p>
       </AvatarContainer>
       <Options>
-        <p>Editar nome de usuário</p>
+        <p onClick={handleOpenUsername}>Editar nome de usuário</p>
         <p>Alterar foto de perfil</p>
         <p>Mudar endereço de e-mail</p>
-        <p onClick={handleOpenForm}>Alterar senha</p>
+        <p onClick={handleOpenPassword}>Alterar senha</p>
         <p>Excluir conta</p>
       </Options>
-      <StyledModal visible={formOpen} onCancel={handleOpenForm}>
-        <UpdateForm handleOpenForm={handleOpenForm} />
+      <StyledModal visible={passwordOpen} onCancel={handleOpenPassword}>
+        <UpdateForm
+          handleOpenForm={handleOpenPassword}
+          list={FormUtils.password}
+          type={UpdateTypes.PASSWORD}
+        />
+      </StyledModal>
+      <StyledModal visible={usernameOpen} onCancel={handleOpenUsername}>
+        <UpdateForm
+          handleOpenForm={handleOpenUsername}
+          list={FormUtils.username(user?.username ?? "")}
+          type={UpdateTypes.USERNAME}
+        />
       </StyledModal>
     </Container>
   );

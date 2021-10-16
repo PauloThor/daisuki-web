@@ -16,3 +16,8 @@ export interface PasswordInfo {
   password: string;
   newPassword: string;
 }
+
+export interface IdentityInfo {
+  username?: string;
+  email?: string;
+}

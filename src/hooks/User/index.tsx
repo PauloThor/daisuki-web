@@ -10,7 +10,7 @@ import { daisukiApi } from "../../services/api";
 import { Anime } from "../../model/anime";
 import { toast } from "react-hot-toast";
 import jwt_decode from "jwt-decode";
-import { Info, PasswordInfo, UserInfo } from "../../model/user";
+import { IdentityInfo, Info, PasswordInfo, UserInfo } from "../../model/user";
 import { LoginData, RegisterData } from "../../model/account";
 
 interface UserData {
@@ -25,6 +25,7 @@ interface UserData {
   deleteFavorite: (id?: number) => void;
   isLoading: boolean;
   updatePassword: (data: PasswordInfo, event?: () => void) => void;
+  updateUser: (data: IdentityInfo, event?: () => void) => void;
 }
 
 interface UserProviderProps {
@@ -33,9 +34,11 @@ interface UserProviderProps {
 
 const UserContext = createContext<UserData>({} as UserData);
 
+const localToken = localStorage.getItem("@Daisuki:token");
+
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [token, setToken] = useState<string>(
-    JSON.parse(localStorage.getItem("@Daisuki:token") ?? "")
+    !localToken ? "" : JSON.parse(localToken)
   );
   const [favorites, setFavorites] = useState<Anime[]>([]);
   const [user, setUser] = useState<UserInfo>({} as UserInfo);
@@ -93,7 +96,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   const getFavorites = async () => {
-    const res = await daisukiApi.get(`/users/favorites`, headers);
+    const res = await daisukiApi.get(`/users/favorites`, headersJson);
     const output = res.data.data.map((favorite: Anime) => {
       return {
         id: favorite.id,
@@ -131,7 +134,23 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     toast.promise(myPromise, {
       loading: "Enviando...",
       success: "Senha atualizada!",
-      error: "Você errou a senha",
+      error: "Senha incorreta",
+    });
+  };
+
+  const updateUser = (data: IdentityInfo, event?: () => void) => {
+    async function fetch() {
+      await daisukiApi.patch("/users/update", data, headersJson).then(() => {
+        if (event) {
+          event();
+        }
+      });
+    }
+    const myPromise = fetch();
+    toast.promise(myPromise, {
+      loading: "Enviando...",
+      success: "Informações atualizadas!",
+      error: "Tente novamente =c",
     });
   };
 
@@ -166,6 +185,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         deleteFavorite,
         isLoading,
         updatePassword,
+        updateUser,
       }}
     >
       {children}

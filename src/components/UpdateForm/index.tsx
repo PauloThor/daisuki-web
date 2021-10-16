@@ -1,13 +1,15 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { InputTypes } from "../../model/enums/input-types";
 import { Form } from "./styles";
 import InputText from "../InputText";
 import SchemaUtils from "../../shared/util/schema-utils";
 import Button from "../Button";
 import { useUser } from "../../hooks/User";
+import { FormProps } from "../../model/form";
+import { UpdateTypes } from "../../model/enums/update-form-types";
+import { IdentityInfo } from "../../model/user";
 
-interface FormInput {
+interface PasswordFormInput {
   currentPassword: string;
   newPassword: string;
   confirmPassword: string;
@@ -15,51 +17,48 @@ interface FormInput {
 
 interface UpdateFormProps {
   handleOpenForm: () => void;
+  list: FormProps[];
+  type: UpdateTypes.USERNAME | UpdateTypes.PASSWORD;
 }
 
-const UpdateForm = ({ handleOpenForm }: UpdateFormProps) => {
-  const { updatePassword } = useUser();
+const UpdateForm = ({ handleOpenForm, list, type }: UpdateFormProps) => {
+  const { updatePassword, updateUser } = useUser();
 
   const methods = useForm({
-    resolver: yupResolver(SchemaUtils.updatePassword()),
+    resolver: yupResolver(
+      type === UpdateTypes.PASSWORD
+        ? SchemaUtils.updatePassword()
+        : SchemaUtils.updateUsername()
+    ),
     mode: "all",
   });
 
-  const onSubmit = (data: FormInput) => {
+  const submitPassword = (data: PasswordFormInput) => {
     const output = {
       password: data.currentPassword,
       newPassword: data.newPassword,
     };
     updatePassword(output, handleOpenForm);
-    methods.reset();
   };
 
-  const inputList = [
-    {
-      name: "currentPassword",
-      placeholder: "Senha",
-      label: "Senha atual*",
-      type: InputTypes.PASSWORD,
-    },
-    {
-      name: "newPassword",
-      placeholder: "Senha",
-      label: "Nova senha*",
-      type: InputTypes.PASSWORD,
-    },
-    {
-      name: "confirmPassword",
-      placeholder: "Senha",
-      label: "Confirme a nova senha*",
-      type: InputTypes.PASSWORD,
-    },
-  ];
+  const submitUsername = (data: IdentityInfo) => {
+    updateUser(data, handleOpenForm);
+  };
+
+  const onSubmit = (data: PasswordFormInput & IdentityInfo) => {
+    const submitOptions = {
+      [UpdateTypes.PASSWORD]: () => submitPassword(data),
+      [UpdateTypes.USERNAME]: () => submitUsername(data),
+    };
+    submitOptions[type]();
+    methods.reset();
+  };
 
   return (
     <div>
       <FormProvider {...methods}>
         <Form onSubmit={methods.handleSubmit(onSubmit)}>
-          {inputList.map((input, index) => (
+          {list.map((input, index) => (
             <InputText
               key={`${input.name}-${index}`}
               name={input.name}

@@ -46,8 +46,8 @@ class SchemaUtils {
       //   .required(" - campo obrigatório"),
       // isMovie: yup.boolean().default(false),
       totalEpisodes: yup.string(),
-        // .typeError(" - Insira um número")
-        // .integer(" - Insira um valor inteiro"),
+      // .typeError(" - Insira um número")
+      // .integer(" - Insira um valor inteiro"),
       // isDubbed: yup.boolean().default(false),
       image: yup.mixed().required("Você precisa enviar uma imagem"),
     });
@@ -91,6 +91,12 @@ class SchemaUtils {
         .min(8, "")
         .required("")
         .oneOf([yup.ref("newPassword")], ""),
+    });
+  }
+
+  static updateUsername() {
+    return yup.object({
+      username: yup.string().required(" - Campo obrigatório"),
     });
   }
 }
