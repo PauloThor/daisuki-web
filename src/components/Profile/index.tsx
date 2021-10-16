@@ -23,16 +23,17 @@ const Profile = ({ onClose }: ProfileProps) => {
   const handleOpenForm = () => setFormOpen(!formOpen);
 
   const { user } = useUser();
+
   return (
     <Container>
       <CloseIcon size={30} onClick={onClose} />
       <Banner>
-        <Text>Minha conta</Text>
+        <Text onClick={() => console.log(user)}>Minha conta</Text>
         <img alt="header" src={BannerImage} />
       </Banner>
       <AvatarContainer>
         <img alt="avatar" src={DefaultAvatar} />
-        <p>{user?.username ?? "Umaru-chan"}</p>
+        <p>{user?.username ?? ""}</p>
       </AvatarContainer>
       <Options>
         <p>Editar nome de usuário</p>
