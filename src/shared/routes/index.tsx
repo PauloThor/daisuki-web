@@ -15,6 +15,8 @@ const Routes = () => {
       <Route exact path="/" component={Home} />
       <Route path="/register" component={Register} />
       <Route path="/login" component={Login} />
+      <Route path="/admin" component={Admin} />
+      <Route path="/animes/:name" component={AnimePage} />
       {user.permission === "mod" && <Route path="/admin" component={Admin} />}
       {user.permission === "admin" && <Route path="/admin" component={Admin} />}
       <Route path="/animes/:id" component={AnimePage} />

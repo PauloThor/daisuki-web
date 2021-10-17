@@ -1,3 +1,3 @@
 export interface ParamProps {
-  id: string;
+  name: string;
 }
