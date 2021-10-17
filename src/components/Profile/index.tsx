@@ -16,6 +16,7 @@ import FormUtils from "../../shared/util/form-utils";
 import { UpdateTypes } from "../../model/enums/update-form-types";
 import { Pop } from "../Favorites/styles";
 import UpdateAvatar from "../UpdateAvatar";
+import SpinLoading from "../SpinLoading";
 
 interface ProfileProps {
   onClose: () => void;
@@ -54,7 +55,11 @@ const Profile = ({ onClose }: ProfileProps) => {
         <img alt="header" src={BannerImage} />
       </Banner>
       <AvatarContainer>
-        <img alt="avatar" src={user?.avatarUrl ?? DefaultAvatar} />
+        {isLoading ? (
+          <SpinLoading />
+        ) : (
+          <img alt="avatar" src={user?.avatarUrl ?? DefaultAvatar} />
+        )}
         {isLoading ? <div></div> : <p>{user?.username ?? ""}</p>}
       </AvatarContainer>
       <Options>

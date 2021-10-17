@@ -12,6 +12,7 @@ import { toast } from "react-hot-toast";
 import { IdentityInfo, PasswordInfo, UserInfo } from "../../model/user";
 import { LoginData, RegisterData } from "../../model/account";
 import { Redirect } from "react-router";
+import { EpisodeHistory } from "../../model/episode-history";
 
 interface UserData {
   token: string;
@@ -29,6 +30,7 @@ interface UserData {
   deleteSelf: () => void;
   updateAvatar: (image?: File, event?: () => void) => void;
   updateInfo: () => void;
+  watched: EpisodeHistory[];
 }
 
 interface UserProviderProps {
@@ -43,9 +45,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [token, setToken] = useState<string>(
     !localToken ? "" : JSON.parse(localToken)
   );
-  const [favorites, setFavorites] = useState<Anime[]>([]);
   const [user, setUser] = useState<UserInfo>({} as UserInfo);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [favorites, setFavorites] = useState<Anime[]>([]);
+  const [watched, setWatched] = useState<EpisodeHistory[]>([]);
 
   const headers = {
     headers: {
@@ -226,9 +229,15 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const updateInfo = () => {
     if (!!token) {
-      getFavorites(); //TODO acrescentar paginação no visual e atualizar aqui
       getSelf();
+      getFavorites(); //TODO acrescentar paginação no visual e atualizar aqui
+      getWatched();
     }
+  };
+
+  const getWatched = async () => {
+    const res = await daisukiApi.get(`/users/watched-episodes`, headers);
+    setWatched(res.data.data);
   };
 
   useEffect(() => {
@@ -254,6 +263,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         deleteSelf,
         updateAvatar,
         updateInfo,
+        watched,
       }}
     >
       {children}

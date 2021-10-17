@@ -6,7 +6,6 @@ import { useState } from "react";
 import * as yup from "yup";
 import InputFile from "../InputFile";
 import { ImageContainer, StyledForm } from "./styles";
-import { AvatarInfo } from "../../model/user";
 import DefaultAvatar from "../../assets/img/default-user-avatar.png";
 
 interface UpdateAvatarProps {
@@ -24,14 +23,11 @@ const UpdateAvatar = ({ handleOpenForm }: UpdateAvatarProps) => {
     mode: "all",
   });
 
-  const onSubmit = (data: AvatarInfo) => {
-    const output = { image: avatar };
-    console.log(output);
+  const onSubmit = () => {
     updateAvatar(avatar, handleOpenForm);
   };
 
   const onUpload = (file: any) => {
-    console.log(file);
     setAvatar(file[0]);
   };
 
