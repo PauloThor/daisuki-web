@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import {Redirect} from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Select, Spin } from "antd";
@@ -47,7 +48,7 @@ const Admin = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const { token } = useUser();
+  const { token, user } = useUser();
   const { Option } = Select;
 
   const getAnimeList = () => {
@@ -251,6 +252,14 @@ const Admin = () => {
     getGenreList();
   }, []);
 
+  if (!token) {
+    return <Redirect to="/"/>
+  }
+
+  if (user.permission === 'user') {
+    return <Redirect to="/"/>
+  }
+
   return (
     <>
       <Header />
@@ -362,6 +371,8 @@ const Admin = () => {
             </FormStyled>
           </FormProvider>
         </Box>
+        {user.permission === 'admin' &&
+        <>
         <Box>
           <h2>Adicionar moderador:</h2>
           <FormProvider {...methodsModerator}>
@@ -382,6 +393,8 @@ const Admin = () => {
         <AddModButton onClick={handleModeratorsModal}>
           Ver moderadores
         </AddModButton>
+        </>
+}
       </Container>
       <Modal
         title="Moderadores"
@@ -412,6 +425,7 @@ const Admin = () => {
           </ul>
         )}
       </Modal>
+
     </>
   );
 };
