@@ -29,6 +29,7 @@ import Favorites from "../Favorites";
 import { useUser } from "../../hooks/User";
 import { Anime } from "../../model/anime";
 import SpinLoading from "../SpinLoading";
+import Watched from "../Watched";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -38,7 +39,7 @@ const Header = () => {
   const { token } = useUser();
 
   const history = useHistory();
-  const { favorites, logout, isLoading } = useUser();
+  const { favorites, logout, isLoading, watched } = useUser();
 
   const handleOpenMenu = () => setMenuOpen(!menuOpen);
   const handleOpenProfile = () => {
@@ -52,6 +53,7 @@ const Header = () => {
   const handleOpenHistory = () => {
     closeAll();
     setHistoryOpen(!historyOpen);
+    console.log(watched);
   };
 
   const closeAll = () => {
@@ -214,7 +216,7 @@ const Header = () => {
       )}
       {historyOpen && (
         <ProfileContainer>
-          <Favorites onClose={handleOpenFavorites} list={favoritesList} />
+          <Watched onClose={handleOpenHistory} list={watched} />
         </ProfileContainer>
       )}
     </Container>
