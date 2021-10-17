@@ -70,11 +70,19 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       history.push("/");
     }
     const myPromise = fetch();
-    toast.promise(myPromise, {
-      loading: "Enviando...",
-      success: "Olá! ＼(≧▽≦)／",
-      error: "Tente novamente =c",
-    });
+    toast.promise(
+      myPromise,
+      {
+        loading: "Enviando...",
+        success: "Olá! ＼(≧▽≦)／",
+        error: "Tente novamente =c",
+      },
+      {
+        success: {
+          icon: "✨✨",
+        },
+      }
+    );
   };
 
   const register = (data: RegisterData, history: History) => {

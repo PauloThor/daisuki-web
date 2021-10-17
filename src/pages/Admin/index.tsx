@@ -102,6 +102,7 @@ const Admin = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      methodsAnime.reset();
       setSynopsis("");
       setAnimeImage(undefined);
     }
@@ -143,7 +144,7 @@ const Admin = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setAnime("");
+      methodsEpisode.reset();
       setEpisodeImage(undefined);
     }
     const myPromise = fetch();
@@ -170,6 +171,7 @@ const Admin = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      methodsModerator.reset()
     }
     const myPromise = fetch();
     toast.promise(
