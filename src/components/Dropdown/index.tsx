@@ -9,6 +9,7 @@ import {
 } from "./styles";
 import { SubItem } from "../../model/menu-item";
 import DefaultAvatar from "../../assets/img/default-user-avatar.png";
+import { useUser } from "../../hooks/User";
 
 interface DropdownItemProps {
   title: string;
@@ -17,6 +18,7 @@ interface DropdownItemProps {
 }
 
 const DropdownItem = ({ title, items, hasAvatar }: DropdownItemProps) => {
+  const { user } = useUser();
   const menu = (
     <Menu style={hasAvatar ? { ...MenuStyles, ...avatarStyles } : MenuStyles}>
       {items?.map((item, index) => (
@@ -40,7 +42,7 @@ const DropdownItem = ({ title, items, hasAvatar }: DropdownItemProps) => {
           {!hasAvatar ? (
             <MenuLabel>{title}</MenuLabel>
           ) : (
-            <img src={DefaultAvatar} alt="avatar" />
+            <img src={user?.avatarUrl ?? DefaultAvatar} alt="avatar" />
           )}
         </MenuItem>
       </Dropdown>

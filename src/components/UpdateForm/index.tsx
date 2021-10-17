@@ -53,7 +53,6 @@ const UpdateForm = ({ handleOpenForm, list, type }: UpdateFormProps) => {
       [UpdateTypes.USERNAME]: () => submitUser(data),
       [UpdateTypes.EMAIL]: () => submitUser(data),
     };
-    console.log(data);
     submitOptions[type]();
     methods.reset();
   };

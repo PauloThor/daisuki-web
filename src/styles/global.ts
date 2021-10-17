@@ -101,4 +101,8 @@ export const GlobalStyle = createGlobalStyle`
           color: ${Color.MAIN_DARK};
       }
   }
+
+  .ant-modal-wrap {
+    z-index: 1002 ;
+  }
 `;
