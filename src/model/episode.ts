@@ -10,4 +10,5 @@ export interface Episode {
   updatedAt?: string;
   animeId?: number;
   anime?: Anime;
+  hasWatched?: boolean;
 }

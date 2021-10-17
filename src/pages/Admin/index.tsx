@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Select } from "antd";
+import { Select, Spin } from "antd";
 import { SelectValue } from "antd/lib/select";
 import { toast } from "react-hot-toast";
-import { IoMdRefresh } from "react-icons/io";
+import { IoMdRefresh, IoMdRemoveCircleOutline } from "react-icons/io";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
 import InputText from "../../components/InputText";
@@ -20,15 +20,21 @@ import {
   TextArea,
   AddEpTitle,
   AddModButton,
+  Modal,
+  Li,
+  SpinContainer,
+  Pop,
 } from "./styles";
 import { useUser } from "../../hooks/User";
 import { InputTypes } from "../../model/enums/input-types";
 import { FormAnime, FormEpisode, FormModerator } from "../../model/admin-forms";
+import { Genre } from "../../model/anime";
+import { UserInfo } from "../../model/user";
 import { daisukiApi } from "../../services/api";
-import { genres as allGenres } from "../../shared/util/genre-utils";
 import SchemaUtils from "../../shared/util/schema-utils";
 
 const Admin = () => {
+  const [allGenres, setAllGenres] = useState<string[]>([]);
   const [genres, setGenres] = useState<SelectValue | any>([]);
   const [isDubbed, setIsDubbed] = useState(false);
   const [isMovie, setIsMovie] = useState(false);
@@ -37,13 +43,28 @@ const Admin = () => {
   const [anime, setAnime] = useState<SelectValue>("");
   const [episodeImage, setEpisodeImage] = useState<File>();
   const [animeImage, setAnimeImage] = useState<File>();
+  const [moderators, setModerators] = useState<UserInfo[]>([]);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const { token } = useUser();
+  const { token, user } = useUser();
+  const { Option } = Select;
 
   const getAnimeList = () => {
     daisukiApi
       .get("/animes/upload-list")
       .then((res) => setAnimeList(res.data))
+      .catch((err) => console.log(err));
+  };
+
+  const getGenreList = () => {
+    daisukiApi
+      .get("/animes/genres")
+      .then((res) => {
+        const data: Genre[] = res.data;
+        const genres = data.map((genre) => genre.name);
+        setAllGenres(genres);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -64,7 +85,10 @@ const Admin = () => {
 
   const onSubmitAnime = (data: FormAnime) => {
     if (!genres[0]) {
-      return toast.error("Selecione ao menos um gênero");
+      return toast.error("Selecione ao menos um gênero!");
+    }
+    if (!animeImage) {
+      return toast.error("Selecione uma imagem!");
     }
 
     const formData = new FormData();
@@ -78,13 +102,7 @@ const Admin = () => {
     formData.append("isDubbed", isDubbed ? "true" : "");
     formData.append("isMovie", isMovie ? "true" : "");
     formData.append("genres", genres.join(","));
-    if (data.image[0]) {
-      formData.append(
-        "image",
-        data.image[0] ?? animeImage,
-        data.image[0].name ?? animeImage
-      );
-    }
+    formData.append("image", animeImage, animeImage.name);
 
     async function fetch() {
       await daisukiApi.post("/animes", formData, {
@@ -93,6 +111,9 @@ const Admin = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      methodsAnime.reset();
+      setSynopsis("");
+      setAnimeImage(undefined);
     }
     const myPromise = fetch();
     toast.promise(
@@ -112,63 +133,123 @@ const Admin = () => {
 
   const onSubmitEpisode = (data: FormEpisode) => {
     if (!anime) {
-      return toast.error("Selecione um anime");
+      return toast.error("Selecione um anime!");
+    }
+    if (!episodeImage) {
+      return toast.error("Selecione uma imagem!");
     }
 
-    const output = {
-      anime: anime,
-      episodeNumber: data.episodeNumber,
-      videoUrl: data.videoUrl,
-      image: data?.imageEpisode?.[0] ?? episodeImage,
-    };
-    console.log("data", episodeImage);
-    console.log(output);
+    const formData = new FormData();
 
-    // async function fetch() {
-    //   await daisukiApi.post("/episodes", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   });
-    // }
-    // const myPromise = fetch();
-    // toast.promise(
-    //   myPromise,
-    //   {
-    //     loading: "Enviando...",
-    //     success: "Episódio adicionado!",
-    //     error: "Tente novamente =c",
-    //   },
-    //   {
-    //     style: {
-    //       minWidth: "200px",
-    //     },
-    //   }
-    // );
+    formData.append("anime", String(anime));
+    formData.append("episodeNumber", String(data.episodeNumber));
+    formData.append("videoUrl", data.videoUrl);
+    formData.append("image", episodeImage, episodeImage.name);
+
+    async function fetch() {
+      await daisukiApi.post("/episodes", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      methodsEpisode.reset();
+      setEpisodeImage(undefined);
+    }
+    const myPromise = fetch();
+    toast.promise(
+      myPromise,
+      {
+        loading: "Enviando...",
+        success: "Episódio adicionado!",
+        error: "Tente novamente =c",
+      },
+      {
+        style: {
+          minWidth: "200px",
+        },
+      }
+    );
   };
 
   const onSubmitModerator = (data: FormModerator) => {
-    console.log(data);
-    const output = {
-      email: data.email,
-    };
-    console.log(output);
+    async function fetch() {
+      await daisukiApi.put("/users/moderators", data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      methodsModerator.reset();
+    }
+    const myPromise = fetch();
+    toast.promise(
+      myPromise,
+      {
+        loading: "Enviando...",
+        success: "Moderador adicionado!",
+        error: "Usuário não cadastrado.",
+      },
+      {
+        style: {
+          minWidth: "200px",
+        },
+      }
+    );
   };
 
-  const { Option } = Select;
-
-  useEffect(() => {
-    getAnimeList();
-  }, []);
-
-  const onUploadEpisodeImage = (file: any) => {
+  const onUploadEpisodeImage = (file: FileList) => {
     setEpisodeImage(file[0]);
   };
 
-  const onUploadAnimeImage = (file: any) => {
+  const onUploadAnimeImage = (file: FileList) => {
     setAnimeImage(file[0]);
   };
+
+  const getModerators = () => {
+    daisukiApi
+      .get("/users/moderators", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setModerators(res.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleModeratorsModal = () => {
+    getModerators();
+    setOpenModal(true);
+  };
+
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+
+  const deleteModerator = (email: string | undefined) => {
+    daisukiApi
+      .delete("/users/moderators", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          email: email,
+        },
+      })
+      .then((_) => {
+        getModerators();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getAnimeList();
+    getGenreList();
+  }, []);
 
   return (
     <>
@@ -195,7 +276,7 @@ const Admin = () => {
                   name="synopsis"
                   id="synopsis"
                   cols={30}
-                  rows={6}
+                  rows={4}
                   placeholder=" Uma sinopse bem legal..."
                   maxLength={1023}
                 />
@@ -225,14 +306,14 @@ const Admin = () => {
                 mode="multiple"
                 onChange={(e) => setGenres(e)}
               >
-                {allGenres.map((genre) => (
+                {allGenres?.map((genre) => (
                   <Option name={genre} value={genre} key={genre}>
                     {genre}
                   </Option>
                 ))}
               </SelectStyled>
               <Wrapper>
-                <InputFile name="image" onChange={onUploadAnimeImage} />
+                <InputFile name="imageAnime" onChange={onUploadAnimeImage} />
                 <Button text="Enviar" />
               </Wrapper>
             </FormStyled>
@@ -281,25 +362,60 @@ const Admin = () => {
             </FormStyled>
           </FormProvider>
         </Box>
-        <Box>
-          <h2>Adicionar moderador:</h2>
-          <FormProvider {...methodsModerator}>
-            <FormMod
-              onSubmit={methodsModerator.handleSubmit(onSubmitModerator)}
-              autoComplete="off"
-            >
-              <InputText
-                name="email"
-                placeholder="exemplo@mail.com"
-                label="Email*"
-                type={InputTypes.EMAIL}
-              />
-              <Button text="Enviar" margin="0.5rem 0 0.5rem 8px" />
-            </FormMod>
-          </FormProvider>
-        </Box>
-        <AddModButton>Ver moderadores</AddModButton>
+        {user.permission === "admin" && (
+          <>
+            <Box>
+              <h2>Adicionar moderador:</h2>
+              <FormProvider {...methodsModerator}>
+                <FormMod
+                  onSubmit={methodsModerator.handleSubmit(onSubmitModerator)}
+                  autoComplete="off"
+                >
+                  <InputText
+                    name="email"
+                    placeholder="exemplo@mail.com"
+                    label="Email*"
+                    type={InputTypes.EMAIL}
+                  />
+                  <Button text="Enviar" margin="0.5rem 0 0.5rem 8px" />
+                </FormMod>
+              </FormProvider>
+            </Box>
+            <AddModButton onClick={handleModeratorsModal}>
+              Ver moderadores
+            </AddModButton>
+          </>
+        )}
       </Container>
+      <Modal
+        title="Moderadores"
+        placement="right"
+        onClose={handleClose}
+        visible={openModal}
+      >
+        {loading ? (
+          <SpinContainer>
+            <Spin />
+          </SpinContainer>
+        ) : (
+          <ul>
+            {moderators?.map((mod) => (
+              <Li key={mod.id}>
+                {mod.email}
+                <Pop
+                  title={`Remover ${mod.username}?`}
+                  placement="left"
+                  onConfirm={() => deleteModerator(mod.email)}
+                  okText="Sim"
+                  cancelText="Não"
+                >
+                  <IoMdRemoveCircleOutline />
+                </Pop>
+              </Li>
+            ))}
+          </ul>
+        )}
+      </Modal>
     </>
   );
 };

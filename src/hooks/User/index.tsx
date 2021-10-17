@@ -67,28 +67,31 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const login = (data: LoginData, history: History) => {
     setIsLoading(true);
     async function fetch() {
-      await daisukiApi
-        .post("/users/login", data)
-        .then((res) => {
-          localStorage.setItem(
-            "@Daisuki:token",
-            JSON.stringify(res.data.accessToken)
-          );
-          setToken(res.data.accessToken);
-        })
-        .finally(() => {
-          updateInfo();
-          history.push("/");
-        });
+      await daisukiApi.post("/users/login", data).then((res) => {
+        localStorage.setItem(
+          "@Daisuki:token",
+          JSON.stringify(res.data.accessToken)
+        );
+        setToken(res.data.accessToken);
+        updateInfo();
+        history.push("/");
+      });
     }
     const myPromise = fetch();
     toast
-      .promise(myPromise, {
-        loading: "Enviando...",
-        success: "Você logou!",
-        error: "Tente novamente =c",
-      })
-      .finally(() => setIsLoading(false));
+      .promise(
+        myPromise,
+        {
+          loading: "Enviando...",
+          success: "Ohayou! ＼(≧▽≦)／",
+          error: "Tente novamente =c",
+        },
+        {
+          success: {
+            icon: "✨✨",
+          },
+        }
+      )
   };
 
   const register = (data: RegisterData, history: History) => {

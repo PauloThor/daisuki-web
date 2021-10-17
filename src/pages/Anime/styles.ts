@@ -3,14 +3,21 @@ import { Font } from "../../model/enums/theme-fonts";
 import { Color } from "../../model/enums/theme-colors";
 import { Collapse } from "antd";
 import { Link } from "react-router-dom";
+import { ReactComponent as RemoveFav } from "../../assets/img/removeFav.svg";
 
 interface HeaderAnimeDataProps {
-  favIcon: string;
+  isFavorite: boolean;
 }
 
 interface EpisodeProps {
   watched: boolean;
 }
+
+const mountedStyle = "inAnimation 300ms ease-in";
+const unmountedStyle = {
+  animation: "outAnimation 350ms ease-out",
+  animationFillMode: "forwards",
+};
 
 export const Container = styled.main`
   width: 100%;
@@ -63,17 +70,89 @@ export const HeaderAnimeData = styled.div<HeaderAnimeDataProps>`
 
   button {
     margin: 0;
-    background-image: url(${({ favIcon }) => favIcon});
     background-color: transparent;
     width: 25px;
     height: 25px;
     border: none;
-    background-repeat: no-repeat;
+    position: relative;
+    animation: ${({ isFavorite }) =>
+      isFavorite ? mountedStyle : unmountedStyle.animation};
+
+    &:hover svg {
+      @media (min-width: 1025px) {
+        display: none;
+      }
+    }
+    &:hover span {
+      @media (min-width: 1025px) {
+        display: block;
+        > svg {
+          display: block;
+          opacity: 100%;
+        }
+      }
+    }
+
+    span {
+      display: none;
+      position: absolute;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+      top: 0;
+
+      svg {
+        path {
+          fill: ${Color.HIGHLIGHT};
+        }
+      }
+    }
+    path {
+      fill: ${Color.HIGHLIGHT_DARK};
+    }
+    svg {
+      width: 25px;
+      height: 25px;
+      opacity: 100%;
+      path {
+        fill: ${({ isFavorite }) => isFavorite && Color.HIGHLIGHT_DARK};
+      }
+    }
 
     @media (min-width: 768px) {
-      width: 35px;
-      height: 35px;
-      background-size: contain;
+      svg {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    @keyframes inAnimation {
+      0% {
+        opacity: 0;
+        visibility: hidden;
+      }
+      50% {
+        opacity: 0.5;
+        visibility: visible;
+      }
+      100% {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    @keyframes outAnimation {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 0.1;
+        color: transparent;
+      }
     }
   }
 `;
@@ -283,4 +362,13 @@ export const Synopsis = styled.p`
 export const Footer = styled.div`
   width: 100%;
   height: 30px;
+`;
+
+export const RemoveFavStyled = styled(RemoveFav)`
+  width: 25px;
+  height: 25px;
+
+  path {
+    fill: green;
+  }
 `;

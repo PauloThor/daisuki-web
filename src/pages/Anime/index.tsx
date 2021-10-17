@@ -18,7 +18,7 @@ import {
 } from "./styles";
 import { useHistory, useParams } from "react-router";
 import { useEffect, useState } from "react";
-import { BackTop, Rate, Spin, Collapse } from "antd";
+import { Rate, Spin, Collapse } from "antd";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
 import { ModalSynopsis } from "../../components/ModalSynopsis";
@@ -27,31 +27,53 @@ import { daisukiApi } from "../../services/api";
 import { Anime } from "../../model/anime";
 import { Episode } from "../../model/episode";
 import { ParamProps } from "../../model/param";
-import FavIcon from "../../assets/img/fav-icon.svg";
+import { ReactComponent as FavIcon } from "../../assets/img/fav-icon.svg";
+import { ReactComponent as FavAnime } from "../../assets/img/favAnime.svg";
+import { ReactComponent as RemoveFav } from "../../assets/img/removeFav.svg";
+import { ReactComponent as FavHover } from "../../assets/img/favHover.svg";
+import BackTop from "../../components/BackTop";
+import { useUser } from "../../hooks/User";
+import { ModalToLogin } from "../../components/ModalToLogin";
+import toast from "react-hot-toast";
+import { returnStars } from "../../shared/util/anime-utils";
 
 const AnimePage = () => {
   const param: ParamProps = useParams();
   const history = useHistory();
+  const { token, getFavorites, favorites } = useUser();
   const { Panel } = Collapse;
 
   const [anime, setAnime] = useState<Anime>();
   const [episodes, setEpisodes] = useState<Episode[]>([]);
+  const [episodesPerPage, setEpisodesPerPage] = useState<[Episode[]]>([[]]);
+  const [animeRate, setAnimeRate] = useState(5.0);
+
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [isInvalidLink, setIsInvalidLink] = useState<boolean>(false);
+
   const [isModalSynopsisVisible, setIsModalSynopsisVisible] =
+    useState<boolean>(false);
+  const [isModalToLoginVisible, setIsModalToLoginVisible] =
     useState<boolean>(false);
 
   const loadAnime = async () => {
     const isValidAnime = await daisukiApi
-      .get(`/animes/${param.id}`)
+      .get(`/animes/${param.name}`)
       .then((response) => {
-        if (response?.data?.anime) {
-          setAnime(response.data.anime);
+        if (response?.data) {
+          setAnime(response.data);
+          if (response.data.rating) {
+            setAnimeRate(response.data.rating);
+          }
           return true;
         } else {
           setIsInvalidLink(true);
           return false;
         }
+      })
+      .catch((e) => {
+        setIsInvalidLink(true);
+        return false;
       });
 
     if (isValidAnime) {
@@ -63,9 +85,26 @@ const AnimePage = () => {
   };
 
   const loadEpisodes = async () => {
-    daisukiApi.get(`/animes/${param.id}/episodes`).then((response) => {
-      setEpisodes(response?.data.episodes);
-    });
+    if (anime?.totalEpisodes) {
+      if (anime.totalEpisodes > 24) {
+        for (let counter = 24; counter <= anime.totalEpisodes; counter += 24) {
+          daisukiApi
+            .get(`/animes/${param.name}/episodes?page=${counter / 24}`)
+            .then((response) => {
+              if (episodesPerPage[0][0] !== undefined) {
+                const listEpisodes = [...episodesPerPage, response?.data.data];
+                setEpisodesPerPage([listEpisodes]);
+              } else {
+                setEpisodesPerPage([response.data.data]);
+              }
+            });
+        }
+      }
+    } else {
+      daisukiApi.get(`/animes/${param.name}/episodes`).then((response) => {
+        setEpisodes(response?.data.data);
+      });
+    }
   };
 
   useEffect(() => {
@@ -73,36 +112,86 @@ const AnimePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // TODO integrar com a nota do anime quando o backend ficar pronto.
-  const [animeRate, setAnimeRate] = useState(4.73);
+  const handleRate = async (value: number) => {
+    await setRating(value);
+    setTimeout(() => {
+      loadAnime();
+    }, 1000);
+  };
 
-  const handleRate = (value: number) => {
-    setAnimeRate(value);
+  const setRating = async (value: number) => {
+    value = Math.ceil(value);
+    if (!token) {
+      handleModalToLogin();
+    } else {
+      daisukiApi
+        .put(
+          `/animes/${anime?.id}/ratings`,
+          {
+            rating: value,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((response) =>
+          toast(`Anime avaliado com ${returnStars(value)}`, {
+            icon: "🏅",
+          })
+        )
+        .catch((e) => toast.error("Algo deu errado, tente novamente!"));
+    }
   };
 
   const handleModalSynopsis = () => {
     setIsModalSynopsisVisible(!isModalSynopsisVisible);
   };
 
+  const handleModalToLogin = () => {
+    setIsModalToLoginVisible(!isModalToLoginVisible);
+  };
+
   const handleToEpisode = (id: number) => {
-    history.push(`/animes/${param.id}/episodes/${id}`);
+    history.push(`/animes/${param.name}/episodes/${id}`);
   };
 
-  const getListsEpisodes = () => {
-    let output: [Episode[]] = [[]];
-    let outputIndex = 0;
-    for (let counter = 0; counter < episodes.length; counter++) {
-      if (output[outputIndex].length < 24) {
-        output[outputIndex].push(episodes[counter]);
-      } else {
-        output[outputIndex + 1] = [episodes[counter]];
-        outputIndex++;
-      }
+  const handleFavoriteAnime = () => {
+    if (!token) {
+      handleModalToLogin();
+    } else if (!isFavorite) {
+      daisukiApi
+        .put(`/users/favorites/${anime?.id}`, null, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          getFavorites();
+          toast("Anime favoritado!", {
+            icon: "❤️",
+          });
+        })
+        .catch((e) => toast.error("Falha ao favoritar, tente novamente!"));
+    } else {
+      daisukiApi
+        .delete(`/users/favorites/${anime?.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          getFavorites();
+          toast("Anime removido dos favoritos!", {
+            icon: "💔",
+          });
+        })
+        .catch((e) => toast.error("Algo deu errado, tente novamente!"));
     }
-    return output;
   };
 
-  const episodesList = getListsEpisodes();
+  const isFavorite = favorites.find((f) => f.id === anime?.id);
 
   return (
     <>
@@ -120,9 +209,12 @@ const AnimePage = () => {
           <Container>
             <InfoAnime>
               <AnimeData>
-                <HeaderAnimeData favIcon={FavIcon}>
+                <HeaderAnimeData isFavorite={!!isFavorite}>
                   <h1>{anime.name}</h1>
-                  <button type="button" />
+                  <button type="button" onClick={handleFavoriteAnime}>
+                    {isFavorite ? <FavAnime /> : <FavIcon />}
+                    <span>{isFavorite ? <RemoveFav /> : <FavHover />}</span>
+                  </button>
                 </HeaderAnimeData>
                 <RateContainer>
                   <Rate onChange={handleRate} value={animeRate} allowHalf />
@@ -166,30 +258,30 @@ const AnimePage = () => {
               </AnimeCover>
             </InfoAnime>
 
-            {episodes.length > 24 ? (
-              episodesList.map((list) => (
+            {episodesPerPage[0][0] !== undefined ? (
+              episodesPerPage.map((list) => (
                 <>
                   <StyledCollapse defaultActiveKey={["0"]} bordered={false}>
                     <Panel
                       header={
                         <span>
                           Episódios:{" "}
-                          {episodesList.indexOf(list) !== 0
-                            ? 1 * episodesList.indexOf(list)
+                          {episodesPerPage.indexOf(list) !== 0
+                            ? 1 * episodesPerPage.indexOf(list)
                             : 1}
                           {" - "}
-                          {episodesList.indexOf(list) !== 0
-                            ? 24 * episodesList.indexOf(list)
+                          {episodesPerPage.indexOf(list) !== 0
+                            ? 24 * episodesPerPage.indexOf(list)
                             : list.length}
                         </span>
                       }
-                      key={episodesList.indexOf(list)}
+                      key={episodesPerPage.indexOf(list)}
                       style={{ color: "white" }}
                     >
                       <StyledListEpisodes>
                         {list.map((epi) => (
                           <AnimeEpisode
-                            watched={false}
+                            watched={epi?.hasWatched || false}
                             key={epi.id}
                             onClick={() =>
                               handleToEpisode(
@@ -230,6 +322,10 @@ const AnimePage = () => {
               handleModalSynopsis={handleModalSynopsis}
               isModalSynopsisVisible={isModalSynopsisVisible}
               synopsis={anime.synopsis || ""}
+            />
+            <ModalToLogin
+              isModalToLoginVisible={isModalToLoginVisible}
+              handleModalToLogin={handleModalToLogin}
             />
           </Container>
         </>
