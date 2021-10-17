@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Select } from "antd";
+import { Select, Spin } from "antd";
 import { SelectValue } from "antd/lib/select";
 import { toast } from "react-hot-toast";
-import { IoMdRefresh } from "react-icons/io";
+import { IoMdRefresh, IoMdRemoveCircleOutline } from "react-icons/io";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
 import InputText from "../../components/InputText";
@@ -20,16 +20,20 @@ import {
   TextArea,
   AddEpTitle,
   AddModButton,
+  Modal,
+  Li,
+  SpinContainer,
 } from "./styles";
 import { useUser } from "../../hooks/User";
 import { InputTypes } from "../../model/enums/input-types";
 import { FormAnime, FormEpisode, FormModerator } from "../../model/admin-forms";
 import { Genre } from "../../model/anime";
+import { UserInfo } from "../../model/user";
 import { daisukiApi } from "../../services/api";
 import SchemaUtils from "../../shared/util/schema-utils";
 
 const Admin = () => {
-  const [allGenres, setAllGenres] = useState<string[]>([])
+  const [allGenres, setAllGenres] = useState<string[]>([]);
   const [genres, setGenres] = useState<SelectValue | any>([]);
   const [isDubbed, setIsDubbed] = useState(false);
   const [isMovie, setIsMovie] = useState(false);
@@ -38,8 +42,12 @@ const Admin = () => {
   const [anime, setAnime] = useState<SelectValue>("");
   const [episodeImage, setEpisodeImage] = useState<File>();
   const [animeImage, setAnimeImage] = useState<File>();
+  const [moderators, setModerators] = useState<UserInfo[]>([]);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { token } = useUser();
+  const { Option } = Select;
 
   const getAnimeList = () => {
     daisukiApi
@@ -52,9 +60,9 @@ const Admin = () => {
     daisukiApi
       .get("/animes/genres")
       .then((res) => {
-        const data: Genre[] = res.data
-        const genres = data.map(genre => genre.name)
-        setAllGenres(genres)
+        const data: Genre[] = res.data;
+        const genres = data.map((genre) => genre.name);
+        setAllGenres(genres);
       })
       .catch((err) => console.log(err));
   };
@@ -171,7 +179,7 @@ const Admin = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      methodsModerator.reset()
+      methodsModerator.reset();
     }
     const myPromise = fetch();
     toast.promise(
@@ -189,13 +197,6 @@ const Admin = () => {
     );
   };
 
-  const { Option } = Select;
-
-  useEffect(() => {
-    getAnimeList();
-    getGenreList();
-  }, []);
-
   const onUploadEpisodeImage = (file: FileList) => {
     setEpisodeImage(file[0]);
   };
@@ -203,6 +204,34 @@ const Admin = () => {
   const onUploadAnimeImage = (file: FileList) => {
     setAnimeImage(file[0]);
   };
+
+  const getModerators = () => {
+    daisukiApi
+      .get("/users/moderators", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setModerators(res.data);
+        setLoading(false)
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleModeratorsModal = () => {
+    getModerators();
+    setOpenModal(true);
+  };
+
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+
+  useEffect(() => {
+    getAnimeList();
+    getGenreList();
+  }, []);
 
   return (
     <>
@@ -332,8 +361,30 @@ const Admin = () => {
             </FormMod>
           </FormProvider>
         </Box>
-        <AddModButton>Ver moderadores</AddModButton>
+        <AddModButton onClick={handleModeratorsModal}>
+          Ver moderadores
+        </AddModButton>
       </Container>
+      <Modal
+        title="Moderadores"
+        placement="right"
+        onClose={handleClose}
+        visible={openModal}
+      >
+        {loading ? (
+          <SpinContainer>
+            <Spin />
+          </SpinContainer>
+        ) : (
+          <ul>
+            {moderators?.map((mod) => (
+              <Li key={mod.id}>
+                {mod.email} <IoMdRemoveCircleOutline />
+              </Li>
+            ))}
+          </ul>
+        )}
+      </Modal>
     </>
   );
 };
