@@ -64,7 +64,10 @@ const Admin = () => {
 
   const onSubmitAnime = (data: FormAnime) => {
     if (!genres[0]) {
-      return toast.error("Selecione ao menos um gênero");
+      return toast.error("Selecione ao menos um gênero!");
+    }
+    if (!animeImage) {
+      return toast.error("Selecione uma imagem!");
     }
 
     const formData = new FormData();
@@ -78,13 +81,7 @@ const Admin = () => {
     formData.append("isDubbed", isDubbed ? "true" : "");
     formData.append("isMovie", isMovie ? "true" : "");
     formData.append("genres", genres.join(","));
-    if (data.image[0]) {
-      formData.append(
-        "image",
-        data.image[0] ?? animeImage,
-        data.image[0].name ?? animeImage
-      );
-    }
+    formData.append("image", animeImage, animeImage.name);
 
     async function fetch() {
       await daisukiApi.post("/animes", formData, {
@@ -112,40 +109,41 @@ const Admin = () => {
 
   const onSubmitEpisode = (data: FormEpisode) => {
     if (!anime) {
-      return toast.error("Selecione um anime");
+      return toast.error("Selecione um anime!");
+    }
+    if (!episodeImage) {
+      return toast.error("Selecione uma imagem!");
     }
 
-    const output = {
-      anime: anime,
-      episodeNumber: data.episodeNumber,
-      videoUrl: data.videoUrl,
-      image: data?.imageEpisode?.[0] ?? episodeImage,
-    };
-    console.log("data", episodeImage);
-    console.log(output);
+    const formData = new FormData();
 
-    // async function fetch() {
-    //   await daisukiApi.post("/episodes", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   });
-    // }
-    // const myPromise = fetch();
-    // toast.promise(
-    //   myPromise,
-    //   {
-    //     loading: "Enviando...",
-    //     success: "Episódio adicionado!",
-    //     error: "Tente novamente =c",
-    //   },
-    //   {
-    //     style: {
-    //       minWidth: "200px",
-    //     },
-    //   }
-    // );
+    formData.append("anime", String(anime));
+    formData.append("episodeNumber", String(data.episodeNumber));
+    formData.append("videoUrl", data.videoUrl);
+    formData.append("image", episodeImage, episodeImage.name);
+
+    async function fetch() {
+      await daisukiApi.post("/episodes", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
+    const myPromise = fetch();
+    toast.promise(
+      myPromise,
+      {
+        loading: "Enviando...",
+        success: "Episódio adicionado!",
+        error: "Tente novamente =c",
+      },
+      {
+        style: {
+          minWidth: "200px",
+        },
+      }
+    );
   };
 
   const onSubmitModerator = (data: FormModerator) => {
@@ -162,11 +160,11 @@ const Admin = () => {
     getAnimeList();
   }, []);
 
-  const onUploadEpisodeImage = (file: any) => {
+  const onUploadEpisodeImage = (file: FileList) => {
     setEpisodeImage(file[0]);
   };
 
-  const onUploadAnimeImage = (file: any) => {
+  const onUploadAnimeImage = (file: FileList) => {
     setAnimeImage(file[0]);
   };
 

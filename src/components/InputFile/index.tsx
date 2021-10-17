@@ -1,16 +1,13 @@
-import { useFormContext } from "react-hook-form";
 import { RiImageAddLine } from "react-icons/ri";
 import { Label, Input } from "./styles";
 
 interface Props {
   name: string;
-  onChange: (e: any) => void;
+  onChange: (e: FileList) => void;
 }
 
 const InputFile = ({ name, onChange }: Props) => {
-  const { register } = useFormContext();
-
-  const onUpload = (e: any) => {
+  const onUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {
       return;
     }
@@ -23,7 +20,6 @@ const InputFile = ({ name, onChange }: Props) => {
         <RiImageAddLine /> Escolha uma imagem
       </Label>
       <Input
-        {...register(name)}
         type="file"
         id={`image-${name}`}
         accept="image/png, image/jpeg"

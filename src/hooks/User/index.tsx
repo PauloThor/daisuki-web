@@ -72,7 +72,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     const myPromise = fetch();
     toast.promise(myPromise, {
       loading: "Enviando...",
-      success: "Você logou!",
+      success: "Olá! ＼(≧▽≦)／",
       error: "Tente novamente =c",
     });
   };
