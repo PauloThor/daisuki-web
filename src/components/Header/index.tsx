@@ -13,8 +13,6 @@ import {
 } from "./styles";
 import Logo from "../../assets/img/logo.svg";
 import DropdownItem from "../Dropdown";
-import InputText from "../InputText";
-import { InputTypes } from "../../model/enums/input-types";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SchemaUtils from "../../shared/util/schema-utils";
@@ -30,6 +28,7 @@ import { useUser } from "../../hooks/User";
 import { Anime } from "../../model/anime";
 import SpinLoading from "../SpinLoading";
 import Watched from "../Watched";
+import InputSearch from "../InputSearch";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -171,7 +170,7 @@ const Header = () => {
       </HeaderItem>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <InputText placeholder="Buscar anime" type={InputTypes.SEARCH} />
+          <InputSearch placeholder="Buscar anime" />
         </form>
       </FormProvider>
       {!token ? (
