@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Select, Spin } from "antd";
@@ -241,7 +241,7 @@ const Admin = () => {
           email: email,
         },
       })
-      .then((res) => {
+      .then((_) => {
         getModerators();
       })
       .catch((err) => console.log(err));
@@ -253,11 +253,11 @@ const Admin = () => {
   }, []);
 
   if (!token) {
-    return <Redirect to="/"/>
+    return <Redirect to="/" />;
   }
 
-  if (user.permission === 'user') {
-    return <Redirect to="/"/>
+  if (user.permission === "user") {
+    return <Redirect to="/" />;
   }
 
   return (
@@ -371,30 +371,30 @@ const Admin = () => {
             </FormStyled>
           </FormProvider>
         </Box>
-        {user.permission === 'admin' &&
-        <>
-        <Box>
-          <h2>Adicionar moderador:</h2>
-          <FormProvider {...methodsModerator}>
-            <FormMod
-              onSubmit={methodsModerator.handleSubmit(onSubmitModerator)}
-              autoComplete="off"
-            >
-              <InputText
-                name="email"
-                placeholder="exemplo@mail.com"
-                label="Email*"
-                type={InputTypes.EMAIL}
-              />
-              <Button text="Enviar" margin="0.5rem 0 0.5rem 8px" />
-            </FormMod>
-          </FormProvider>
-        </Box>
-        <AddModButton onClick={handleModeratorsModal}>
-          Ver moderadores
-        </AddModButton>
-        </>
-}
+        {user.permission === "admin" && (
+          <>
+            <Box>
+              <h2>Adicionar moderador:</h2>
+              <FormProvider {...methodsModerator}>
+                <FormMod
+                  onSubmit={methodsModerator.handleSubmit(onSubmitModerator)}
+                  autoComplete="off"
+                >
+                  <InputText
+                    name="email"
+                    placeholder="exemplo@mail.com"
+                    label="Email*"
+                    type={InputTypes.EMAIL}
+                  />
+                  <Button text="Enviar" margin="0.5rem 0 0.5rem 8px" />
+                </FormMod>
+              </FormProvider>
+            </Box>
+            <AddModButton onClick={handleModeratorsModal}>
+              Ver moderadores
+            </AddModButton>
+          </>
+        )}
       </Container>
       <Modal
         title="Moderadores"
@@ -425,7 +425,6 @@ const Admin = () => {
           </ul>
         )}
       </Modal>
-
     </>
   );
 };
