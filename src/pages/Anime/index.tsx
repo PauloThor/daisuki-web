@@ -18,7 +18,7 @@ import {
 } from "./styles";
 import { useHistory, useParams } from "react-router";
 import { useEffect, useState } from "react";
-import { BackTop, Rate, Spin, Collapse } from "antd";
+import { Rate, Spin, Collapse } from "antd";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
 import { ModalSynopsis } from "../../components/ModalSynopsis";
@@ -28,25 +28,31 @@ import { Anime } from "../../model/anime";
 import { Episode } from "../../model/episode";
 import { ParamProps } from "../../model/param";
 import FavIcon from "../../assets/img/fav-icon.svg";
+import BackTop from "../../components/BackTop";
 
 const AnimePage = () => {
   const param: ParamProps = useParams();
   const history = useHistory();
   const { Panel } = Collapse;
-
   const [anime, setAnime] = useState<Anime>();
   const [episodes, setEpisodes] = useState<Episode[]>([]);
+  const [episodesPerPage, setEpisodesPerPage] = useState<[Episode[]]>([[]]);
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [isInvalidLink, setIsInvalidLink] = useState<boolean>(false);
   const [isModalSynopsisVisible, setIsModalSynopsisVisible] =
     useState<boolean>(false);
 
   const loadAnime = async () => {
+    console.log(param);
     const isValidAnime = await daisukiApi
-      .get(`/animes/${param.id}`)
+      .get(`/animes/${param.name}`)
       .then((response) => {
-        if (response?.data?.anime) {
-          setAnime(response.data.anime);
+        if (response?.data) {
+          setAnime(response.data);
+          if (response.data.rating) {
+            setAnimeRate(response.data.rating);
+            console.log(response.data.rating);
+          }
           return true;
         } else {
           setIsInvalidLink(true);
@@ -63,9 +69,26 @@ const AnimePage = () => {
   };
 
   const loadEpisodes = async () => {
-    daisukiApi.get(`/animes/${param.id}/episodes`).then((response) => {
-      setEpisodes(response?.data.episodes);
-    });
+    if (anime?.totalEpisodes) {
+      if (anime.totalEpisodes > 24) {
+        for (let counter = 24; counter <= anime.totalEpisodes; counter += 24) {
+          daisukiApi
+            .get(`/animes/${param.name}/episodes?page=${counter / 24}`)
+            .then((response) => {
+              if (episodesPerPage[0][0] !== undefined) {
+                const listEpisodes = [...episodesPerPage, response?.data.data];
+                setEpisodesPerPage([listEpisodes]);
+              } else {
+                setEpisodesPerPage([response.data.data]);
+              }
+            });
+        }
+      }
+    } else {
+      daisukiApi.get(`/animes/${param.name}/episodes`).then((response) => {
+        setEpisodes(response?.data.data);
+      });
+    }
   };
 
   useEffect(() => {
@@ -74,10 +97,34 @@ const AnimePage = () => {
   }, []);
 
   // TODO integrar com a nota do anime quando o backend ficar pronto.
-  const [animeRate, setAnimeRate] = useState(4.73);
+  const [animeRate, setAnimeRate] = useState(5.0);
+  const handleRate = async (value: number) => {
+    await setRating(value);
+    setTimeout(() => {
+      loadAnime();
+    }, 1000);
+  };
 
-  const handleRate = (value: number) => {
-    setAnimeRate(value);
+  const setRating = async (value: number) => {
+    const token = localStorage.getItem("@Daisuki:token");
+    if (token) {
+      daisukiApi
+        .put(
+          `/animes/${anime?.id}/ratings`,
+          {
+            rating: value,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((response) => console.log("succes"))
+        .catch((e) => console.log(e));
+    } else {
+      console.log("need login");
+    }
   };
 
   const handleModalSynopsis = () => {
@@ -85,24 +132,8 @@ const AnimePage = () => {
   };
 
   const handleToEpisode = (id: number) => {
-    history.push(`/animes/${param.id}/episodes/${id}`);
+    history.push(`/animes/${param.name}/episodes/${id}`);
   };
-
-  const getListsEpisodes = () => {
-    let output: [Episode[]] = [[]];
-    let outputIndex = 0;
-    for (let counter = 0; counter < episodes.length; counter++) {
-      if (output[outputIndex].length < 24) {
-        output[outputIndex].push(episodes[counter]);
-      } else {
-        output[outputIndex + 1] = [episodes[counter]];
-        outputIndex++;
-      }
-    }
-    return output;
-  };
-
-  const episodesList = getListsEpisodes();
 
   return (
     <>
@@ -166,24 +197,24 @@ const AnimePage = () => {
               </AnimeCover>
             </InfoAnime>
 
-            {episodes.length > 24 ? (
-              episodesList.map((list) => (
+            {episodesPerPage[0][0] !== undefined ? (
+              episodesPerPage.map((list) => (
                 <>
                   <StyledCollapse defaultActiveKey={["0"]} bordered={false}>
                     <Panel
                       header={
                         <span>
                           Episódios:{" "}
-                          {episodesList.indexOf(list) !== 0
-                            ? 1 * episodesList.indexOf(list)
+                          {episodesPerPage.indexOf(list) !== 0
+                            ? 1 * episodesPerPage.indexOf(list)
                             : 1}
                           {" - "}
-                          {episodesList.indexOf(list) !== 0
-                            ? 24 * episodesList.indexOf(list)
+                          {episodesPerPage.indexOf(list) !== 0
+                            ? 24 * episodesPerPage.indexOf(list)
                             : list.length}
                         </span>
                       }
-                      key={episodesList.indexOf(list)}
+                      key={episodesPerPage.indexOf(list)}
                       style={{ color: "white" }}
                     >
                       <StyledListEpisodes>
@@ -214,9 +245,7 @@ const AnimePage = () => {
                     watched={false}
                     key={epi.id}
                     onClick={() =>
-                      handleToEpisode(
-                        epi.episodeNumber ? epi.episodeNumber : 1
-                      )
+                      handleToEpisode(epi.episodeNumber ? epi.episodeNumber : 1)
                     }
                   >
                     {anime.isMovie

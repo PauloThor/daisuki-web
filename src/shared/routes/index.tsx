@@ -14,7 +14,7 @@ const Routes = () => {
       <Route path="/register" component={Register} />
       <Route path="/login" component={Login} />
       <Route path="/admin" component={Admin} />
-      <Route path="/animes/:id" component={AnimePage} />
+      <Route path="/animes/:name" component={AnimePage} />
       <Route exact path="/styleguide" component={Styleguide} />
       <Route path="*" component={NotFound} />
     </Switch>
