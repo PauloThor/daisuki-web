@@ -9,14 +9,7 @@ import { History } from "history";
 import { daisukiApi } from "../../services/api";
 import { Anime } from "../../model/anime";
 import { toast } from "react-hot-toast";
-import jwt_decode from "jwt-decode";
-import {
-  AvatarInfo,
-  IdentityInfo,
-  Info,
-  PasswordInfo,
-  UserInfo,
-} from "../../model/user";
+import { IdentityInfo, PasswordInfo, UserInfo } from "../../model/user";
 import { LoginData, RegisterData } from "../../model/account";
 import { Redirect } from "react-router";
 
@@ -34,7 +27,7 @@ interface UserData {
   updatePassword: (data: PasswordInfo, event?: () => void) => void;
   updateUser: (data: IdentityInfo, event?: () => void) => void;
   deleteSelf: () => void;
-  updateAvatar: (data: AvatarInfo, event?: () => void) => void;
+  updateAvatar: (image?: File, event?: () => void) => void;
 }
 
 interface UserProviderProps {
@@ -152,7 +145,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     async function fetch() {
       setIsLoading(true);
       await daisukiApi.patch("/users/update", data, headersJson).then((res) => {
-        setUser({ ...user, ...res });
+        getSelf();
         if (event) {
           event();
         }
@@ -170,9 +163,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const deleteSelf = () => {
     async function fetch() {
       setIsLoading(true);
-      await daisukiApi.delete("/users", headersJson).then(() => {
+      await daisukiApi.delete("/users", headers).then(() => {
         logout();
-        return <Redirect to="login" />;
       });
       setIsLoading(false);
     }
@@ -182,15 +174,25 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       success: "Conta excluída!",
       error: "Tente novamente =c",
     });
+    return <Redirect to="login" />;
   };
 
-  const updateAvatar = (data: AvatarInfo, event?: () => void) => {
+  const updateAvatar = (image?: File, event?: () => void) => {
+    if (!image) {
+      return;
+    }
+    const formData = new FormData();
+    formData.append("image", image, image.name);
+
     async function fetch() {
-      await daisukiApi.patch("/users/update-avatar", data, headers).then(() => {
-        if (event) {
-          event();
-        }
-      });
+      await daisukiApi
+        .patch("/users/update-avatar", formData, headers)
+        .then(() => {
+          getSelf();
+          if (event) {
+            event();
+          }
+        });
     }
     const myPromise = fetch();
     toast.promise(myPromise, {
@@ -200,23 +202,23 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     });
   };
 
-  const decodeToken = () => {
-    const info: Info = jwt_decode(token);
-    setUser({
-      ...info.sub,
-      avatarUrl: info?.sub?.avatarUrl ?? null,
-      createdAt: info.sub.createdAt,
-      updatedAt: info.sub.updatedAt,
-    });
+  const getSelf = async () => {
+    setIsLoading(true);
+    await daisukiApi
+      .get("/users/me", headers)
+      .then((response) => {
+        setUser(response.data);
+      })
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
     if (!!token) {
       getFavorites(); //TODO acrescentar paginação no visual e atualizar aqui
-      decodeToken();
+      getSelf();
     }
     // eslint-disable-next-line
-  }, []);
+  }, [token]);
 
   return (
     <UserContext.Provider

@@ -5,7 +5,7 @@ import { useUser } from "../../hooks/User";
 import { useState } from "react";
 import * as yup from "yup";
 import InputFile from "../InputFile";
-import { StyledForm } from "./styles";
+import { ImageContainer, StyledForm } from "./styles";
 import { AvatarInfo } from "../../model/user";
 import DefaultAvatar from "../../assets/img/default-user-avatar.png";
 
@@ -14,15 +14,10 @@ interface UpdateAvatarProps {
 }
 
 const UpdateAvatar = ({ handleOpenForm }: UpdateAvatarProps) => {
-  const [avatar, setAvatar] = useState<FileList>();
+  const [avatar, setAvatar] = useState<File>();
   const { updateAvatar, user } = useUser();
 
-  const schema = yup.object({
-    image: yup
-      .string()
-      .transform(() => avatar)
-      .required(),
-  });
+  const schema = yup.object({});
 
   const methods = useForm({
     resolver: yupResolver(schema),
@@ -30,19 +25,23 @@ const UpdateAvatar = ({ handleOpenForm }: UpdateAvatarProps) => {
   });
 
   const onSubmit = (data: AvatarInfo) => {
-    updateAvatar(data, handleOpenForm);
-    methods.reset();
+    const output = { image: avatar };
+    console.log(output);
+    updateAvatar(avatar, handleOpenForm);
   };
 
   const onUpload = (file: any) => {
+    console.log(file);
     setAvatar(file[0]);
   };
 
   return (
     <div>
-      <img alt="avatar" src={user?.avatarUrl ?? DefaultAvatar} />
       <FormProvider {...methods}>
         <StyledForm onSubmit={methods.handleSubmit(onSubmit)}>
+          <ImageContainer>
+            <img alt="avatar" src={user?.avatarUrl ?? DefaultAvatar} />
+          </ImageContainer>
           <InputFile name="image" onChange={onUpload} />
           <Button text="Enviar" />
         </StyledForm>

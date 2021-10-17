@@ -27,7 +27,7 @@ class FormUtils {
       name: "username",
       placeholder,
       label: "Novo nome de usuário*",
-      type: InputTypes.TEXT,
+      type: InputTypes.USER,
     },
   ];
 
@@ -36,7 +36,7 @@ class FormUtils {
       name: "email",
       placeholder,
       label: "Novo endereço de e-mail*",
-      type: InputTypes.TEXT,
+      type: InputTypes.EMAIL,
     },
   ];
 }

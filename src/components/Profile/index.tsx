@@ -15,6 +15,7 @@ import BannerImage from "../../assets/img/profile-header.png";
 import FormUtils from "../../shared/util/form-utils";
 import { UpdateTypes } from "../../model/enums/update-form-types";
 import { Pop } from "../Favorites/styles";
+import UpdateAvatar from "../UpdateAvatar";
 
 interface ProfileProps {
   onClose: () => void;
@@ -24,6 +25,7 @@ const Profile = ({ onClose }: ProfileProps) => {
   const [passwordOpen, setPasswordOpen] = useState<boolean>(false);
   const [usernameOpen, setUsernameOpen] = useState<boolean>(false);
   const [emailOpen, setEmailOpen] = useState<boolean>(false);
+  const [avatarOpen, setAvatarOpen] = useState<boolean>(false);
 
   const closeAll = () => {
     setPasswordOpen(false);
@@ -37,6 +39,10 @@ const Profile = ({ onClose }: ProfileProps) => {
     closeAll();
     setEmailOpen(!emailOpen);
   };
+  const handleOpenAvatar = () => {
+    closeAll();
+    setAvatarOpen(!avatarOpen);
+  };
 
   const { user, isLoading, deleteSelf } = useUser();
 
@@ -44,16 +50,16 @@ const Profile = ({ onClose }: ProfileProps) => {
     <Container>
       <CloseIcon size={30} onClick={onClose} />
       <Banner>
-        <Text onClick={() => console.log(user)}>Minha conta</Text>
+        <Text>Minha conta</Text>
         <img alt="header" src={BannerImage} />
       </Banner>
       <AvatarContainer>
-        <img alt="avatar" src={DefaultAvatar} />
+        <img alt="avatar" src={user?.avatarUrl ?? DefaultAvatar} />
         {isLoading ? <div></div> : <p>{user?.username ?? ""}</p>}
       </AvatarContainer>
       <Options>
         <p onClick={handleOpenUsername}>Editar nome de usuário</p>
-        <p>Alterar foto de perfil</p>
+        <p onClick={handleOpenAvatar}>Alterar foto de perfil</p>
         <p onClick={handleOpenEmail}>Mudar endereço de e-mail</p>
         <p onClick={handleOpenPassword}>Alterar senha</p>
         <p>
@@ -87,6 +93,9 @@ const Profile = ({ onClose }: ProfileProps) => {
           list={FormUtils.email(user?.email ?? "")}
           type={UpdateTypes.EMAIL}
         />
+      </StyledModal>
+      <StyledModal visible={avatarOpen} onCancel={handleOpenAvatar}>
+        <UpdateAvatar handleOpenForm={handleOpenAvatar} />
       </StyledModal>
     </Container>
   );

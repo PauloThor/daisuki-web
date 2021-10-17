@@ -23,5 +23,5 @@ export interface IdentityInfo {
 }
 
 export interface AvatarInfo {
-  image: FileList;
+  image?: File;
 }
