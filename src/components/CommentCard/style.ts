@@ -8,11 +8,23 @@ interface CommentProp {
   image?: string;
 }
 
+export const OptionContainer = styled.div`
+  position: absolute;
+  top: 14px;
+  right: 30px;
+  cursor: pointer;
+  display: none;
+`;
+
 export const Container = styled.div`
   width: 100%;
   margin-bottom: 24px;
   position: relative;
   display: flex;
+
+  &:hover ${OptionContainer} {
+    display: initial;
+  }
 `;
 
 export const Content = styled.div<CommentProp>`
@@ -28,19 +40,6 @@ export const ProfilePicture = styled.img`
   height: 48px;
   border-radius: 50%;
   margin-right: 14px;
-
-  @media (max-width: 425px) {
-    width: 36px;
-    height: 36px;
-  }
-`;
-
-export const DefaultProfilePicture = styled.div`
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  margin-right: 14px;
-  background-color: ${Color.SECONDARY};
 
   @media (max-width: 425px) {
     width: 36px;
@@ -76,78 +75,21 @@ export const Comment = styled.p`
   }
 `;
 
-export const OptionContainer = styled.div`
-  position: absolute;
-  top: 14px;
-  right: 30px;
-  cursor: pointer;
-`;
-
 export const Options = styled(BsThreeDotsVertical)`
   width: 24px;
   height: 24px;
   color: ${Color.HIGHLIGHT_LIGHT};
 `;
 
-export const DropDown = styled.div`
-  padding: 10px 18px;
-  font-size: 16px;
-  background-color: ${Color.MAIN};
-  position: absolute;
-  right: 20px;
-  top: -10px;
+export const DropDown = styled.a`
   color: ${Color.TEXT_MAIN};
 
   &:hover,
   &:focus {
-    background-color: ${Color.MAIN_LIGHT};
-    transition: 300ms;
+    color: ${Color.TEXT_MAIN};
   }
 `;
 
-export const ButtonStyle = styled(Button)`
-  /* .ant-popover-inner-content {
-    background-color: ${Color.MAIN};
-    color: ${Color.MAIN};
-  }
+export const ButtonStyle = styled(Button)``;
 
-  .ant-popover-arrow {
-    display: none; 
-  }*/
-
-  /* .ant-popover-inner-content {
-    background-color: ${Color.MAIN};
-    color: ${Color.MAIN};
-  } */
-`;
-
-export const PopDrop = styled(Popover)`
-  /* .ant-btn .ant-btn-link .ant-popover-open {
-    background-color: ${Color.MAIN};
-    color: ${Color.MAIN};
-  } */
-
-  /* .ant-popover .ant-popover-placement-top {
-    background-color: ${Color.MAIN};
-    color: ${Color.MAIN};
-  } */
-
-  /* .ant-popover-inner-content {
-    background-color: ${Color.MAIN};
-    color: ${Color.MAIN};
-  } */
-
-  /* .ant-popover-arrow {
-    display: none;
-  } */
-
-  /* .ant-popover-content.ant-popover-arrow.ant-popover-inner.ant-popover-inner-content {
-    background-color: ${Color.MAIN};
-    color: ${Color.MAIN};
-  } */
-
-  .ant-popover-inner-content {
-    background-color: ${Color.MAIN};
-    color: ${Color.MAIN};
-  }
-`;
+export const PopDrop = styled(Popover)``;

@@ -1,4 +1,10 @@
-import { OptionContainer, Options, ButtonStyle, PopDrop } from "./style";
+import {
+  OptionContainer,
+  Options,
+  ButtonStyle,
+  PopDrop,
+  DropDown,
+} from "./style";
 import { useState } from "react";
 
 const OptionsMenu = () => {
@@ -15,7 +21,7 @@ const OptionsMenu = () => {
   return (
     <OptionContainer>
       <PopDrop
-        content={<a onClick={handleDeleteComment}>Excluir</a>}
+        content={<DropDown onClick={handleDeleteComment}>Excluir</DropDown>}
         trigger="click"
         visible={visible}
         onVisibleChange={handleVisibleChange}

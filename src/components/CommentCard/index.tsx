@@ -2,7 +2,6 @@ import {
   Container,
   Content,
   ProfilePicture,
-  DefaultProfilePicture,
   UserName,
   TimeLapsed,
   Comment,
@@ -28,11 +27,7 @@ const CommentCard = ({
 }: CommentProps) => {
   return (
     <Container>
-      {image ? (
-        <ProfilePicture src={image} alt={`${name} profile picture`} />
-      ) : (
-        <DefaultProfilePicture />
-      )}
+      <ProfilePicture src={image} alt={`${name} avatar`} />
       <Content visible={visible}>
         <UserName>{name}</UserName>
         <TimeLapsed>• {DateUtils.timeFromNow(created_at)}</TimeLapsed>

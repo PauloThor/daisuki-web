@@ -51,4 +51,21 @@ export const GlobalStyle = createGlobalStyle`
     background-color: ${Color.HIGHLIGHT_DARK};
     }
 
+    .ant-popover-inner {
+    background-color: ${Color.MAIN};
+    }
+
+    .ant-popover-inner-content {
+        color: ${Color.TEXT_MAIN};
+        &:hover,
+        &:focus {
+        background-color: ${Color.MAIN_LIGHT};
+        transition: 300ms;
+        }
+    }
+
+    .ant-popover-arrow{
+        display: none;
+    }
+
 `;
