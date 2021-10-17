@@ -40,12 +40,22 @@ export const Container = styled.header`
     }
   }
 
+  .header-logo {
+    max-width: 120px;
+  }
+
   @media (max-width: 350px) {
     .link-logo {
       padding-right: 10px;
     }
 
     padding: 15px;
+  }
+
+  @media (min-width: 768px) {
+    .header-logo {
+      max-width: initial;
+    }
   }
 `;
 

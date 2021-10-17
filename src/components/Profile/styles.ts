@@ -39,8 +39,10 @@ export const AvatarContainer = styled.section`
   padding: 10px 0;
 
   img {
-    max-width: 96px;
-    max-height: 96px;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    margin-bottom: 5px;
   }
 `;
 
@@ -110,5 +112,9 @@ export const StyledModal = styled(Modal)`
     max-height: 0;
     display: flex;
     justify-content: center;
+  }
+
+  .ant-modal-close {
+    display: none;
   }
 `;

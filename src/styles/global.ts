@@ -56,9 +56,13 @@ export const GlobalStyle = createGlobalStyle`
     justify-content: center;
   }
 
+  .ant-popover-arrow-content {
+    background: ${Color.MAIN};
+  }
+
   .ant-popover-inner-content {
     background: ${Color.MAIN};
-
+  
     .anticon svg {
       display: none;
   }
@@ -100,5 +104,9 @@ export const GlobalStyle = createGlobalStyle`
           background-color: ${Color.SECONDARY};
           color: ${Color.MAIN_DARK};
       }
+  }
+
+  .ant-modal-wrap {
+    z-index: 1002 ;
   }
 `;

@@ -9,9 +9,10 @@ import { History } from "history";
 import { daisukiApi } from "../../services/api";
 import { Anime } from "../../model/anime";
 import { toast } from "react-hot-toast";
-import jwt_decode from "jwt-decode";
-import { IdentityInfo, Info, PasswordInfo, UserInfo } from "../../model/user";
+import { IdentityInfo, PasswordInfo, UserInfo } from "../../model/user";
 import { LoginData, RegisterData } from "../../model/account";
+import { Redirect } from "react-router";
+import { EpisodeHistory } from "../../model/episode-history";
 
 interface UserData {
   token: string;
@@ -26,6 +27,10 @@ interface UserData {
   isLoading: boolean;
   updatePassword: (data: PasswordInfo, event?: () => void) => void;
   updateUser: (data: IdentityInfo, event?: () => void) => void;
+  deleteSelf: () => void;
+  updateAvatar: (image?: File, event?: () => void) => void;
+  updateInfo: () => void;
+  watched: EpisodeHistory[];
 }
 
 interface UserProviderProps {
@@ -40,9 +45,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [token, setToken] = useState<string>(
     !localToken ? "" : JSON.parse(localToken)
   );
-  const [favorites, setFavorites] = useState<Anime[]>([]);
   const [user, setUser] = useState<UserInfo>({} as UserInfo);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [favorites, setFavorites] = useState<Anime[]>([]);
+  const [watched, setWatched] = useState<EpisodeHistory[]>([]);
 
   const headers = {
     headers: {
@@ -59,22 +65,33 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   const login = (data: LoginData, history: History) => {
+    setIsLoading(true);
     async function fetch() {
-      const res = await daisukiApi.post("/users/login", data);
-      localStorage.setItem(
-        "@Daisuki:token",
-        JSON.stringify(res.data.accessToken)
-      );
-      setUser(res.data.user);
-      setToken(res.data.access);
-      history.push("/");
+      await daisukiApi.post("/users/login", data).then((res) => {
+        localStorage.setItem(
+          "@Daisuki:token",
+          JSON.stringify(res.data.accessToken)
+        );
+        setToken(res.data.accessToken);
+        updateInfo();
+        history.push("/");
+      });
     }
     const myPromise = fetch();
-    toast.promise(myPromise, {
-      loading: "Enviando...",
-      success: "Você logou!",
-      error: "Tente novamente =c",
-    });
+    toast
+      .promise(
+        myPromise,
+        {
+          loading: "Enviando...",
+          success: "Ohayou! ＼(≧▽≦)／",
+          error: "Tente novamente =c",
+        },
+        {
+          success: {
+            icon: "✨✨",
+          },
+        }
+      )
   };
 
   const register = (data: RegisterData, history: History) => {
@@ -93,6 +110,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const logout = () => {
     localStorage.removeItem("@Daisuki:token");
     setToken("");
+    setUser({});
   };
 
   const getFavorites = async () => {
@@ -142,7 +160,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     async function fetch() {
       setIsLoading(true);
       await daisukiApi.patch("/users/update", data, headersJson).then((res) => {
-        setUser({ ...user, ...res });
+        getSelf();
         if (event) {
           event();
         }
@@ -157,23 +175,75 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     });
   };
 
-  const decodeToken = () => {
-    const info: Info = jwt_decode(token);
-    setUser({
-      ...info.sub,
-      avatarUrl: info?.sub?.avatarUrl ?? null,
-      createdAt: info.sub.createdAt,
-      updatedAt: info.sub.updatedAt,
+  const deleteSelf = () => {
+    async function fetch() {
+      setIsLoading(true);
+      await daisukiApi.delete("/users", headers).then(() => {
+        logout();
+      });
+      setIsLoading(false);
+    }
+    const myPromise = fetch();
+    toast.promise(myPromise, {
+      loading: "Enviando...",
+      success: "Conta excluída!",
+      error: "Tente novamente =c",
+    });
+    return <Redirect to="login" />;
+  };
+
+  const updateAvatar = (image?: File, event?: () => void) => {
+    if (!image) {
+      return;
+    }
+    const formData = new FormData();
+    formData.append("image", image, image.name);
+
+    async function fetch() {
+      await daisukiApi
+        .patch("/users/update-avatar", formData, headers)
+        .then(() => {
+          getSelf();
+          if (event) {
+            event();
+          }
+        });
+    }
+    const myPromise = fetch();
+    toast.promise(myPromise, {
+      loading: "Enviando...",
+      success: "Informações atualizadas!",
+      error: "Tente novamente =c",
     });
   };
 
-  useEffect(() => {
+  const getSelf = async () => {
+    setIsLoading(true);
+    await daisukiApi
+      .get("/users/me", headers)
+      .then((response) => {
+        setUser(response.data);
+      })
+      .finally(() => setIsLoading(false));
+  };
+
+  const updateInfo = () => {
     if (!!token) {
+      getSelf();
       getFavorites(); //TODO acrescentar paginação no visual e atualizar aqui
-      decodeToken();
+      getWatched();
     }
+  };
+
+  const getWatched = async () => {
+    const res = await daisukiApi.get(`/users/watched-episodes`, headers);
+    setWatched(res.data.data);
+  };
+
+  useEffect(() => {
+    updateInfo();
     // eslint-disable-next-line
-  }, []);
+  }, [token]);
 
   return (
     <UserContext.Provider
@@ -190,6 +260,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         isLoading,
         updatePassword,
         updateUser,
+        deleteSelf,
+        updateAvatar,
+        updateInfo,
+        watched,
       }}
     >
       {children}

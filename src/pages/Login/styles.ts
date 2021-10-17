@@ -103,7 +103,6 @@ export const StyledLink = styled(Link)`
 export const CheckboxContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: flex-end;
 
   span {
     font-size: 0.9rem;

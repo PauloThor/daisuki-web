@@ -28,33 +28,45 @@ import Profile from "../Profile";
 import Favorites from "../Favorites";
 import { useUser } from "../../hooks/User";
 import { Anime } from "../../model/anime";
+import SpinLoading from "../SpinLoading";
+import Watched from "../Watched";
 
-interface HeaderProps {
-  isAuth?: boolean;
-}
-
-const Header = ({ isAuth = true }: HeaderProps) => {
+const Header = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [profileOpen, setProfileOpen] = useState<boolean>(false);
   const [favoritesOpen, setFavoritesOpen] = useState<boolean>(false);
+  const [historyOpen, setHistoryOpen] = useState<boolean>(false);
+  const { token, user } = useUser();
 
   const history = useHistory();
-  const { favorites, logout } = useUser();
+  const { favorites, logout, isLoading, watched } = useUser();
 
   const handleOpenMenu = () => setMenuOpen(!menuOpen);
   const handleOpenProfile = () => {
+    closeAll();
     setProfileOpen(!profileOpen);
-    setFavoritesOpen(false);
   };
   const handleOpenFavorites = () => {
+    closeAll();
     setFavoritesOpen(!favoritesOpen);
+  };
+  const handleOpenHistory = () => {
+    closeAll();
+    setHistoryOpen(!historyOpen);
+  };
+
+  const closeAll = () => {
     setProfileOpen(false);
+    setFavoritesOpen(false);
+    setHistoryOpen(false);
   };
 
   const handleLogout = () => {
     logout();
     history.push("/login");
   };
+
+  const pathToAdmin = () => history.push("/admin");
 
   const handlePath = (path: string) => history.push(path);
 
@@ -66,7 +78,7 @@ const Header = ({ isAuth = true }: HeaderProps) => {
   const onSubmit = (data: any) => console.log(data);
 
   const renderMobileMenu = () => (
-    <MobileMenu onClick={() => console.log()} mode="inline">
+    <MobileMenu mode="inline">
       <MobileSubMenu key="submobile1" title="Animes">
         {MenuUtils.animes.map((item, index) => (
           <MobileItem
@@ -97,7 +109,7 @@ const Header = ({ isAuth = true }: HeaderProps) => {
           </MobileItem>
         ))}
       </MobileSubMenu>
-      {!isAuth && (
+      {!token && (
         <>
           <StyledLink to="/register">
             <div style={{ width: "23px" }} />
@@ -122,13 +134,23 @@ const Header = ({ isAuth = true }: HeaderProps) => {
     },
     {
       name: "Histórico",
-      event: handleOpenFavorites,
+      event: handleOpenHistory,
     },
     {
       name: "Sair",
       event: handleLogout,
     },
   ];
+
+  const getAvatarItems = () => {
+    const adminItem = {
+      name: "Central de upload",
+      event: pathToAdmin,
+    };
+    return user.permission === "user"
+      ? avatarMenuItems
+      : [adminItem, ...avatarMenuItems];
+  };
 
   const favoritesList = favorites.map((favorite: Anime) => {
     return {
@@ -140,7 +162,7 @@ const Header = ({ isAuth = true }: HeaderProps) => {
   return (
     <Container>
       <Link to="/" className="link-logo">
-        <img src={Logo} alt="logo" />
+        <img src={Logo} alt="logo" className="header-logo" />
       </Link>
       <HeaderItem>
         <DropdownItem title="Animes" items={MenuUtils.animes} />
@@ -152,7 +174,7 @@ const Header = ({ isAuth = true }: HeaderProps) => {
           <InputText placeholder="Buscar anime" type={InputTypes.SEARCH} />
         </form>
       </FormProvider>
-      {!isAuth ? (
+      {!token ? (
         <HeaderItem>
           <ProfileLink to="/login">Entrar</ProfileLink>
           <Divider />
@@ -160,15 +182,19 @@ const Header = ({ isAuth = true }: HeaderProps) => {
         </HeaderItem>
       ) : (
         <HeaderItem>
-          <DropdownItem
-            title="avatar"
-            hasAvatar
-            items={avatarMenuItems}
-            key={"desktop-dropdown-1"}
-          />
+          {isLoading ? (
+            <SpinLoading />
+          ) : (
+            <DropdownItem
+              title="avatar"
+              hasAvatar
+              items={getAvatarItems()}
+              key={"desktop-dropdown-1"}
+            />
+          )}
         </HeaderItem>
       )}
-      {!isAuth ? (
+      {!token ? (
         <GiHamburgerMenu
           size={35}
           className="hamburger-menu"
@@ -182,7 +208,7 @@ const Header = ({ isAuth = true }: HeaderProps) => {
           <DropdownItem
             title="avatar"
             hasAvatar
-            items={avatarMenuItems}
+            items={getAvatarItems()}
             key={"mobile-dropdown-1"}
           />
         </MobileAuth>
@@ -197,6 +223,11 @@ const Header = ({ isAuth = true }: HeaderProps) => {
       {favoritesOpen && (
         <ProfileContainer>
           <Favorites onClose={handleOpenFavorites} list={favoritesList} />
+        </ProfileContainer>
+      )}
+      {historyOpen && (
+        <ProfileContainer>
+          <Watched onClose={handleOpenHistory} list={watched} />
         </ProfileContainer>
       )}
     </Container>

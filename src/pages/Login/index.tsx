@@ -50,7 +50,6 @@ const Login = () => {
   });
 
   const onSubmit = (data: FormInput) => {
-    console.log(data);
     login({ ...data, remindMe: shouldRemember }, history);
   };
 
