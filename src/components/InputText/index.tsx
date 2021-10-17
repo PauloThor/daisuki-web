@@ -10,6 +10,7 @@ import { AiOutlineLock } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
 import { InputTypes } from "../../model/enums/input-types";
 import { InputTypeProps } from "../../model/input";
+import { Color } from "../../model/enums/theme-colors";
 
 interface InputTextProps {
   name?: string;
@@ -25,12 +26,12 @@ interface InputTextProps {
 }
 
 const inputTypeOptions = {
-  [InputTypes.USER]: <FaRegUserCircle />,
-  [InputTypes.EMAIL]: <GoMail />,
-  [InputTypes.PASSWORD]: <AiOutlineLock />,
+  [InputTypes.USER]: <FaRegUserCircle color={Color.TEXT_MAIN} />,
+  [InputTypes.EMAIL]: <GoMail color={Color.TEXT_MAIN} />,
+  [InputTypes.PASSWORD]: <AiOutlineLock color={Color.TEXT_MAIN} />,
   [InputTypes.DEFAULT]: <></>,
   [InputTypes.TEXT]: <></>,
-  [InputTypes.SEARCH]: <FiSearch />,
+  [InputTypes.SEARCH]: <FiSearch color={Color.TEXT_MAIN} />,
   [InputTypes.FILE]: <></>,
   [InputTypes.NUMBER]: <></>,
   [InputTypes.CHECKBOX]: <></>,
