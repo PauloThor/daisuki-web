@@ -27,7 +27,8 @@ import { daisukiApi } from "../../services/api";
 import { Anime } from "../../model/anime";
 import { Episode } from "../../model/episode";
 import { ParamProps } from "../../model/param";
-import FavIcon from "../../assets/img/fav-icon.svg";
+import { ReactComponent as FavIcon } from "../../assets/img/fav-icon.svg";
+import { ReactComponent as FavAnime } from "../../assets/img/favAnime.svg";
 import BackTop from "../../components/BackTop";
 import { useUser } from "../../hooks/User";
 import { ModalToLogin } from "../../components/ModalToLogin";
@@ -35,7 +36,7 @@ import { ModalToLogin } from "../../components/ModalToLogin";
 const AnimePage = () => {
   const param: ParamProps = useParams();
   const history = useHistory();
-  const { token } = useUser();
+  const { token, getFavorites, favorites } = useUser();
   const { Panel } = Collapse;
 
   const [anime, setAnime] = useState<Anime>();
@@ -64,6 +65,10 @@ const AnimePage = () => {
           setIsInvalidLink(true);
           return false;
         }
+      })
+      .catch((e) => {
+        setIsInvalidLink(true);
+        return false;
       });
 
     if (isValidAnime) {
@@ -143,6 +148,38 @@ const AnimePage = () => {
     history.push(`/animes/${param.name}/episodes/${id}`);
   };
 
+  const handleFavoriteAnime = () => {
+    if (!token) {
+      handleModalToLogin();
+    } else if (!isFavorite) {
+      daisukiApi
+        .put(`/users/favorites/${anime?.id}`, null, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          getFavorites();
+          console.log("Anime favoritado!");
+        })
+        .catch((e) => console.log(e));
+    } else {
+      daisukiApi
+        .delete(`/users/favorites/${anime?.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          getFavorites();
+          console.log("Anime desfav!");
+        })
+        .catch((e) => console.log("Algo deu errado, tente novamente!"));
+    }
+  };
+
+  const isFavorite = favorites.find((f) => f.id === anime?.id);
+
   return (
     <>
       {!isLoad && (
@@ -159,9 +196,11 @@ const AnimePage = () => {
           <Container>
             <InfoAnime>
               <AnimeData>
-                <HeaderAnimeData favIcon={FavIcon}>
+                <HeaderAnimeData isFavorite={!!isFavorite}>
                   <h1>{anime.name}</h1>
-                  <button type="button" />
+                  <button type="button" onClick={handleFavoriteAnime}>
+                    {isFavorite ? <FavAnime /> : <FavIcon />}
+                  </button>
                 </HeaderAnimeData>
                 <RateContainer>
                   <Rate onChange={handleRate} value={animeRate} allowHalf />

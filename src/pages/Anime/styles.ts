@@ -5,12 +5,18 @@ import { Collapse } from "antd";
 import { Link } from "react-router-dom";
 
 interface HeaderAnimeDataProps {
-  favIcon: string;
+  isFavorite: boolean;
 }
 
 interface EpisodeProps {
   watched: boolean;
 }
+
+const mountedStyle = "inAnimation 300ms ease-in";
+const unmountedStyle = {
+  animation: "outAnimation 350ms ease-out",
+  animationFillMode: "forwards",
+};
 
 export const Container = styled.main`
   width: 100%;
@@ -63,17 +69,55 @@ export const HeaderAnimeData = styled.div<HeaderAnimeDataProps>`
 
   button {
     margin: 0;
-    background-image: url(${({ favIcon }) => favIcon});
     background-color: transparent;
     width: 25px;
     height: 25px;
     border: none;
-    background-repeat: no-repeat;
+    animation: ${({ isFavorite }) =>
+      isFavorite ? mountedStyle : unmountedStyle.animation};
+    svg {
+      width: 25px;
+      height: 25px;
+      opacity: 100%;
+      transition: opacity 3s;
+      path {
+        fill: ${({ isFavorite }) => isFavorite && Color.HIGHLIGHT_DARK};
+      }
+    }
 
     @media (min-width: 768px) {
-      width: 35px;
-      height: 35px;
-      background-size: contain;
+      svg {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    @keyframes inAnimation {
+      0% {
+        opacity: 0;
+        visibility: hidden;
+      }
+      50% {
+        opacity: 0.5;
+        visibility: visible;
+      }
+      100% {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    @keyframes outAnimation {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 0.1;
+        color: transparent;
+      }
     }
   }
 `;
