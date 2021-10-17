@@ -28,6 +28,7 @@ interface UserData {
   updateUser: (data: IdentityInfo, event?: () => void) => void;
   deleteSelf: () => void;
   updateAvatar: (image?: File, event?: () => void) => void;
+  updateInfo: () => void;
 }
 
 interface UserProviderProps {
@@ -61,22 +62,30 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   const login = (data: LoginData, history: History) => {
+    setIsLoading(true);
     async function fetch() {
-      const res = await daisukiApi.post("/users/login", data);
-      localStorage.setItem(
-        "@Daisuki:token",
-        JSON.stringify(res.data.accessToken)
-      );
-      setUser(res.data.user);
-      setToken(res.data.access);
-      history.push("/");
+      await daisukiApi
+        .post("/users/login", data)
+        .then((res) => {
+          localStorage.setItem(
+            "@Daisuki:token",
+            JSON.stringify(res.data.accessToken)
+          );
+          setToken(res.data.accessToken);
+        })
+        .finally(() => {
+          updateInfo();
+          history.push("/");
+        });
     }
     const myPromise = fetch();
-    toast.promise(myPromise, {
-      loading: "Enviando...",
-      success: "Você logou!",
-      error: "Tente novamente =c",
-    });
+    toast
+      .promise(myPromise, {
+        loading: "Enviando...",
+        success: "Você logou!",
+        error: "Tente novamente =c",
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const register = (data: RegisterData, history: History) => {
@@ -212,11 +221,15 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       .finally(() => setIsLoading(false));
   };
 
-  useEffect(() => {
+  const updateInfo = () => {
     if (!!token) {
       getFavorites(); //TODO acrescentar paginação no visual e atualizar aqui
       getSelf();
     }
+  };
+
+  useEffect(() => {
+    updateInfo();
     // eslint-disable-next-line
   }, [token]);
 
@@ -237,6 +250,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         updateUser,
         deleteSelf,
         updateAvatar,
+        updateInfo,
       }}
     >
       {children}

@@ -28,13 +28,11 @@ import { Anime } from "../../model/anime";
 import { Episode } from "../../model/episode";
 import { ParamProps } from "../../model/param";
 import FavIcon from "../../assets/img/fav-icon.svg";
-import { useUser } from "../../hooks/User";
 
 const AnimePage = () => {
   const param: ParamProps = useParams();
   const history = useHistory();
   const { Panel } = Collapse;
-  const { token } = useUser();
 
   const [anime, setAnime] = useState<Anime>();
   const [episodes, setEpisodes] = useState<Episode[]>([]);
@@ -110,7 +108,7 @@ const AnimePage = () => {
     <>
       {!isLoad && (
         <>
-          <Header isAuth={!!token} />
+          <Header />
           <SpinContainer>
             <Spin size="large" />
           </SpinContainer>

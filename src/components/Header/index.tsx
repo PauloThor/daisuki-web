@@ -29,14 +29,13 @@ import Favorites from "../Favorites";
 import { useUser } from "../../hooks/User";
 import { Anime } from "../../model/anime";
 
-interface HeaderProps {
-  isAuth?: boolean;
-}
+const localToken = localStorage.getItem("@Daisuki:token");
 
-const Header = ({ isAuth = false }: HeaderProps) => {
+const Header = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [profileOpen, setProfileOpen] = useState<boolean>(false);
   const [favoritesOpen, setFavoritesOpen] = useState<boolean>(false);
+  const [token] = useState<string>(!localToken ? "" : JSON.parse(localToken));
 
   const history = useHistory();
   const { favorites, logout, isLoading } = useUser();
@@ -97,7 +96,7 @@ const Header = ({ isAuth = false }: HeaderProps) => {
           </MobileItem>
         ))}
       </MobileSubMenu>
-      {!isAuth && (
+      {!token && (
         <>
           <StyledLink to="/register">
             <div style={{ width: "23px" }} />
@@ -154,7 +153,7 @@ const Header = ({ isAuth = false }: HeaderProps) => {
               <InputText placeholder="Buscar anime" type={InputTypes.SEARCH} />
             </form>
           </FormProvider>
-          {!isAuth ? (
+          {!token ? (
             <HeaderItem>
               <ProfileLink to="/login">Entrar</ProfileLink>
               <Divider />
@@ -170,7 +169,7 @@ const Header = ({ isAuth = false }: HeaderProps) => {
               />
             </HeaderItem>
           )}
-          {!isAuth ? (
+          {!token ? (
             <GiHamburgerMenu
               size={35}
               className="hamburger-menu"
