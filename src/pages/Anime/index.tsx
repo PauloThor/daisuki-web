@@ -137,7 +137,7 @@ const AnimePage = () => {
           }
         )
         .then((response) =>
-          toast(`Anime avaliado com ${returnStars(value)}`, {
+          toast.success(`Anime avaliado com ${returnStars(value)}`, {
             icon: "🏅",
           })
         )
@@ -169,7 +169,7 @@ const AnimePage = () => {
         })
         .then((response) => {
           getFavorites();
-          toast("Anime favoritado!", {
+          toast.success("Anime favoritado!", {
             icon: "❤️",
           });
         })
@@ -183,7 +183,7 @@ const AnimePage = () => {
         })
         .then((response) => {
           getFavorites();
-          toast("Anime removido dos favoritos!", {
+          toast.success("Anime removido dos favoritos!", {
             icon: "💔",
           });
         })
