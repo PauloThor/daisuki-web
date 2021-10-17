@@ -20,6 +20,8 @@ interface InputTextProps {
   defaultValue?: string;
   type?: InputTypeProps;
   autofocus?: boolean;
+  disabled?: boolean;
+  maxWidth?: string;
 }
 
 const inputTypeOptions = {
@@ -29,6 +31,9 @@ const inputTypeOptions = {
   [InputTypes.DEFAULT]: <></>,
   [InputTypes.TEXT]: <></>,
   [InputTypes.SEARCH]: <FiSearch />,
+  [InputTypes.FILE]: <></>,
+  [InputTypes.NUMBER]: <></>,
+  [InputTypes.CHECKBOX]: <></>,
 };
 
 const InputText = ({
@@ -38,8 +43,10 @@ const InputText = ({
   mask = Mask.DEFAULT,
   defaultValue,
   label,
+  maxWidth,
   type = InputTypes.DEFAULT,
   autofocus = false,
+  disabled = false,
 }: InputTextProps) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
@@ -92,6 +99,17 @@ const InputText = ({
     setValue(name, MaskFormats[mask]);
   };
 
+  const choiceType = (type: string) => {
+    if (type === InputTypes.PASSWORD) {
+      return InputTypes.PASSWORD;
+    }
+    if (type === InputTypes.NUMBER) {
+      return InputTypes.NUMBER;
+    }
+
+    return InputTypes.TEXT;
+  };
+
   useEffect(() => {
     if (defaultValue) {
       handleSetMask(defaultValue);
@@ -108,7 +126,7 @@ const InputText = ({
             {label}
             {validationProps.hasError && `${errors[name].message}`}
           </InputLabel>
-          <InputWrapper {...validationProps}>
+          <InputWrapper {...validationProps} maxWidth={maxWidth}>
             {inputTypeOptions[type]}
             <Input
               {...register(name)}
@@ -121,12 +139,9 @@ const InputText = ({
                 }
               }}
               placeholder={placeholder}
-              type={
-                type === InputTypes.PASSWORD
-                  ? InputTypes.PASSWORD
-                  : InputTypes.TEXT
-              }
+              type={choiceType(type)}
               autoFocus={autofocus}
+              disabled={disabled}
             />
           </InputWrapper>
         </>

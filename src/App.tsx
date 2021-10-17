@@ -1,6 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 import { GlobalStyle } from "./styles/global";
 import Provider from "./hooks";
+import Toaster from "./components/Toaster";
 import Routes from "./shared/routes";
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
     <Provider>
       <BrowserRouter>
         <GlobalStyle />
+        <Toaster/>
         <Routes />
       </BrowserRouter>
     </Provider>

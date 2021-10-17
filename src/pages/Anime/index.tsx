@@ -7,6 +7,14 @@ import {
   SpinContainer,
   StyledCollapse,
   StyledListEpisodes,
+  Synopsis,
+  Categories,
+  Details,
+  RateContainer,
+  AnimeData,
+  HeaderAnimeData,
+  AnimeCover,
+  AnimeEpisode,
 } from "./styles";
 import { useHistory, useParams } from "react-router";
 import { useEffect, useState } from "react";
@@ -66,8 +74,7 @@ const AnimePage = () => {
   }, []);
 
   // TODO integrar com a nota do anime quando o backend ficar pronto.
-  const [animeRate, setAnimeRate] = useState(5);
-  const desc = ["1.00", "2.00", "3.00", "4.00", String(animeRate.toFixed(2))];
+  const [animeRate, setAnimeRate] = useState(4.73);
 
   const handleRate = (value: number) => {
     setAnimeRate(value);
@@ -111,54 +118,52 @@ const AnimePage = () => {
         <>
           <Header />
           <Container>
-            <InfoAnime favIcon={FavIcon}>
-              <div className="container-data">
-                <div className="header">
+            <InfoAnime>
+              <AnimeData>
+                <HeaderAnimeData favIcon={FavIcon}>
                   <h1>{anime.name}</h1>
                   <button type="button" />
-                </div>
-                <div className="rate-container">
-                  <Rate
-                    tooltips={desc}
-                    onChange={handleRate}
-                    value={animeRate}
-                  />
+                </HeaderAnimeData>
+                <RateContainer>
+                  <Rate onChange={handleRate} value={animeRate} allowHalf />
                   {animeRate ? (
-                    <span className="ant-rate-text">{desc[animeRate - 1]}</span>
+                    <span className="ant-rate-text">
+                      {animeRate.toFixed(2)}
+                    </span>
                   ) : (
                     ""
                   )}
-                </div>
-                <div className="details">
-                  <p>Áudio: {anime.is_dubbed ? "Português" : "Japonês"}</p>
-                  <p>Episódios: {anime.total_episodes}</p>
+                </RateContainer>
+                <Details>
+                  <p>Áudio: {anime.isDubbed ? "Português" : "Japonês"}</p>
+                  <p>Episódios: {anime.totalEpisodes}</p>
                   <p>
-                    {anime.is_movie
+                    {anime.isMovie
                       ? `Lançamento: ${new Intl.DateTimeFormat("pt-BR").format(
-                          new Date(anime.created_at || "")
+                          new Date(anime.createdAt || "")
                         )}`
                       : `Status: ${
-                          anime.is_completed ? "Encerrado" : "Em lançamento"
+                          anime.isCompleted ? "Encerrado" : "Em lançamento"
                         }`}
                   </p>
-                  <div className="categories">
-                    <Category>Ação</Category>
-                    <Category>Shõnen</Category>
-                    <Category>Aventura</Category>
-                  </div>
-                  <p className="synopsis">
+                  <Categories>
+                    <Category to="">Ação</Category>
+                    <Category to="">Shõnen</Category>
+                    <Category to="">Aventura</Category>
+                  </Categories>
+                  <Synopsis>
                     <strong> Sinopse:</strong> {anime.synopsis}
-                  </p>
-                </div>
-              </div>
-              <div className="container-image">
-                <img src={anime.image_url} alt="anime cover" />
+                  </Synopsis>
+                </Details>
+              </AnimeData>
+              <AnimeCover>
+                <img src={anime.imageUrl} alt="anime cover" />
                 <Button
                   text="Ver Sinopse"
                   margin="0 8px"
                   handleClick={handleModalSynopsis}
                 />
-              </div>
+              </AnimeCover>
             </InfoAnime>
 
             {episodes.length > 24 ? (
@@ -183,19 +188,19 @@ const AnimePage = () => {
                     >
                       <StyledListEpisodes>
                         {list.map((epi) => (
-                          <li
-                            className="card-episode"
+                          <AnimeEpisode
+                            watched={false}
                             key={epi.id}
                             onClick={() =>
                               handleToEpisode(
-                                epi.episode_number ? epi.episode_number : 1
+                                epi.episodeNumber ? epi.episodeNumber : 1
                               )
                             }
                           >
-                            {anime.is_movie
+                            {anime.isMovie
                               ? anime.name
-                              : `Episódio ${epi.episode_number}`}
-                          </li>
+                              : `Episódio ${epi.episodeNumber}`}
+                          </AnimeEpisode>
                         ))}
                       </StyledListEpisodes>
                     </Panel>
@@ -205,19 +210,19 @@ const AnimePage = () => {
             ) : (
               <ListEpisodes>
                 {episodes.map((epi) => (
-                  <li
-                    className="card-episode"
+                  <AnimeEpisode
+                    watched={false}
                     key={epi.id}
                     onClick={() =>
                       handleToEpisode(
-                        epi.episode_number ? epi.episode_number : 1
+                        epi.episodeNumber ? epi.episodeNumber : 1
                       )
                     }
                   >
-                    {anime.is_movie
+                    {anime.isMovie
                       ? `${anime.name} - Filme`
-                      : `Episódio ${epi.episode_number}`}
-                  </li>
+                      : `Episódio ${epi.episodeNumber}`}
+                  </AnimeEpisode>
                 ))}
               </ListEpisodes>
             )}

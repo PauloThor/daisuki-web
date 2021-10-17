@@ -1,6 +1,6 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { InputTypes } from "../../model/enums/input-types";
 import InputText from "../../components/InputText";
 import SchemaUtils from "../../shared/util/schema-utils";
@@ -18,6 +18,7 @@ import Lottie from "react-lottie";
 import kakashi from "../../assets/lottie/kakashi.json";
 import Logo from "../../assets/img/logo.svg";
 import Button from "../../components/Button";
+import { useUser } from "../../hooks/User";
 
 interface FormInput {
   username: string;
@@ -28,6 +29,9 @@ interface FormInput {
 }
 
 const Register = () => {
+  const { register, token } = useUser();
+  const history = useHistory();
+
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -43,7 +47,12 @@ const Register = () => {
   });
 
   const onSubmit = (data: FormInput) => {
-    console.log(data);
+    const output = {
+      username: data.username,
+      email: data.email,
+      password: data.password,
+    };
+    register(output, history);
   };
 
   const inputList = [
@@ -79,6 +88,10 @@ const Register = () => {
     },
   ];
 
+  if (!!token) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <FullContainer>
       <LogoContainer>
@@ -103,7 +116,7 @@ const Register = () => {
               <Button text="Enviar" margin="8px 0" />
               <Subtitle>
                 Já é cadastrado?
-                <StyledLink to="/login">Acessar conta.</StyledLink>
+                <StyledLink to="/login"> Acessar conta.</StyledLink>
               </Subtitle>
             </Form>
           </FormProvider>

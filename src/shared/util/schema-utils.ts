@@ -34,6 +34,68 @@ class SchemaUtils {
       password: yup.string().min(8, " - Mínimo de 8 caracteres"),
     });
   }
+
+  static anime() {
+    return yup.object({
+      name: yup.string().required(" - Campo obrigatório"),
+      // synopsis: yup
+      //   .string()
+      //   .required(" - campo obrigatório"),
+      // isMovie: yup.boolean().default(false),
+      totalEpisodes: yup.string(),
+      // .typeError(" - Insira um número")
+      // .integer(" - Insira um valor inteiro"),
+      // isDubbed: yup.boolean().default(false),
+      image: yup.mixed().required("Você precisa enviar uma imagem"),
+    });
+  }
+
+  static episode() {
+    return yup.object({
+      episodeNumber: yup
+        .number()
+        .typeError(" - Insira um número")
+        .integer(" - Insira um valor inteiro"),
+      videoUrl: yup
+        .string()
+        .required(" - Campo obrigatório")
+        .matches(/^https:\/\/streamable.com\/[a-z0-9]{6}$/, " - Url inválida"),
+      imageEpisode: yup.mixed().required("Você precisa enviar uma imagem"),
+    });
+  }
+
+  static moderator() {
+    return yup.object({
+      email: yup
+        .string()
+        .email(" - Precisa ser um email")
+        .required(" - Campo obrigatório"),
+    });
+  }
+
+  static updatePassword() {
+    return yup.object({
+      currentPassword: yup
+        .string()
+        .min(8, " - Mínimo de 8 caracteres")
+        .required(" - Campo obrigatório"),
+      newPassword: yup
+        .string()
+        .min(8, " - Mínimo de 8 caracteres")
+        .required(" - Campo obrigatório"),
+      confirmPassword: yup
+        .string()
+        .min(8, "")
+        .required("")
+        .oneOf([yup.ref("newPassword")], ""),
+    });
+  }
+
+  static updateUsername() {
+    return yup.object({
+      username: yup.string().required(" - Campo obrigatório"),
+    });
+  }
 }
 
 export default SchemaUtils;

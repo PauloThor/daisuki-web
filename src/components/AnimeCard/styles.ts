@@ -21,7 +21,9 @@ export const Container = styled(Link)`
 
   &:hover,
   &:focus {
-    filter: grayscale(0.8);
+    img {
+      filter: grayscale(0.8);
+    }
   }
 `;
 

@@ -7,6 +7,7 @@ import {
   MobileItem,
   MobileMenu,
   MobileSubMenu,
+  ProfileContainer,
   ProfileLink,
   StyledLink,
 } from "./styles";
@@ -23,6 +24,10 @@ import { Link, useHistory } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
 import { TiArrowSortedDown } from "react-icons/ti";
+import Profile from "../Profile";
+import Favorites from "../Favorites";
+import { useUser } from "../../hooks/User";
+import { Anime } from "../../model/anime";
 
 interface HeaderProps {
   isAuth?: boolean;
@@ -30,10 +35,26 @@ interface HeaderProps {
 
 const Header = ({ isAuth = true }: HeaderProps) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [profileOpen, setProfileOpen] = useState<boolean>(false);
+  const [favoritesOpen, setFavoritesOpen] = useState<boolean>(false);
 
   const history = useHistory();
+  const { favorites, logout } = useUser();
 
   const handleOpenMenu = () => setMenuOpen(!menuOpen);
+  const handleOpenProfile = () => {
+    setProfileOpen(!profileOpen);
+    setFavoritesOpen(false);
+  };
+  const handleOpenFavorites = () => {
+    setFavoritesOpen(!favoritesOpen);
+    setProfileOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    history.push("/login");
+  };
 
   const handlePath = (path: string) => history.push(path);
 
@@ -90,9 +111,35 @@ const Header = ({ isAuth = true }: HeaderProps) => {
     </MobileMenu>
   );
 
+  const avatarMenuItems = [
+    {
+      name: "Minha conta",
+      event: handleOpenProfile,
+    },
+    {
+      name: "Favoritos",
+      event: handleOpenFavorites,
+    },
+    {
+      name: "Histórico",
+      event: handleOpenFavorites,
+    },
+    {
+      name: "Sair",
+      event: handleLogout,
+    },
+  ];
+
+  const favoritesList = favorites.map((favorite: Anime) => {
+    return {
+      name: favorite.name,
+      id: favorite.id,
+    };
+  });
+
   return (
     <Container>
-      <Link to="/">
+      <Link to="/" className="link-logo">
         <img src={Logo} alt="logo" />
       </Link>
       <HeaderItem>
@@ -116,7 +163,7 @@ const Header = ({ isAuth = true }: HeaderProps) => {
           <DropdownItem
             title="avatar"
             hasAvatar
-            items={MenuUtils.account}
+            items={avatarMenuItems}
             key={"desktop-dropdown-1"}
           />
         </HeaderItem>
@@ -124,7 +171,6 @@ const Header = ({ isAuth = true }: HeaderProps) => {
       {!isAuth ? (
         <GiHamburgerMenu
           size={35}
-          color="white"
           className="hamburger-menu"
           onClick={handleOpenMenu}
         />
@@ -136,13 +182,23 @@ const Header = ({ isAuth = true }: HeaderProps) => {
           <DropdownItem
             title="avatar"
             hasAvatar
-            items={MenuUtils.account}
+            items={avatarMenuItems}
             key={"mobile-dropdown-1"}
           />
         </MobileAuth>
       )}
 
       {menuOpen && renderMobileMenu()}
+      {profileOpen && (
+        <ProfileContainer>
+          <Profile onClose={handleOpenProfile} />
+        </ProfileContainer>
+      )}
+      {favoritesOpen && (
+        <ProfileContainer>
+          <Favorites onClose={handleOpenFavorites} list={favoritesList} />
+        </ProfileContainer>
+      )}
     </Container>
   );
 };
