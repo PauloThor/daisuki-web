@@ -23,7 +23,7 @@ import {
   Modal,
   Li,
   SpinContainer,
-  Pop
+  Pop,
 } from "./styles";
 import { useUser } from "../../hooks/User";
 import { InputTypes } from "../../model/enums/input-types";
@@ -215,7 +215,7 @@ const Admin = () => {
       })
       .then((res) => {
         setModerators(res.data);
-        setLoading(false)
+        setLoading(false);
       })
       .catch((err) => console.log(err));
   };
@@ -237,14 +237,14 @@ const Admin = () => {
           Authorization: `Bearer ${token}`,
         },
         data: {
-          email: email
-        }
-      },)
+          email: email,
+        },
+      })
       .then((res) => {
-        getModerators()
+        getModerators();
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   useEffect(() => {
     getAnimeList();
@@ -397,17 +397,16 @@ const Admin = () => {
           <ul>
             {moderators?.map((mod) => (
               <Li key={mod.id}>
-                {mod.email} 
+                {mod.email}
                 <Pop
-                title={`Remover ${mod.username}?`}
-                placement="left"
-                onConfirm={() => deleteModerator(mod.email)}
-                okText="Sim"
-                cancelText="Não"
-              >
-                <IoMdRemoveCircleOutline />
-                
-              </Pop>
+                  title={`Remover ${mod.username}?`}
+                  placement="left"
+                  onConfirm={() => deleteModerator(mod.email)}
+                  okText="Sim"
+                  cancelText="Não"
+                >
+                  <IoMdRemoveCircleOutline />
+                </Pop>
               </Li>
             ))}
           </ul>

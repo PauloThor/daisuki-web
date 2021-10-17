@@ -242,9 +242,9 @@ export const Li = styled.li`
 `;
 
 export const SpinContainer = styled.div`
-height: 100%;
-display: grid;
-place-items: center;
+  height: 100%;
+  display: grid;
+  place-items: center;
 `;
 
 export const Pop = styled(Popconfirm)`
