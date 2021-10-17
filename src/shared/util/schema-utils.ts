@@ -5,7 +5,8 @@ class SchemaUtils {
     return yup.object({
       username: yup
         .string()
-        .min(5, " - Mínimo de 5 caracteres")
+        .min(3, " - Mínimo de 3 caracteres")
+        .max(20, " - Máximo de 20 caracteres")
         .required(" - Campo obrigatório"),
       email: yup
         .string()
@@ -93,7 +94,11 @@ class SchemaUtils {
 
   static updateUsername() {
     return yup.object({
-      username: yup.string().required(" - Campo obrigatório"),
+      username: yup
+        .string()
+        .max(3, " - Mínimo de 3 caracteres")
+        .max(20, " - Máximo de 20 caracteres")
+        .required(" - Campo obrigatório"),
     });
   }
 

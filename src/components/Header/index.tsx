@@ -36,7 +36,7 @@ const Header = () => {
   const [profileOpen, setProfileOpen] = useState<boolean>(false);
   const [favoritesOpen, setFavoritesOpen] = useState<boolean>(false);
   const [historyOpen, setHistoryOpen] = useState<boolean>(false);
-  const { token } = useUser();
+  const { token, user } = useUser();
 
   const history = useHistory();
   const { favorites, logout, isLoading, watched } = useUser();
@@ -53,7 +53,6 @@ const Header = () => {
   const handleOpenHistory = () => {
     closeAll();
     setHistoryOpen(!historyOpen);
-    console.log(watched);
   };
 
   const closeAll = () => {
@@ -67,6 +66,8 @@ const Header = () => {
     history.push("/login");
   };
 
+  const pathToAdmin = () => history.push("/admin");
+
   const handlePath = (path: string) => history.push(path);
 
   const methods = useForm({
@@ -77,7 +78,7 @@ const Header = () => {
   const onSubmit = (data: any) => console.log(data);
 
   const renderMobileMenu = () => (
-    <MobileMenu onClick={() => console.log()} mode="inline">
+    <MobileMenu mode="inline">
       <MobileSubMenu key="submobile1" title="Animes">
         {MenuUtils.animes.map((item, index) => (
           <MobileItem
@@ -141,6 +142,16 @@ const Header = () => {
     },
   ];
 
+  const getAvatarItems = () => {
+    const adminItem = {
+      name: "Central de upload",
+      event: pathToAdmin,
+    };
+    return user.permission === "user"
+      ? avatarMenuItems
+      : [adminItem, ...avatarMenuItems];
+  };
+
   const favoritesList = favorites.map((favorite: Anime) => {
     return {
       name: favorite.name,
@@ -177,7 +188,7 @@ const Header = () => {
             <DropdownItem
               title="avatar"
               hasAvatar
-              items={avatarMenuItems}
+              items={getAvatarItems()}
               key={"desktop-dropdown-1"}
             />
           )}
@@ -197,7 +208,7 @@ const Header = () => {
           <DropdownItem
             title="avatar"
             hasAvatar
-            items={avatarMenuItems}
+            items={getAvatarItems()}
             key={"mobile-dropdown-1"}
           />
         </MobileAuth>
