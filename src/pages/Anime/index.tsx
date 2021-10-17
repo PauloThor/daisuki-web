@@ -29,9 +29,13 @@ import { Episode } from "../../model/episode";
 import { ParamProps } from "../../model/param";
 import { ReactComponent as FavIcon } from "../../assets/img/fav-icon.svg";
 import { ReactComponent as FavAnime } from "../../assets/img/favAnime.svg";
+import { ReactComponent as RemoveFav } from "../../assets/img/removeFav.svg";
+import { ReactComponent as FavHover } from "../../assets/img/favHover.svg";
 import BackTop from "../../components/BackTop";
 import { useUser } from "../../hooks/User";
 import { ModalToLogin } from "../../components/ModalToLogin";
+import toast from "react-hot-toast";
+import { returnStars } from "../../shared/util/anime-utils";
 
 const AnimePage = () => {
   const param: ParamProps = useParams();
@@ -42,6 +46,7 @@ const AnimePage = () => {
   const [anime, setAnime] = useState<Anime>();
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [episodesPerPage, setEpisodesPerPage] = useState<[Episode[]]>([[]]);
+  const [animeRate, setAnimeRate] = useState(5.0);
 
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [isInvalidLink, setIsInvalidLink] = useState<boolean>(false);
@@ -107,7 +112,6 @@ const AnimePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [animeRate, setAnimeRate] = useState(5.0);
   const handleRate = async (value: number) => {
     await setRating(value);
     setTimeout(() => {
@@ -116,6 +120,7 @@ const AnimePage = () => {
   };
 
   const setRating = async (value: number) => {
+    value = Math.ceil(value);
     if (!token) {
       handleModalToLogin();
     } else {
@@ -131,8 +136,12 @@ const AnimePage = () => {
             },
           }
         )
-        .then((response) => console.log("Anime avaliado!"))
-        .catch((e) => console.log("Algo deu errado, tente novamente!"));
+        .then((response) =>
+          toast(`Anime avaliado com ${returnStars(value)}`, {
+            icon: "🏅",
+          })
+        )
+        .catch((e) => toast.error("Algo deu errado, tente novamente!"));
     }
   };
 
@@ -160,9 +169,11 @@ const AnimePage = () => {
         })
         .then((response) => {
           getFavorites();
-          console.log("Anime favoritado!");
+          toast("Anime favoritado!", {
+            icon: "❤️",
+          });
         })
-        .catch((e) => console.log(e));
+        .catch((e) => toast.error("Falha ao favoritar, tente novamente!"));
     } else {
       daisukiApi
         .delete(`/users/favorites/${anime?.id}`, {
@@ -172,9 +183,11 @@ const AnimePage = () => {
         })
         .then((response) => {
           getFavorites();
-          console.log("Anime desfav!");
+          toast("Anime removido dos favoritos!", {
+            icon: "💔",
+          });
         })
-        .catch((e) => console.log("Algo deu errado, tente novamente!"));
+        .catch((e) => toast.error("Algo deu errado, tente novamente!"));
     }
   };
 
@@ -200,6 +213,7 @@ const AnimePage = () => {
                   <h1>{anime.name}</h1>
                   <button type="button" onClick={handleFavoriteAnime}>
                     {isFavorite ? <FavAnime /> : <FavIcon />}
+                    <span>{isFavorite ? <RemoveFav /> : <FavHover />}</span>
                   </button>
                 </HeaderAnimeData>
                 <RateContainer>
@@ -267,7 +281,7 @@ const AnimePage = () => {
                       <StyledListEpisodes>
                         {list.map((epi) => (
                           <AnimeEpisode
-                            watched={false}
+                            watched={epi?.hasWatched || false}
                             key={epi.id}
                             onClick={() =>
                               handleToEpisode(

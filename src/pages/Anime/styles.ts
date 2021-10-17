@@ -3,6 +3,7 @@ import { Font } from "../../model/enums/theme-fonts";
 import { Color } from "../../model/enums/theme-colors";
 import { Collapse } from "antd";
 import { Link } from "react-router-dom";
+import { ReactComponent as RemoveFav } from "../../assets/img/removeFav.svg";
 
 interface HeaderAnimeDataProps {
   isFavorite: boolean;
@@ -73,13 +74,47 @@ export const HeaderAnimeData = styled.div<HeaderAnimeDataProps>`
     width: 25px;
     height: 25px;
     border: none;
+    position: relative;
     animation: ${({ isFavorite }) =>
       isFavorite ? mountedStyle : unmountedStyle.animation};
+
+    &:hover svg {
+      @media (min-width: 1025px) {
+        display: none;
+      }
+    }
+    &:hover span {
+      @media (min-width: 1025px) {
+        display: block;
+        > svg {
+          display: block;
+          opacity: 100%;
+        }
+      }
+    }
+
+    span {
+      display: none;
+      position: absolute;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+      top: 0;
+
+      svg {
+        path {
+          fill: ${Color.HIGHLIGHT};
+        }
+      }
+    }
+    path {
+      fill: ${Color.HIGHLIGHT_DARK};
+    }
     svg {
       width: 25px;
       height: 25px;
       opacity: 100%;
-      transition: opacity 3s;
       path {
         fill: ${({ isFavorite }) => isFavorite && Color.HIGHLIGHT_DARK};
       }
@@ -327,4 +362,13 @@ export const Synopsis = styled.p`
 export const Footer = styled.div`
   width: 100%;
   height: 30px;
+`;
+
+export const RemoveFavStyled = styled(RemoveFav)`
+  width: 25px;
+  height: 25px;
+
+  path {
+    fill: green;
+  }
 `;
