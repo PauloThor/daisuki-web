@@ -90,6 +90,8 @@ const Admin = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      setSynopsis("");
+      setAnimeImage(undefined);
     }
     const myPromise = fetch();
     toast.promise(
@@ -129,6 +131,8 @@ const Admin = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      setAnime("");
+      setEpisodeImage(undefined);
     }
     const myPromise = fetch();
     toast.promise(
@@ -147,11 +151,28 @@ const Admin = () => {
   };
 
   const onSubmitModerator = (data: FormModerator) => {
-    console.log(data);
-    const output = {
-      email: data.email,
-    };
-    console.log(output);
+    async function fetch() {
+      await daisukiApi.put("/users/moderators", data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
+    const myPromise = fetch();
+    toast.promise(
+      myPromise,
+      {
+        loading: "Enviando...",
+        success: "Moderador adicionado!",
+        error: "Usuário não cadastrado.",
+      },
+      {
+        style: {
+          minWidth: "200px",
+        },
+      }
+    );
   };
 
   const { Option } = Select;
