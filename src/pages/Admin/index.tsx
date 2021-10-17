@@ -24,11 +24,12 @@ import {
 import { useUser } from "../../hooks/User";
 import { InputTypes } from "../../model/enums/input-types";
 import { FormAnime, FormEpisode, FormModerator } from "../../model/admin-forms";
+import { Genre } from "../../model/anime";
 import { daisukiApi } from "../../services/api";
-import { genres as allGenres } from "../../shared/util/genre-utils";
 import SchemaUtils from "../../shared/util/schema-utils";
 
 const Admin = () => {
+  const [allGenres, setAllGenres] = useState<string[]>([])
   const [genres, setGenres] = useState<SelectValue | any>([]);
   const [isDubbed, setIsDubbed] = useState(false);
   const [isMovie, setIsMovie] = useState(false);
@@ -44,6 +45,17 @@ const Admin = () => {
     daisukiApi
       .get("/animes/upload-list")
       .then((res) => setAnimeList(res.data))
+      .catch((err) => console.log(err));
+  };
+
+  const getGenreList = () => {
+    daisukiApi
+      .get("/animes/genres")
+      .then((res) => {
+        const data: Genre[] = res.data
+        const genres = data.map(genre => genre.name)
+        setAllGenres(genres)
+      })
       .catch((err) => console.log(err));
   };
 
@@ -179,6 +191,7 @@ const Admin = () => {
 
   useEffect(() => {
     getAnimeList();
+    getGenreList();
   }, []);
 
   const onUploadEpisodeImage = (file: FileList) => {
@@ -244,7 +257,7 @@ const Admin = () => {
                 mode="multiple"
                 onChange={(e) => setGenres(e)}
               >
-                {allGenres.map((genre) => (
+                {allGenres?.map((genre) => (
                   <Option name={genre} value={genre} key={genre}>
                     {genre}
                   </Option>
