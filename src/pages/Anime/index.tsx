@@ -29,21 +29,28 @@ import { Episode } from "../../model/episode";
 import { ParamProps } from "../../model/param";
 import FavIcon from "../../assets/img/fav-icon.svg";
 import BackTop from "../../components/BackTop";
+import { useUser } from "../../hooks/User";
+import { ModalToLogin } from "../../components/ModalToLogin";
 
 const AnimePage = () => {
   const param: ParamProps = useParams();
   const history = useHistory();
+  const { token } = useUser();
   const { Panel } = Collapse;
+
   const [anime, setAnime] = useState<Anime>();
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [episodesPerPage, setEpisodesPerPage] = useState<[Episode[]]>([[]]);
+
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [isInvalidLink, setIsInvalidLink] = useState<boolean>(false);
+
   const [isModalSynopsisVisible, setIsModalSynopsisVisible] =
+    useState<boolean>(false);
+  const [isModalToLoginVisible, setIsModalToLoginVisible] =
     useState<boolean>(false);
 
   const loadAnime = async () => {
-    console.log(param);
     const isValidAnime = await daisukiApi
       .get(`/animes/${param.name}`)
       .then((response) => {
@@ -51,7 +58,6 @@ const AnimePage = () => {
           setAnime(response.data);
           if (response.data.rating) {
             setAnimeRate(response.data.rating);
-            console.log(response.data.rating);
           }
           return true;
         } else {
@@ -96,7 +102,6 @@ const AnimePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // TODO integrar com a nota do anime quando o backend ficar pronto.
   const [animeRate, setAnimeRate] = useState(5.0);
   const handleRate = async (value: number) => {
     await setRating(value);
@@ -106,8 +111,9 @@ const AnimePage = () => {
   };
 
   const setRating = async (value: number) => {
-    const token = localStorage.getItem("@Daisuki:token");
-    if (token) {
+    if (!token) {
+      handleModalToLogin();
+    } else {
       daisukiApi
         .put(
           `/animes/${anime?.id}/ratings`,
@@ -120,15 +126,17 @@ const AnimePage = () => {
             },
           }
         )
-        .then((response) => console.log("succes"))
-        .catch((e) => console.log(e));
-    } else {
-      console.log("need login");
+        .then((response) => console.log("Anime avaliado!"))
+        .catch((e) => console.log("Algo deu errado, tente novamente!"));
     }
   };
 
   const handleModalSynopsis = () => {
     setIsModalSynopsisVisible(!isModalSynopsisVisible);
+  };
+
+  const handleModalToLogin = () => {
+    setIsModalToLoginVisible(!isModalToLoginVisible);
   };
 
   const handleToEpisode = (id: number) => {
@@ -261,6 +269,10 @@ const AnimePage = () => {
               handleModalSynopsis={handleModalSynopsis}
               isModalSynopsisVisible={isModalSynopsisVisible}
               synopsis={anime.synopsis || ""}
+            />
+            <ModalToLogin
+              isModalToLoginVisible={isModalToLoginVisible}
+              handleModalToLogin={handleModalToLogin}
             />
           </Container>
         </>
