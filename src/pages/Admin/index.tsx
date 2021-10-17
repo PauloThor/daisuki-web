@@ -195,7 +195,7 @@ const Admin = () => {
                   name="synopsis"
                   id="synopsis"
                   cols={30}
-                  rows={6}
+                  rows={4}
                   placeholder=" Uma sinopse bem legal..."
                   maxLength={1023}
                 />
