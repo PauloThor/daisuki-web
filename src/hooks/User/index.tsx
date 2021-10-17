@@ -84,7 +84,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         myPromise,
         {
           loading: "Enviando...",
-          success: "Olá! ＼(≧▽≦)／",
+          success: "Ohayou! ＼(≧▽≦)／",
           error: "Tente novamente =c",
         },
         {

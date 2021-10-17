@@ -23,6 +23,7 @@ import {
   Modal,
   Li,
   SpinContainer,
+  Pop
 } from "./styles";
 import { useUser } from "../../hooks/User";
 import { InputTypes } from "../../model/enums/input-types";
@@ -228,6 +229,23 @@ const Admin = () => {
     setOpenModal(false);
   };
 
+  const deleteModerator = (email: string | undefined) => {
+    daisukiApi
+      .delete("/users/moderators", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          email: email
+        }
+      },)
+      .then((res) => {
+        getModerators()
+      })
+      .catch((err) => console.log(err));
+  }
+
   useEffect(() => {
     getAnimeList();
     getGenreList();
@@ -295,7 +313,7 @@ const Admin = () => {
                 ))}
               </SelectStyled>
               <Wrapper>
-                <InputFile name="image" onChange={onUploadAnimeImage} />
+                <InputFile name="imageAnime" onChange={onUploadAnimeImage} />
                 <Button text="Enviar" />
               </Wrapper>
             </FormStyled>
@@ -379,7 +397,17 @@ const Admin = () => {
           <ul>
             {moderators?.map((mod) => (
               <Li key={mod.id}>
-                {mod.email} <IoMdRemoveCircleOutline />
+                {mod.email} 
+                <Pop
+                title={`Remover ${mod.username}?`}
+                placement="left"
+                onConfirm={() => deleteModerator(mod.email)}
+                okText="Sim"
+                cancelText="Não"
+              >
+                <IoMdRemoveCircleOutline />
+                
+              </Pop>
               </Li>
             ))}
           </ul>

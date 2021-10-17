@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../model/enums/theme-colors";
-import { Checkbox, Select, Drawer } from "antd";
+import { Checkbox, Select, Drawer, Popconfirm } from "antd";
 
 export const Container = styled.div`
   display: flex;
@@ -245,4 +245,11 @@ export const SpinContainer = styled.div`
 height: 100%;
 display: grid;
 place-items: center;
+`;
+
+export const Pop = styled(Popconfirm)`
+  .ant-popover-buttons {
+    display: flex;
+    justify-content: center;
+  }
 `;
