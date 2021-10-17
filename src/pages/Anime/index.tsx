@@ -214,9 +214,7 @@ const AnimePage = () => {
                     watched={false}
                     key={epi.id}
                     onClick={() =>
-                      handleToEpisode(
-                        epi.episodeNumber ? epi.episodeNumber : 1
-                      )
+                      handleToEpisode(epi.episodeNumber ? epi.episodeNumber : 1)
                     }
                   >
                     {anime.isMovie

@@ -27,7 +27,16 @@ class FormUtils {
       name: "username",
       placeholder,
       label: "Novo nome de usuário*",
-      type: InputTypes.TEXT,
+      type: InputTypes.USER,
+    },
+  ];
+
+  static email = (placeholder: string) => [
+    {
+      name: "email",
+      placeholder,
+      label: "Novo endereço de e-mail*",
+      type: InputTypes.EMAIL,
     },
   ];
 }
