@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Select, Spin } from "antd";
@@ -251,14 +250,6 @@ const Admin = () => {
     getAnimeList();
     getGenreList();
   }, []);
-
-  if (!token) {
-    return <Redirect to="/" />;
-  }
-
-  if (user.permission === "user") {
-    return <Redirect to="/" />;
-  }
 
   return (
     <>
