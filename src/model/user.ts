@@ -21,3 +21,7 @@ export interface IdentityInfo {
   username?: string;
   email?: string;
 }
+
+export interface AvatarInfo {
+  image: FileList;
+}

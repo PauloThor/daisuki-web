@@ -96,6 +96,15 @@ class SchemaUtils {
       username: yup.string().required(" - Campo obrigatório"),
     });
   }
+
+  static updateEmail() {
+    return yup.object({
+      email: yup
+        .string()
+        .email(" - Deve ser um e-mail")
+        .required(" - Campo obrigatório"),
+    });
+  }
 }
 
 export default SchemaUtils;

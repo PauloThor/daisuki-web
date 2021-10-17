@@ -10,8 +10,15 @@ import { daisukiApi } from "../../services/api";
 import { Anime } from "../../model/anime";
 import { toast } from "react-hot-toast";
 import jwt_decode from "jwt-decode";
-import { IdentityInfo, Info, PasswordInfo, UserInfo } from "../../model/user";
+import {
+  AvatarInfo,
+  IdentityInfo,
+  Info,
+  PasswordInfo,
+  UserInfo,
+} from "../../model/user";
 import { LoginData, RegisterData } from "../../model/account";
+import { Redirect } from "react-router";
 
 interface UserData {
   token: string;
@@ -26,6 +33,8 @@ interface UserData {
   isLoading: boolean;
   updatePassword: (data: PasswordInfo, event?: () => void) => void;
   updateUser: (data: IdentityInfo, event?: () => void) => void;
+  deleteSelf: () => void;
+  updateAvatar: (data: AvatarInfo, event?: () => void) => void;
 }
 
 interface UserProviderProps {
@@ -93,6 +102,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const logout = () => {
     localStorage.removeItem("@Daisuki:token");
     setToken("");
+    setUser({});
   };
 
   const getFavorites = async () => {
@@ -157,6 +167,39 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     });
   };
 
+  const deleteSelf = () => {
+    async function fetch() {
+      setIsLoading(true);
+      await daisukiApi.delete("/users", headersJson).then(() => {
+        logout();
+        return <Redirect to="login" />;
+      });
+      setIsLoading(false);
+    }
+    const myPromise = fetch();
+    toast.promise(myPromise, {
+      loading: "Enviando...",
+      success: "Conta excluída!",
+      error: "Tente novamente =c",
+    });
+  };
+
+  const updateAvatar = (data: AvatarInfo, event?: () => void) => {
+    async function fetch() {
+      await daisukiApi.patch("/users/update-avatar", data, headers).then(() => {
+        if (event) {
+          event();
+        }
+      });
+    }
+    const myPromise = fetch();
+    toast.promise(myPromise, {
+      loading: "Enviando...",
+      success: "Informações atualizadas!",
+      error: "Tente novamente =c",
+    });
+  };
+
   const decodeToken = () => {
     const info: Info = jwt_decode(token);
     setUser({
@@ -190,6 +233,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         isLoading,
         updatePassword,
         updateUser,
+        deleteSelf,
+        updateAvatar,
       }}
     >
       {children}
