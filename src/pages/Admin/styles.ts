@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../model/enums/theme-colors";
-import { Checkbox, Select } from "antd";
+import { Checkbox, Select, Drawer, Popconfirm } from "antd";
 
 export const Container = styled.div`
   display: flex;
@@ -192,5 +192,64 @@ export const AddModButton = styled.button`
   &:hover,
   &:focus {
     border-color: ${Color.HIGHLIGHT};
+  }
+`;
+
+export const Modal = styled(Drawer)`
+  .ant-drawer-content-wrapper {
+    width: 100% !important;
+    max-width: 400px;
+  }
+  .ant-drawer-header {
+    background-color: ${Color.MAIN};
+
+    .ant-drawer-title {
+      font-size: 1.125rem;
+    }
+
+    .ant-drawer-title,
+    .ant-drawer-close {
+      color: ${Color.TEXT_MAIN};
+    }
+  }
+  .ant-drawer-content {
+    background-color: ${Color.MAIN_DARK};
+  }
+`;
+
+export const Li = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+
+  svg {
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: 0.3s;
+
+    &:hover {
+      color: ${Color.TEXT_SECONDARY};
+    }
+  }
+
+  &:hover {
+    svg {
+      opacity: 1;
+    }
+  }
+`;
+
+export const SpinContainer = styled.div`
+  height: 100%;
+  display: grid;
+  place-items: center;
+`;
+
+export const Pop = styled(Popconfirm)`
+  .ant-popover-buttons {
+    display: flex;
+    justify-content: center;
   }
 `;

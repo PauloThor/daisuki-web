@@ -38,15 +38,7 @@ class SchemaUtils {
   static anime() {
     return yup.object({
       name: yup.string().required(" - Campo obrigatório"),
-      // synopsis: yup
-      //   .string()
-      //   .required(" - campo obrigatório"),
-      // isMovie: yup.boolean().default(false),
       totalEpisodes: yup.string(),
-      // .typeError(" - Insira um número")
-      // .integer(" - Insira um valor inteiro"),
-      // isDubbed: yup.boolean().default(false),
-      image: yup.mixed().required("Você precisa enviar uma imagem"),
     });
   }
 
@@ -60,7 +52,6 @@ class SchemaUtils {
         .string()
         .required(" - Campo obrigatório")
         .matches(/^https:\/\/streamable.com\/[a-z0-9]{6}$/, " - Url inválida"),
-      imageEpisode: yup.mixed().required("Você precisa enviar uma imagem"),
     });
   }
 
