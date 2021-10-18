@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Color } from "../../model/enums/theme-colors";
 import {
@@ -33,12 +34,17 @@ export const AnimeContainer = styled.div`
   transition: 0.5s;
 `;
 
-export const Item = styled.section`
+export const Item = styled(Link)`
   padding: 0.5rem 0;
   display: flex;
+  color: ${Color.SECONDARY};
   img {
     width: 30%;
     object-fit: contain;
+  }
+
+  &:hover {
+    color: ${Color.HIGHLIGHT_LIGHT};
   }
 `;
 

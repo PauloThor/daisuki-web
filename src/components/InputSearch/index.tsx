@@ -16,6 +16,7 @@ import {
   SearchWrapper,
   Title,
 } from "./styles";
+import StringUtils from "../../shared/util/string-utils";
 
 interface InputSearchProps {
   placeholder: string;
@@ -79,7 +80,7 @@ const InputSearch = ({ placeholder, maxWidth = "270px" }: InputSearchProps) => {
       </SearchWrapper>
       <AnimeContainer>
         {list.map((anime, index) => (
-          <Item key={index}>
+          <Item key={index} to={`/animes/${StringUtils.urlMask(anime?.name)}`}>
             <img alt={anime.name} src={anime.imageUrl} />
             <Info>
               <Title>
