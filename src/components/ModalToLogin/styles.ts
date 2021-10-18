@@ -100,9 +100,9 @@ export const CheckboxContainer = styled.div`
 export const ContainerButtons = styled.div`
   margin-top: 1rem;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   gap: 1rem;
-  width: 15rem;
+  width: 16rem;
 
   @media (min-width: 768px) {
     width: auto;
