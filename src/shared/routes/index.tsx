@@ -21,7 +21,10 @@ const Routes = () => {
         <AnimeList request="genre" />
       </Route>
       <Route path="/search/:search">
-        <AnimeList request="search" search/>
+        <AnimeList request="search" search />
+      </Route>
+      <Route path="/:filter">
+        <AnimeList request="filter" />
       </Route>
       {user.permission === "mod" && <Route path="/admin" component={Admin} />}
       {user.permission === "admin" && <Route path="/admin" component={Admin} />}

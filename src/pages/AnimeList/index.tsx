@@ -4,8 +4,13 @@ import { Spin } from "antd";
 import { AnimeListParamProps } from "../../model/param";
 import { Anime } from "../../model/anime";
 import { daisukiApi } from "../../services/api";
-import { genres, alphabet } from "../../shared/util/genre-utils";
-import StringUtils from "../../shared/util/string-utils"
+import {
+  genres,
+  alphabet,
+  endpointByParam,
+  titleByParam,
+} from "../../shared/util/anime-list-utils";
+import StringUtils from "../../shared/util/string-utils";
 import Header from "../../components/Header";
 import Pagination from "../../components/Pagination";
 import AnimeCard from "../../components/AnimeCard";
@@ -56,13 +61,40 @@ const AnimeList = ({ request, search = false }: Props) => {
 
   const getAnimesBySearch = async (page: number) => {
     await daisukiApi
-      .get(`/animes/search/${StringUtils.removeDashFromUrl(params.search)}?page=${page}&per_page=24`)
+      .get(
+        `/animes/search/${StringUtils.removeDashFromUrl(
+          params.search
+        )}?page=${page}&per_page=24`
+      )
       .then((res) => {
         setTotal(res.data.total);
         setAnimes(res.data.data);
-        setTitle(`Resultado da busca por: ${StringUtils.removeDashFromUrl(params.search)}`);
+        setTitle(
+          `Resultado da busca por: ${StringUtils.removeDashFromUrl(
+            params.search
+          )}`
+        );
+        setLoading(false);
+      });
+  };
+
+  const getAnimesByStatus = async (page: number, letter?: string) => {
+    const url = endpointByParam[params.filter] ?? "";
+    await daisukiApi
+      .get(
+        `${url}&page=${page}&per_page=24${
+          letter ? `&starts_with=${letter}` : ""
+        }`
+      )
+      .then((res) => {
+        setTotal(res.data.total);
+        setAnimes(res.data.data);
+        setTitle(titleByParam[params.filter] ?? "");
         setLoading(false);
       })
+      .catch((err) => {
+        setIsInvalidLink(true);
+      });
   };
 
   const handleChange = (page: number) => {
@@ -75,7 +107,12 @@ const AnimeList = ({ request, search = false }: Props) => {
   const handleFilter = (letter: string) => {
     setLoading(true);
     setCurrentPage(1);
-    getAnimesByGenre(currentPage, letter);
+    if (request === "genre") {
+      getAnimesByGenre(currentPage, letter);
+    }
+    if (request === "filter") {
+      getAnimesByStatus(currentPage, letter);
+    }
   };
 
   useEffect(() => {
@@ -84,6 +121,9 @@ const AnimeList = ({ request, search = false }: Props) => {
     }
     if (request === "search") {
       getAnimesBySearch(currentPage);
+    }
+    if (request === "filter") {
+      getAnimesByStatus(currentPage);
     }
   }, []);
 
