@@ -23,11 +23,11 @@ const Routes = () => {
       <Route path="/search/:search">
         <AnimeList request="search" search />
       </Route>
+      {user.permission === "mod" && <Route path="/admin" component={Admin} />}
+      {user.permission === "admin" && <Route path="/admin" component={Admin} />}
       <Route path="/:filter">
         <AnimeList request="filter" />
       </Route>
-      {user.permission === "mod" && <Route path="/admin" component={Admin} />}
-      {user.permission === "admin" && <Route path="/admin" component={Admin} />}
       <Route exact path="/styleguide" component={Styleguide} />
       <Route path="*" component={NotFound} />
     </Switch>
