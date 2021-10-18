@@ -244,7 +244,9 @@ const AnimePage = () => {
                 <HeaderAnimeData isFavorite={!!isFavorite}>
                   <h1>{anime.name}</h1>
                   <button type="button" onClick={handleFavoriteAnime}>
-                    {isFavorite ? <FaHeart /> : <FaRegHeart />}
+                    {!token && <FaRegHeart />}
+                    {token && isFavorite && <FaHeart />}
+                    {token && !isFavorite && <FaRegHeart />}
                     <span>{isFavorite ? <FaHeartBroken /> : <FaHeart />}</span>
                   </button>
                 </HeaderAnimeData>
