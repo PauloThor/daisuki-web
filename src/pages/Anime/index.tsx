@@ -129,17 +129,6 @@ const AnimePage = () => {
   };
 
   const setRating = async (value: number) => {
-    // if (value < 1 || value > 5) {
-    //   toast(`Você já avaliou esse anime com ${returnStars(animeRate)}`, {
-    //     icon: "❌",
-    //     style: {
-    //       borderRadius: "10px",
-    //       background: Color.MAIN_DARK,
-    //       color: "#fff",
-    //     },
-    //   });
-    //   return;
-    // }
     if (value === 0) {
       value = animeRate;
     }
@@ -287,7 +276,7 @@ const AnimePage = () => {
                   <Categories>
                     {anime.genres &&
                       anime.genres.map((genre) => (
-                        <Category to={`/genres/${genre}`}>
+                        <Category to={`/genres/${genresToEnglish[genre.name]}`}>
                           {genre.name}
                         </Category>
                       ))}
