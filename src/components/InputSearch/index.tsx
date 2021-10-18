@@ -78,9 +78,12 @@ const InputSearch = ({ placeholder, maxWidth = "270px" }: InputSearchProps) => {
           <FiSearch color={Color.TEXT_MAIN} />
         )}
       </SearchWrapper>
-      <AnimeContainer>
+      <AnimeContainer key="anime-page">
         {list.map((anime, index) => (
-          <Item key={index} to={`/animes/${StringUtils.urlMask(anime?.name)}`}>
+          <Item
+            key={`${anime.name}-a${index}`}
+            to={`/animes/${StringUtils.urlMask(anime?.name)}`}
+          >
             <img alt={anime.name} src={anime.imageUrl} />
             <Info>
               <Title>

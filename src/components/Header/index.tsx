@@ -62,7 +62,7 @@ const Header = () => {
 
   const handleLogout = () => {
     logout();
-    history.push("/login");
+    history.push("/");
   };
 
   const pathToAdmin = () => history.push("/admin");
