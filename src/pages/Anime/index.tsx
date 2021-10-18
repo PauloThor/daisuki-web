@@ -27,10 +27,7 @@ import { daisukiApi } from "../../services/api";
 import { Anime } from "../../model/anime";
 import { Episode } from "../../model/episode";
 import { ParamProps } from "../../model/param";
-import { ReactComponent as FavIcon } from "../../assets/img/fav-icon.svg";
-import { ReactComponent as FavAnime } from "../../assets/img/favAnime.svg";
-import { ReactComponent as RemoveFav } from "../../assets/img/removeFav.svg";
-import { ReactComponent as FavHover } from "../../assets/img/favHover.svg";
+import { FaHeart, FaHeartBroken, FaRegHeart } from "react-icons/fa";
 import BackTop from "../../components/BackTop";
 import { useUser } from "../../hooks/User";
 import { ModalToLogin } from "../../components/ModalToLogin";
@@ -115,12 +112,28 @@ const AnimePage = () => {
   const handleRate = async (value: number) => {
     await setRating(value);
     setTimeout(() => {
-      loadAnime();
+      daisukiApi
+        .get(`/animes/${param.name}`)
+        .then((response) => {
+          setAnime(response.data);
+          setAnimeRate(response.data.rating);
+          return true;
+        })
+        .catch((e) => {
+          toast.error("falhou");
+          return false;
+        });
     }, 1000);
   };
 
   const setRating = async (value: number) => {
-    value = Math.ceil(value);
+    // value = Math.ceil(value);
+    console.log(value);
+    if (value < 1 || value > 5) {
+      console.log("tente novamente");
+      return;
+    }
+
     if (!token) {
       handleModalToLogin();
     } else {
@@ -212,13 +225,12 @@ const AnimePage = () => {
                 <HeaderAnimeData isFavorite={!!isFavorite}>
                   <h1>{anime.name}</h1>
                   <button type="button" onClick={handleFavoriteAnime}>
-                    {isFavorite ? <FavAnime /> : <FavIcon />}
-                    <span>{isFavorite ? <RemoveFav /> : <FavHover />}</span>
+                    {isFavorite ? <FaHeart /> : <FaRegHeart />}
+                    <span>{isFavorite ? <FaHeartBroken /> : <FaHeart />}</span>
                   </button>
                 </HeaderAnimeData>
                 <RateContainer>
-                  <Rate onChange={handleRate} value={animeRate} allowHalf />
-
+                  <Rate onChange={handleRate} value={animeRate} />
                   <span className="ant-rate-text">
                     {animeRate ? animeRate.toFixed(2) : "N/A"}
                   </span>
