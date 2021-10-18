@@ -18,7 +18,7 @@ const AnimeCard = ({ anime, rank, showRating }: Props) => {
       {rank && <Rank>{rank}</Rank>}
       {showRating && (
         <Rating>
-          {rating?.toFixed(2)} <AiFillStar />
+          {rating ? rating?.toFixed(2) : "N/A"} <AiFillStar />
         </Rating>
       )}
     </Container>

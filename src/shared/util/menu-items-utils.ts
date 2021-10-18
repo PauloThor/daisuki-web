@@ -40,15 +40,15 @@ class MenuUtils {
   static genders = [
     {
       name: "Ação",
-      path: "/genres/acao",
+      path: "/genres/action",
     },
     {
       name: "Aventura",
-      path: "/genres/aventura",
+      path: "/genres/adventure",
     },
     {
       name: "Comédia",
-      path: "/genres/comedia",
+      path: "/genres/comedy",
     },
     {
       name: "Drama",
@@ -56,15 +56,15 @@ class MenuUtils {
     },
     {
       name: "Esporte",
-      path: "/genres/esporte",
+      path: "/genres/sports",
     },
     {
       name: "Fantasia",
-      path: "/genres/fantasia",
+      path: "/genres/fantasy",
     },
     {
       name: "Ficção científica",
-      path: "/genres/ficcao-cientifica",
+      path: "/genres/fiction",
     },
     {
       name: "Gourmet",
@@ -84,7 +84,7 @@ class MenuUtils {
     },
     {
       name: "Mistério",
-      path: "/genres/misterio",
+      path: "/genres/mistery",
     },
     {
       name: "Romance",
@@ -100,11 +100,11 @@ class MenuUtils {
     },
     {
       name: "Sobrenatural",
-      path: "/genres/sobrenatural",
+      path: "/genres/supernatural",
     },
     {
       name: "Suspense",
-      path: "/genres/suspense",
+      path: "/genres/thriller",
     },
   ];
 
