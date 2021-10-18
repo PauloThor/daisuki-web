@@ -101,11 +101,7 @@ export const ModalToLogin = ({
                   />
                   <Button text="Fazer login" margin="0px" type="submit" />
                 </ContainerButtons>
-                <Subtitle>
-                  <StyledLink to="/recover-password">
-                    Esqueceu a senha?
-                  </StyledLink>
-                </Subtitle>
+
                 <Subtitle>
                   Não é cadastrado?
                   <StyledLink to="/register"> Criar conta.</StyledLink>

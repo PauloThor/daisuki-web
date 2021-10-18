@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Modal } from "antd";
 import { Color } from "../../model/enums/theme-colors";
 import { Link } from "react-router-dom";
-import InputText from "../InputText";
 
 export const Content = styled.div`
   overflow: auto;
@@ -14,25 +13,11 @@ export const Content = styled.div`
     color: white;
     font-size: 1rem;
   }
-
-  /* div {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: space-around;
-    gap: 1rem;
-
-    button {
-      background: ${Color.MAIN_LIGHT};
-      color: white;
-    }
-    button + button {
-      background-color: ${Color.HIGHLIGHT_DARK};
-    }
-  } */
 `;
 
 export const StyledModal = styled(Modal)`
   max-width: 90vw;
+  max-width: 19rem;
 
   @media (min-width: 768px) {
     max-width: 25rem;
@@ -50,6 +35,7 @@ export const StyledModal = styled(Modal)`
 
   .ant-modal-body {
     background-color: ${Color.MAIN};
+    padding: 1rem;
   }
 
   .ant-modal-footer {
@@ -57,31 +43,10 @@ export const StyledModal = styled(Modal)`
   }
 `;
 
-export const LogoContainer = styled.div`
-  display: flex;
-  justify-content: start;
-  /* align-items: center; */
-
-  img {
-    width: 100px;
-    height: 50px;
-  }
-
-  @media (min-width: 768px) {
-    justify-content: start;
-  }
-
-  @media (min-width: 1980px) {
-    padding-left: 100px;
-  }
-`;
-
 export const Container = styled.div`
   display: flex;
   justify-content: center;
-  /* flex-direction: column; */
   align-items: center;
-  overflow: hidden;
 `;
 
 export const FormContainer = styled.div`
@@ -89,22 +54,18 @@ export const FormContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-
-    width: 100%;
   }
 `;
 
 export const Form = styled.form`
   background-color: ${Color.MAIN};
-  padding: 8px;
   display: flex;
   flex-direction: column;
-  /* flex-wrap: wrap; */
+  flex-wrap: wrap;
   justify-content: center;
-  width: 20rem;
 
   @media (min-width: 768px) {
-    /* width: 350px; */
+    width: 350px;
   }
 `;
 
@@ -136,21 +97,16 @@ export const CheckboxContainer = styled.div`
   }
 `;
 
-export const StyledInputText = styled(InputText)`
-  .sc-fodVek {
-    flex-direction: column;
-  }
-
-  div {
-    flex-direction: column;
-  }
-`;
-
 export const ContainerButtons = styled.div`
   margin-top: 1rem;
   display: flex;
   justify-content: space-around;
   gap: 1rem;
+  width: 15rem;
+
+  @media (min-width: 768px) {
+    width: auto;
+  }
 
   button {
     background: ${Color.MAIN_LIGHT};
