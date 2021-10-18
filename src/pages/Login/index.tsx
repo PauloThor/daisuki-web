@@ -17,6 +17,7 @@ import {
   Subtitle,
   StyledModal,
 } from "./styles";
+import toast from "react-hot-toast";
 import Lottie from "react-lottie";
 import sailormoon from "../../assets/lottie/sailor-moon.json";
 import Logo from "../../assets/img/logo.svg";
@@ -25,18 +26,19 @@ import { useUser } from "../../hooks/User";
 import { useState } from "react";
 import { CheckboxStyled } from "../Admin/styles";
 import { daisukiApi } from "../../services/api";
-import toast from "react-hot-toast";
 
 interface FormInput {
   email: string;
   password: string;
 }
 
+interface FormPasswordRecovery {
+  email: string;
+}
+
 const Login = () => {
   const [shouldRemember, setShouldRemember] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
-  const [confirmLoading, setConfirmLoading] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>("");
   const { login, token } = useUser();
   const history = useHistory();
 
@@ -71,33 +73,33 @@ const Login = () => {
 
   const handleCancel = () => {
     setVisible(false);
-    sendEmailMethods.reset()
-    setEmail("")
+    sendEmailMethods.reset();
   };
 
-  const handleOk = () => {
-    if (!!email) {
-      setConfirmLoading(true);
-      
-      daisukiApi
-      .post("/users/temp-token", {email: email})
-      .then((res) => {
-        setConfirmLoading(false);
-        toast.success("Confira a caixa de entrada do seu e-mail!", {
+  const handleSubmitEmail = (data: FormPasswordRecovery) => {
+    const fetch = async () => {
+      await daisukiApi.post("/users/temp-token", data);
+      handleCancel();
+    };
+    const myPromise = fetch();
+    toast.promise(
+      myPromise,
+      {
+        loading: "Enviando...",
+        success: "Confira a caixa de entrada do seu e-mail!",
+        error: "E-mail não cadastrado!",
+      },
+      {
+        success: {
           duration: 10000,
           style: {
             fontSize: "1.2rem",
-            padding: "8px"
+            padding: "8px",
           },
-          icon: "📨"
-        })
-        handleCancel()
-      })
-      .catch((err) => {
-        toast.error("E-mail inválido!")
-        setConfirmLoading(false);
-      });
-    }
+          icon: "📨",
+        },
+      }
+    );
   };
 
   const inputList = [
@@ -170,20 +172,17 @@ const Login = () => {
       <StyledModal
         title="Insira o e-mail cadastrado"
         visible={visible}
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
         onCancel={handleCancel}
-        cancelText="Fechar"
       >
         <FormProvider {...sendEmailMethods}>
-          <form>
+          <form onSubmit={sendEmailMethods.handleSubmit(handleSubmitEmail)}>
             <InputText
               type={InputTypes.EMAIL}
               name="email"
               label="E-mail*"
               placeholder="exemplo@mail.com"
-              handleOnChange={(e) => setEmail(e.target.value)}
             />
+            <Button text="Enviar" margin="8px 0 0" />
           </form>
         </FormProvider>
       </StyledModal>

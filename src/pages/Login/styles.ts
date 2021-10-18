@@ -124,6 +124,12 @@ export const CheckboxContainer = styled.div`
 `;
 
 export const StyledModal = styled(Modal)`
+  color: ${Color.TEXT_MAIN};
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .ant-modal-body {
     background-color: ${Color.MAIN};
   }
@@ -133,11 +139,10 @@ export const StyledModal = styled(Modal)`
   }
 
   .ant-modal-footer {
-    background-color: ${Color.MAIN};
+    display: none;
   }
 
-  .ant-modal-header,
-  .ant-modal-footer {
+  .ant-modal-header {
     border: none;
   }
   .ant-modal-title,
