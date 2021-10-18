@@ -27,15 +27,13 @@ import { daisukiApi } from "../../services/api";
 import { Anime } from "../../model/anime";
 import { Episode } from "../../model/episode";
 import { ParamProps } from "../../model/param";
-import { ReactComponent as FavIcon } from "../../assets/img/fav-icon.svg";
-import { ReactComponent as FavAnime } from "../../assets/img/favAnime.svg";
-import { ReactComponent as RemoveFav } from "../../assets/img/removeFav.svg";
-import { ReactComponent as FavHover } from "../../assets/img/favHover.svg";
+import { FaHeart, FaHeartBroken, FaRegHeart } from "react-icons/fa";
 import BackTop from "../../components/BackTop";
 import { useUser } from "../../hooks/User";
 import { ModalToLogin } from "../../components/ModalToLogin";
 import toast from "react-hot-toast";
 import { returnStars } from "../../shared/util/anime-utils";
+import { Color } from "../../model/enums/theme-colors";
 
 const AnimePage = () => {
   const param: ParamProps = useParams();
@@ -46,7 +44,8 @@ const AnimePage = () => {
   const [anime, setAnime] = useState<Anime>();
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [episodesPerPage, setEpisodesPerPage] = useState<[Episode[]]>([[]]);
-  const [animeRate, setAnimeRate] = useState(5.0);
+  const [animeRate, setAnimeRate] = useState(0);
+  const [ativAllowHalf, setAtivAllowHalf] = useState(true);
 
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [isInvalidLink, setIsInvalidLink] = useState<boolean>(false);
@@ -115,12 +114,33 @@ const AnimePage = () => {
   const handleRate = async (value: number) => {
     await setRating(value);
     setTimeout(() => {
-      loadAnime();
+      daisukiApi
+        .get(`/animes/${param.name}`)
+        .then((response) => {
+          setAnime(response.data);
+          setAnimeRate(response.data.rating);
+          return true;
+        })
+        .catch((e) => {
+          toast.error("falhou");
+          return false;
+        });
     }, 1000);
   };
 
   const setRating = async (value: number) => {
-    value = Math.ceil(value);
+    if (value < 1 || value > 5) {
+      toast(`Você já avaliou esse anime com ${returnStars(animeRate)}`, {
+        icon: "❌",
+        style: {
+          borderRadius: "10px",
+          background: Color.MAIN_DARK,
+          color: "#fff",
+        },
+      });
+      return;
+    }
+
     if (!token) {
       handleModalToLogin();
     } else {
@@ -137,8 +157,12 @@ const AnimePage = () => {
           }
         )
         .then((response) =>
-          toast.success(`Anime avaliado com ${returnStars(value)}`, {
-            icon: "🏅",
+          toast(`Anime avaliado com ${returnStars(value)}`, {
+            style: {
+              borderRadius: "10px",
+              background: Color.HIGHLIGHT,
+              color: "#fff",
+            },
           })
         )
         .catch((e) => toast.error("Algo deu errado, tente novamente!"));
@@ -169,8 +193,13 @@ const AnimePage = () => {
         })
         .then((response) => {
           getFavorites();
-          toast.success("Anime favoritado!", {
-            icon: "❤️",
+          toast(`Anime favoritado!`, {
+            icon: "💙",
+            style: {
+              borderRadius: "10px",
+              background: Color.HIGHLIGHT_DARK,
+              color: "#fff",
+            },
           });
         })
         .catch((e) => toast.error("Falha ao favoritar, tente novamente!"));
@@ -183,12 +212,22 @@ const AnimePage = () => {
         })
         .then((response) => {
           getFavorites();
-          toast.success("Anime removido dos favoritos!", {
+
+          toast(`Anime removido dos favoritos!`, {
             icon: "💔",
+            style: {
+              borderRadius: "10px",
+              background: Color.MAIN_DARK,
+              color: "#fff",
+            },
           });
         })
         .catch((e) => toast.error("Algo deu errado, tente novamente!"));
     }
+  };
+
+  const handleAllowHalf = () => {
+    setAtivAllowHalf(!ativAllowHalf);
   };
 
   const isFavorite = favorites.find((f) => f.id === anime?.id);
@@ -212,19 +251,22 @@ const AnimePage = () => {
                 <HeaderAnimeData isFavorite={!!isFavorite}>
                   <h1>{anime.name}</h1>
                   <button type="button" onClick={handleFavoriteAnime}>
-                    {isFavorite ? <FavAnime /> : <FavIcon />}
-                    <span>{isFavorite ? <RemoveFav /> : <FavHover />}</span>
+                    {isFavorite ? <FaHeart /> : <FaRegHeart />}
+                    <span>{isFavorite ? <FaHeartBroken /> : <FaHeart />}</span>
                   </button>
                 </HeaderAnimeData>
-                <RateContainer>
-                  <Rate onChange={handleRate} value={animeRate} allowHalf />
-                  {animeRate ? (
-                    <span className="ant-rate-text">
-                      {animeRate.toFixed(2)}
-                    </span>
-                  ) : (
-                    ""
-                  )}
+                <RateContainer
+                  onMouseOver={handleAllowHalf}
+                  onMouseOut={handleAllowHalf}
+                >
+                  <Rate
+                    onChange={handleRate}
+                    value={animeRate}
+                    allowHalf={ativAllowHalf}
+                  />
+                  <span className="ant-rate-text">
+                    {animeRate ? animeRate.toFixed(2) : "N/A"}
+                  </span>
                 </RateContainer>
                 <Details>
                   <p>Áudio: {anime.isDubbed ? "Português" : "Japonês"}</p>

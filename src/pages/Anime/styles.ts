@@ -3,7 +3,6 @@ import { Font } from "../../model/enums/theme-fonts";
 import { Color } from "../../model/enums/theme-colors";
 import { Collapse } from "antd";
 import { Link } from "react-router-dom";
-import { ReactComponent as RemoveFav } from "../../assets/img/removeFav.svg";
 
 interface HeaderAnimeDataProps {
   isFavorite: boolean;
@@ -188,6 +187,7 @@ export const RateContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+
   .ant-rate {
     li {
       color: #a4ccf4;
@@ -362,13 +362,4 @@ export const Synopsis = styled.p`
 export const Footer = styled.div`
   width: 100%;
   height: 30px;
-`;
-
-export const RemoveFavStyled = styled(RemoveFav)`
-  width: 25px;
-  height: 25px;
-
-  path {
-    fill: green;
-  }
 `;
