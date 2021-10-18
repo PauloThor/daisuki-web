@@ -46,7 +46,7 @@ const AnimePage = () => {
   const [anime, setAnime] = useState<Anime>();
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [episodesPerPage, setEpisodesPerPage] = useState<[Episode[]]>([[]]);
-  const [animeRate, setAnimeRate] = useState(5.0);
+  const [animeRate, setAnimeRate] = useState(0);
 
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [isInvalidLink, setIsInvalidLink] = useState<boolean>(false);
@@ -218,13 +218,10 @@ const AnimePage = () => {
                 </HeaderAnimeData>
                 <RateContainer>
                   <Rate onChange={handleRate} value={animeRate} allowHalf />
-                  {animeRate ? (
-                    <span className="ant-rate-text">
-                      {animeRate.toFixed(2)}
-                    </span>
-                  ) : (
-                    ""
-                  )}
+
+                  <span className="ant-rate-text">
+                    {animeRate ? animeRate.toFixed(2) : "N/A"}
+                  </span>
                 </RateContainer>
                 <Details>
                   <p>Áudio: {anime.isDubbed ? "Português" : "Japonês"}</p>
