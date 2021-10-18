@@ -33,6 +33,7 @@ import { useUser } from "../../hooks/User";
 import { ModalToLogin } from "../../components/ModalToLogin";
 import toast from "react-hot-toast";
 import { returnStars } from "../../shared/util/anime-utils";
+import { Color } from "../../model/enums/theme-colors";
 
 const AnimePage = () => {
   const param: ParamProps = useParams();
@@ -128,10 +129,15 @@ const AnimePage = () => {
   };
 
   const setRating = async (value: number) => {
-    // value = Math.ceil(value);
-    console.log(value);
     if (value < 1 || value > 5) {
-      console.log("tente novamente");
+      toast(`Você já avaliou esse anime com ${returnStars(animeRate)}`, {
+        icon: "❌",
+        style: {
+          borderRadius: "10px",
+          background: Color.MAIN_DARK,
+          color: "#fff",
+        },
+      });
       return;
     }
 
@@ -151,8 +157,12 @@ const AnimePage = () => {
           }
         )
         .then((response) =>
-          toast.success(`Anime avaliado com ${returnStars(value)}`, {
-            icon: "🏅",
+          toast(`Anime avaliado com ${returnStars(value)}`, {
+            style: {
+              borderRadius: "10px",
+              background: Color.HIGHLIGHT,
+              color: "#fff",
+            },
           })
         )
         .catch((e) => toast.error("Algo deu errado, tente novamente!"));
@@ -183,8 +193,13 @@ const AnimePage = () => {
         })
         .then((response) => {
           getFavorites();
-          toast.success("Anime favoritado!", {
-            icon: "❤️",
+          toast(`Anime favoritado!`, {
+            icon: "💙",
+            style: {
+              borderRadius: "10px",
+              background: Color.HIGHLIGHT_DARK,
+              color: "#fff",
+            },
           });
         })
         .catch((e) => toast.error("Falha ao favoritar, tente novamente!"));
@@ -197,8 +212,14 @@ const AnimePage = () => {
         })
         .then((response) => {
           getFavorites();
-          toast.success("Anime removido dos favoritos!", {
+
+          toast(`Anime removido dos favoritos!`, {
             icon: "💔",
+            style: {
+              borderRadius: "10px",
+              background: Color.MAIN_DARK,
+              color: "#fff",
+            },
           });
         })
         .catch((e) => toast.error("Algo deu errado, tente novamente!"));
@@ -235,7 +256,6 @@ const AnimePage = () => {
                   </button>
                 </HeaderAnimeData>
                 <RateContainer
-                  onHover={handleAllowHalf}
                   onMouseOver={handleAllowHalf}
                   onMouseOut={handleAllowHalf}
                 >

@@ -12,10 +12,6 @@ interface EpisodeProps {
   watched: boolean;
 }
 
-interface RateContainerProps {
-  onHover: () => void;
-}
-
 const mountedStyle = "inAnimation 300ms ease-in";
 const unmountedStyle = {
   animation: "outAnimation 350ms ease-out",
@@ -187,13 +183,11 @@ export const AnimeCover = styled.div`
   }
 `;
 
-export const RateContainer = styled.div<RateContainerProps>`
+export const RateContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
 
-  &:hover {
-  }
   .ant-rate {
     li {
       color: #a4ccf4;
