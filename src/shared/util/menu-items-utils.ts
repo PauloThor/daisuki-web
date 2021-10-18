@@ -40,71 +40,71 @@ class MenuUtils {
   static genders = [
     {
       name: "Ação",
-      path: "/animes/action",
+      path: "/genres/action",
     },
     {
       name: "Aventura",
-      path: "/animes/adventure",
+      path: "/genres/adventure",
     },
     {
       name: "Comédia",
-      path: "/animes/comedy",
+      path: "/genres/comedy",
     },
     {
       name: "Drama",
-      path: "/animes/drama",
+      path: "/genres/drama",
     },
     {
       name: "Esporte",
-      path: "/animes/sports",
+      path: "/genres/sports",
     },
     {
       name: "Fantasia",
-      path: "/animes/fantasy",
+      path: "/genres/fantasy",
     },
     {
       name: "Ficção científica",
-      path: "/animes/fiction",
+      path: "/genres/fiction",
     },
     {
       name: "Gourmet",
-      path: "/animes/gourmet",
+      path: "/genres/gourmet",
     },
     {
       name: "Horror",
-      path: "/animes/horror",
+      path: "/genres/horror",
     },
     {
       name: "Josei",
-      path: "/animes/josei",
+      path: "/genres/josei",
     },
     {
       name: "Mecha",
-      path: "/animes/mecha",
+      path: "/genres/mecha",
     },
     {
       name: "Mistério",
-      path: "/animes/mistery",
+      path: "/genres/mistery",
     },
     {
       name: "Romance",
-      path: "/animes/romance",
+      path: "/genres/romance",
     },
     {
       name: "Seinen",
-      path: "/animes/seinen",
+      path: "/genres/seinen",
     },
     {
       name: "Slice of life",
-      path: "/animes/slice",
+      path: "/genres/slice-of-life",
     },
     {
       name: "Sobrenatural",
-      path: "/animes/supernatural",
+      path: "/genres/supernatural",
     },
     {
       name: "Suspense",
-      path: "/animes/thriller",
+      path: "/genres/thriller",
     },
   ];
 

@@ -13,6 +13,7 @@ import { IdentityInfo, PasswordInfo, UserInfo } from "../../model/user";
 import { LoginData, RegisterData } from "../../model/account";
 import { Redirect } from "react-router";
 import { EpisodeHistory } from "../../model/episode-history";
+import { Color } from "../../model/enums/theme-colors";
 
 interface UserData {
   token: string;
@@ -78,20 +79,19 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       });
     }
     const myPromise = fetch();
-    toast
-      .promise(
-        myPromise,
-        {
-          loading: "Enviando...",
-          success: "Ohayou! ＼(≧▽≦)／",
-          error: "Tente novamente =c",
+    toast.promise(
+      myPromise,
+      {
+        loading: "Enviando...",
+        success: "Ohayou! ＼(≧▽≦)／",
+        error: "Tente novamente =c",
+      },
+      {
+        success: {
+          icon: "✨✨",
         },
-        {
-          success: {
-            icon: "✨✨",
-          },
-        }
-      )
+      }
+    );
   };
 
   const register = (data: RegisterData, history: History) => {
@@ -178,17 +178,30 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const deleteSelf = () => {
     async function fetch() {
       setIsLoading(true);
-      await daisukiApi.delete("/users", headers).then(() => {
-        logout();
-      });
+      const res = await daisukiApi.delete("/users", headers);
+      logout();
       setIsLoading(false);
+      return res.data;
     }
     const myPromise = fetch();
-    toast.promise(myPromise, {
-      loading: "Enviando...",
-      success: "Conta excluída!",
-      error: "Tente novamente =c",
-    });
+    toast.promise(
+      myPromise,
+      {
+        loading: "Enviando...",
+        success: (data: UserInfo) => `Adeus ${data.username}!`,
+        error: "Tente novamente =c",
+      },
+      {
+        success: {
+          icon: "😢 💔",
+          style: {
+            background: Color.MAIN_DARK,
+            color: Color.TEXT_MAIN,
+          },
+          duration: 4000
+        },
+      }
+    );
     return <Redirect to="login" />;
   };
 
