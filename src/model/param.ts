@@ -2,6 +2,8 @@ export interface ParamProps {
   name: string;
 }
 
-export interface GenreParamProps {
+export interface AnimeListParamProps {
   genre: string;
+  filter: string;
+  search: string;
 }
