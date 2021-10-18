@@ -77,29 +77,29 @@ const AnimeList = ({ request, search = false }: Props) => {
         <>
           <Header />
           <main>
-            {!!title && 
-            <>
-              <Title>{title}</Title>
-              <FilterMenu>
-                <label htmlFor="filterOptions">Filtrar</label>
-                <input type="checkbox" id="filterOptions" />
-            <ul>
-              <li key="0-9">
-                <StyledButton onClick={() => handleFilter("1")}>
-                  0-9
-                </StyledButton>
-              </li>
-              {alphabet.map((letter) => (
-                <li key={letter}>
-                  <StyledButton onClick={() => handleFilter(letter)}>
-                    {letter}
-                  </StyledButton>
-                </li>
-              ))}
-            </ul>
-            </FilterMenu>
-            </>
-            }
+            {!!title && (
+              <>
+                <Title>{title}</Title>
+                <FilterMenu>
+                  <label htmlFor="filterOptions">Filtrar</label>
+                  <input type="checkbox" id="filterOptions" />
+                  <ul>
+                    <li key="0-9">
+                      <StyledButton onClick={() => handleFilter("1")}>
+                        0-9
+                      </StyledButton>
+                    </li>
+                    {alphabet.map((letter) => (
+                      <li key={letter}>
+                        <StyledButton onClick={() => handleFilter(letter)}>
+                          {letter}
+                        </StyledButton>
+                      </li>
+                    ))}
+                  </ul>
+                </FilterMenu>
+              </>
+            )}
             <section>
               <StyledList>
                 {loading ? (
