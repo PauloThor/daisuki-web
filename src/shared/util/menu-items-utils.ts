@@ -2,38 +2,38 @@ class MenuUtils {
   static animes = [
     {
       name: "Em lançamento",
-      path: "/animes/airing",
+      path: "/airing",
     },
     {
       name: "Completos",
-      path: "/animes/completed",
+      path: "/completed",
     },
     {
       name: "Legendados",
-      path: "/animes/subbed",
+      path: "/subbed",
     },
     {
       name: "Dublados",
-      path: "/animes/dubbed",
+      path: "/dubbed",
     },
     {
       name: "Top animes",
-      path: "/animes/top",
+      path: "/top-animes",
     },
   ];
 
   static movies = [
     {
       name: "Legendados",
-      path: "/movies/airing",
+      path: "/subbed-movies",
     },
     {
       name: "Dublados",
-      path: "/movies/dubbed",
+      path: "/dubbed-movies",
     },
     {
       name: "Top filmes",
-      path: "/movies/top",
+      path: "/top-movies",
     },
   ];
 
