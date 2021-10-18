@@ -27,15 +27,14 @@ import { daisukiApi } from "../../services/api";
 import { Anime } from "../../model/anime";
 import { Episode } from "../../model/episode";
 import { ParamProps } from "../../model/param";
-import { ReactComponent as FavIcon } from "../../assets/img/fav-icon.svg";
-import { ReactComponent as FavAnime } from "../../assets/img/favAnime.svg";
-import { ReactComponent as RemoveFav } from "../../assets/img/removeFav.svg";
-import { ReactComponent as FavHover } from "../../assets/img/favHover.svg";
+import { FaHeart, FaHeartBroken, FaRegHeart } from "react-icons/fa";
 import BackTop from "../../components/BackTop";
 import { useUser } from "../../hooks/User";
 import { ModalToLogin } from "../../components/ModalToLogin";
 import toast from "react-hot-toast";
 import { returnStars } from "../../shared/util/anime-utils";
+import { Color } from "../../model/enums/theme-colors";
+import { genresToEnglish } from "../../shared/util/genre-utils";
 
 const AnimePage = () => {
   const param: ParamProps = useParams();
@@ -46,7 +45,8 @@ const AnimePage = () => {
   const [anime, setAnime] = useState<Anime>();
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [episodesPerPage, setEpisodesPerPage] = useState<[Episode[]]>([[]]);
-  const [animeRate, setAnimeRate] = useState(5.0);
+  const [animeRate, setAnimeRate] = useState(0);
+  const [ativAllowHalf, setAtivAllowHalf] = useState(true);
 
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [isInvalidLink, setIsInvalidLink] = useState<boolean>(false);
@@ -115,12 +115,23 @@ const AnimePage = () => {
   const handleRate = async (value: number) => {
     await setRating(value);
     setTimeout(() => {
-      loadAnime();
+      daisukiApi
+        .get(`/animes/${param.name}/rating`)
+        .then((response) => {
+          setAnimeRate(response.data.rating);
+          return true;
+        })
+        .catch((e) => {
+          toast.error("falhou");
+          return false;
+        });
     }, 1000);
   };
 
   const setRating = async (value: number) => {
-    value = Math.ceil(value);
+    if (value === 0) {
+      value = animeRate;
+    }
     if (!token) {
       handleModalToLogin();
     } else {
@@ -138,7 +149,11 @@ const AnimePage = () => {
         )
         .then((response) =>
           toast(`Anime avaliado com ${returnStars(value)}`, {
-            icon: "🏅",
+            style: {
+              borderRadius: "10px",
+              background: Color.HIGHLIGHT,
+              color: "#fff",
+            },
           })
         )
         .catch((e) => toast.error("Algo deu errado, tente novamente!"));
@@ -169,8 +184,13 @@ const AnimePage = () => {
         })
         .then((response) => {
           getFavorites();
-          toast("Anime favoritado!", {
-            icon: "❤️",
+          toast(`Anime favoritado!`, {
+            icon: "💙",
+            style: {
+              borderRadius: "10px",
+              background: Color.HIGHLIGHT_DARK,
+              color: "#fff",
+            },
           });
         })
         .catch((e) => toast.error("Falha ao favoritar, tente novamente!"));
@@ -183,15 +203,27 @@ const AnimePage = () => {
         })
         .then((response) => {
           getFavorites();
-          toast("Anime removido dos favoritos!", {
+
+          toast(`Anime removido dos favoritos!`, {
             icon: "💔",
+            style: {
+              borderRadius: "10px",
+              background: Color.MAIN_DARK,
+              color: "#fff",
+            },
           });
         })
         .catch((e) => toast.error("Algo deu errado, tente novamente!"));
     }
   };
 
+  const handleAllowHalf = () => {
+    setAtivAllowHalf(!ativAllowHalf);
+  };
+
   const isFavorite = favorites.find((f) => f.id === anime?.id);
+
+  episodes?.sort((a, b) => a.id - b.id);
 
   return (
     <>
@@ -212,19 +244,24 @@ const AnimePage = () => {
                 <HeaderAnimeData isFavorite={!!isFavorite}>
                   <h1>{anime.name}</h1>
                   <button type="button" onClick={handleFavoriteAnime}>
-                    {isFavorite ? <FavAnime /> : <FavIcon />}
-                    <span>{isFavorite ? <RemoveFav /> : <FavHover />}</span>
+                    {!token && <FaRegHeart />}
+                    {token && isFavorite && <FaHeart />}
+                    {token && !isFavorite && <FaRegHeart />}
+                    <span>{isFavorite ? <FaHeartBroken /> : <FaHeart />}</span>
                   </button>
                 </HeaderAnimeData>
-                <RateContainer>
-                  <Rate onChange={handleRate} value={animeRate} allowHalf />
-                  {animeRate ? (
-                    <span className="ant-rate-text">
-                      {animeRate.toFixed(2)}
-                    </span>
-                  ) : (
-                    ""
-                  )}
+                <RateContainer
+                  onMouseOver={handleAllowHalf}
+                  onMouseOut={handleAllowHalf}
+                >
+                  <Rate
+                    onChange={handleRate}
+                    value={animeRate}
+                    allowHalf={ativAllowHalf}
+                  />
+                  <span className="ant-rate-text">
+                    {animeRate ? animeRate.toFixed(2) : "N/A"}
+                  </span>
                 </RateContainer>
                 <Details>
                   <p>Áudio: {anime.isDubbed ? "Português" : "Japonês"}</p>
@@ -239,9 +276,12 @@ const AnimePage = () => {
                         }`}
                   </p>
                   <Categories>
-                    <Category to="">Ação</Category>
-                    <Category to="">Shõnen</Category>
-                    <Category to="">Aventura</Category>
+                    {anime.genres &&
+                      anime.genres.map((genre) => (
+                        <Category to={`/genres/${genresToEnglish[genre.name]}`}>
+                          {genre.name}
+                        </Category>
+                      ))}
                   </Categories>
                   <Synopsis>
                     <strong> Sinopse:</strong> {anime.synopsis}
