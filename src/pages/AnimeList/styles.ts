@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Color } from "../../model/enums/theme-colors";
-import itachi from "../../assets/img/itachi.jpg";
 
 export const Title = styled.h1`
   font-size: 1rem;
@@ -31,18 +30,31 @@ export const SpinContainer = styled.div`
   height: 60vh;
 `;
 
-export const NoData = styled.p`
+export const NoData = styled.div`
   font-size: 1.5rem;
   padding: 30px;
   color: #ccc;
+  position: relative;
+
+  img {
+    display: none;
+  }
 
   @media (min-width: 768px) {
     flex-grow: 1;
     font-size: 5rem;
-    background: url(${itachi}) no-repeat;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    display: flex;
+
+    p {
+      margin-left: -16px;
+    }
+
+    img {
+      height: 100px;
+      width: 55px;
+      display: initial;
+      z-index: 1;
+    }
   }
 `;
 

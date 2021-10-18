@@ -10,6 +10,7 @@ import Pagination from "../../components/Pagination";
 import AnimeCard from "../../components/AnimeCard";
 import BackTop from "../../components/BackTop";
 import NotFound from "../NotFound";
+import itachi from "../../assets/img/itachi.png";
 import {
   Title,
   StyledList,
@@ -107,7 +108,10 @@ const AnimeList = ({ request, search = false }: Props) => {
                     <Spin size="large" />
                   </SpinContainer>
                 ) : !animes[0] ? (
-                  <NoData>Nada encontrado</NoData>
+                  <NoData>
+                    <img src={itachi} alt="Itachi" />
+                    <p>Nada encontrado</p>
+                  </NoData>
                 ) : (
                   animes.map((anime) => (
                     <li key={anime.id}>
