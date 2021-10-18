@@ -49,7 +49,17 @@ class StringUtils {
     if (value == null) {
       return "";
     }
-    return value.toLowerCase().replaceAll(" ", "-").replace(/[:'?!().,;]/g, "");
+    return value
+      .toLowerCase()
+      .replaceAll(" ", "-")
+      .replace(/[:'?!().,;]/g, "");
+  };
+
+  static removeDashFromUrl = (value?: string) => {
+    if (value == null) {
+      return "";
+    }
+    return value.toLowerCase().replaceAll("-", " ");
   };
 }
 

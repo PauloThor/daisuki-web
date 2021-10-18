@@ -5,6 +5,7 @@ import { AnimeListParamProps } from "../../model/param";
 import { Anime } from "../../model/anime";
 import { daisukiApi } from "../../services/api";
 import { genres, alphabet } from "../../shared/util/genre-utils";
+import StringUtils from "../../shared/util/string-utils"
 import Header from "../../components/Header";
 import Pagination from "../../components/Pagination";
 import AnimeCard from "../../components/AnimeCard";
@@ -53,6 +54,17 @@ const AnimeList = ({ request, search = false }: Props) => {
       });
   };
 
+  const getAnimesBySearch = async (page: number) => {
+    await daisukiApi
+      .get(`/animes/search/${StringUtils.removeDashFromUrl(params.search)}?page=${page}&per_page=24`)
+      .then((res) => {
+        setTotal(res.data.total);
+        setAnimes(res.data.data);
+        setTitle(`Resultado da busca por: ${StringUtils.removeDashFromUrl(params.search)}`);
+        setLoading(false);
+      })
+  };
+
   const handleChange = (page: number) => {
     if (request === "genre") {
       getAnimesByGenre(page);
@@ -70,6 +82,9 @@ const AnimeList = ({ request, search = false }: Props) => {
     if (request === "genre") {
       getAnimesByGenre(currentPage);
     }
+    if (request === "search") {
+      getAnimesBySearch(currentPage);
+    }
   }, []);
 
   return (
@@ -81,24 +96,26 @@ const AnimeList = ({ request, search = false }: Props) => {
             {!!title && (
               <>
                 <Title>{title}</Title>
-                <FilterMenu>
-                  <label htmlFor="filterOptions">Filtrar</label>
-                  <input type="checkbox" id="filterOptions" />
-                  <ul>
-                    <li key="0-9">
-                      <StyledButton onClick={() => handleFilter("1")}>
-                        0-9
-                      </StyledButton>
-                    </li>
-                    {alphabet.map((letter) => (
-                      <li key={letter}>
-                        <StyledButton onClick={() => handleFilter(letter)}>
-                          {letter}
+                {!search && (
+                  <FilterMenu>
+                    <label htmlFor="filterOptions">Filtrar</label>
+                    <input type="checkbox" id="filterOptions" />
+                    <ul>
+                      <li key="0-9">
+                        <StyledButton onClick={() => handleFilter("1")}>
+                          0-9
                         </StyledButton>
                       </li>
-                    ))}
-                  </ul>
-                </FilterMenu>
+                      {alphabet.map((letter) => (
+                        <li key={letter}>
+                          <StyledButton onClick={() => handleFilter(letter)}>
+                            {letter}
+                          </StyledButton>
+                        </li>
+                      ))}
+                    </ul>
+                  </FilterMenu>
+                )}
               </>
             )}
             <section>
