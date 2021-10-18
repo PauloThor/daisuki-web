@@ -101,6 +101,15 @@ class SchemaUtils {
         .required(" - Campo obrigatório"),
     });
   }
+
+  static sendTokenEmail() {
+    return yup.object({
+      email: yup
+        .string()
+        .email(" - Deve ser um e-mail")
+        .required(" - Campo obrigatório"),
+    });
+  }
 }
 
 export default SchemaUtils;
