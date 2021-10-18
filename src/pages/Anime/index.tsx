@@ -44,6 +44,7 @@ const AnimePage = () => {
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [episodesPerPage, setEpisodesPerPage] = useState<[Episode[]]>([[]]);
   const [animeRate, setAnimeRate] = useState(0);
+  const [ativAllowHalf, setAtivAllowHalf] = useState(true);
 
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [isInvalidLink, setIsInvalidLink] = useState<boolean>(false);
@@ -204,6 +205,10 @@ const AnimePage = () => {
     }
   };
 
+  const handleAllowHalf = () => {
+    setAtivAllowHalf(!ativAllowHalf);
+  };
+
   const isFavorite = favorites.find((f) => f.id === anime?.id);
 
   return (
@@ -229,8 +234,16 @@ const AnimePage = () => {
                     <span>{isFavorite ? <FaHeartBroken /> : <FaHeart />}</span>
                   </button>
                 </HeaderAnimeData>
-                <RateContainer>
-                  <Rate onChange={handleRate} value={animeRate} />
+                <RateContainer
+                  onHover={handleAllowHalf}
+                  onMouseOver={handleAllowHalf}
+                  onMouseOut={handleAllowHalf}
+                >
+                  <Rate
+                    onChange={handleRate}
+                    value={animeRate}
+                    allowHalf={ativAllowHalf}
+                  />
                   <span className="ant-rate-text">
                     {animeRate ? animeRate.toFixed(2) : "N/A"}
                   </span>
