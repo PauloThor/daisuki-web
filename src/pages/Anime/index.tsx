@@ -34,6 +34,7 @@ import { ModalToLogin } from "../../components/ModalToLogin";
 import toast from "react-hot-toast";
 import { returnStars } from "../../shared/util/anime-utils";
 import { Color } from "../../model/enums/theme-colors";
+import { genresToEnglish } from "../../shared/util/genre-utils";
 
 const AnimePage = () => {
   const param: ParamProps = useParams();
@@ -115,9 +116,8 @@ const AnimePage = () => {
     await setRating(value);
     setTimeout(() => {
       daisukiApi
-        .get(`/animes/${param.name}`)
+        .get(`/animes/${param.name}/rating`)
         .then((response) => {
-          setAnime(response.data);
           setAnimeRate(response.data.rating);
           return true;
         })
@@ -129,18 +129,9 @@ const AnimePage = () => {
   };
 
   const setRating = async (value: number) => {
-    if (value < 1 || value > 5) {
-      toast(`Você já avaliou esse anime com ${returnStars(animeRate)}`, {
-        icon: "❌",
-        style: {
-          borderRadius: "10px",
-          background: Color.MAIN_DARK,
-          color: "#fff",
-        },
-      });
-      return;
+    if (value === 0) {
+      value = animeRate;
     }
-
     if (!token) {
       handleModalToLogin();
     } else {
@@ -232,6 +223,8 @@ const AnimePage = () => {
 
   const isFavorite = favorites.find((f) => f.id === anime?.id);
 
+  episodes?.sort((a, b) => a.id - b.id);
+
   return (
     <>
       {!isLoad && (
@@ -281,9 +274,12 @@ const AnimePage = () => {
                         }`}
                   </p>
                   <Categories>
-                    <Category to="">Ação</Category>
-                    <Category to="">Shõnen</Category>
-                    <Category to="">Aventura</Category>
+                    {anime.genres &&
+                      anime.genres.map((genre) => (
+                        <Category to={`/genres/${genresToEnglish[genre.name]}`}>
+                          {genre.name}
+                        </Category>
+                      ))}
                   </Categories>
                   <Synopsis>
                     <strong> Sinopse:</strong> {anime.synopsis}
