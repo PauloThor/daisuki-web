@@ -2,9 +2,20 @@ import { useState } from "react";
 
 import { FiSearch } from "react-icons/fi";
 import { Color } from "../../model/enums/theme-colors";
+import { Anime } from "../../model/anime";
 import { daisukiApi } from "../../services/api";
 import SpinLoading from "../SpinLoading";
-import { SearchContainer, SearchInput, SearchWrapper } from "./styles";
+import {
+  AnimeContainer,
+  Info,
+  InfoItem,
+  InfoList,
+  Item,
+  SearchContainer,
+  SearchInput,
+  SearchWrapper,
+  Title,
+} from "./styles";
 
 interface InputSearchProps {
   placeholder: string;
@@ -15,14 +26,18 @@ interface InputSearchProps {
 const InputSearch = ({ placeholder, maxWidth = "270px" }: InputSearchProps) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [value, setValue] = useState<string>("");
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<Anime[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getData = async (text: string) => {
     setIsLoading(true);
-    const res = await daisukiApi.get(`/animes/search/${text}`);
-    console.log(res.data.data);
-    setList(res.data.data);
+    let output = [];
+    if (text) {
+      const res = await daisukiApi.get(`/animes/search/${text}?per_page=3`);
+      output = res.data.data;
+    }
+    setList(output);
+    console.log(output);
     setIsLoading(false);
   };
 
@@ -41,10 +56,7 @@ const InputSearch = ({ placeholder, maxWidth = "270px" }: InputSearchProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
 
-    if (e.target.value) {
-      console.log(e.target.value);
-      getData(e.target.value);
-    }
+    getData(e.target.value);
   };
 
   return (
@@ -65,6 +77,34 @@ const InputSearch = ({ placeholder, maxWidth = "270px" }: InputSearchProps) => {
           <FiSearch color={Color.TEXT_MAIN} />
         )}
       </SearchWrapper>
+      <AnimeContainer>
+        {list.map((anime, index) => (
+          <Item key={index}>
+            <img alt={anime.name} src={anime.imageUrl} />
+            <Info>
+              <Title>
+                <p>{anime.name}</p>
+              </Title>
+              <InfoList>
+                <InfoItem>
+                  <label>Nota: </label>
+                  <label>{anime?.rating?.toFixed(2) ?? "N/A"}</label>
+                </InfoItem>
+                <InfoItem>
+                  <label>Status: </label>
+                  <label>
+                    {anime.isCompleted ? "Completo" : "Em lançamento"}
+                  </label>
+                </InfoItem>
+                <InfoItem>
+                  <label>Total de episódios: </label>
+                  <label>{anime.totalEpisodes}</label>
+                </InfoItem>
+              </InfoList>
+            </Info>
+          </Item>
+        ))}
+      </AnimeContainer>
     </SearchContainer>
   );
 };
