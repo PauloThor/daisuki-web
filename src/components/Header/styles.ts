@@ -91,6 +91,13 @@ export const HeaderSection = styled.section`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  div {
+    padding-left: 20px;
+  }
+
+  @media (min-width: 1024px) {
+    width: 30%;
+  }
 `;
 
 export const ProfileLink = styled(Link)`
