@@ -17,14 +17,14 @@ import {
   Title,
 } from "./styles";
 import StringUtils from "../../shared/util/string-utils";
+import { Redirect, useHistory } from "react-router";
 
 interface InputSearchProps {
   placeholder: string;
-  handleOnChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   maxWidth?: string;
 }
 
-const InputSearch = ({ placeholder, maxWidth = "270px" }: InputSearchProps) => {
+const InputSearch = ({ placeholder, maxWidth = "350px" }: InputSearchProps) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [value, setValue] = useState<string>("");
   const [list, setList] = useState<Anime[]>([]);
@@ -56,12 +56,21 @@ const InputSearch = ({ placeholder, maxWidth = "270px" }: InputSearchProps) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-
     getData(e.target.value);
   };
 
+  const history = useHistory();
+
+  document.body.addEventListener("keyup", function (event) {
+    if (event.key === "Enter" && isFocused) {
+      event.preventDefault();
+      console.log(value);
+      // return history.push(`/search/${value}`);
+    }
+  });
+
   return (
-    <SearchContainer {...validationProps}>
+    <SearchContainer {...validationProps} className="search-container">
       <SearchWrapper {...validationProps} style={{ maxWidth: maxWidth }}>
         <SearchInput
           onFocus={handleFocus}
@@ -71,6 +80,8 @@ const InputSearch = ({ placeholder, maxWidth = "270px" }: InputSearchProps) => {
           }
           placeholder={placeholder}
           value={value}
+          id="search-input"
+          autoComplete="off"
         />
         {isLoading ? (
           <SpinLoading size="small" />

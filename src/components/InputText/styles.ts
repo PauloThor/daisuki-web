@@ -24,7 +24,7 @@ export const InputContainer = styled.div`
   }
 `;
 
-export const InputWrapper = styled.div<InputWrapperProps>`
+export const InputWrapper = styled.section<InputWrapperProps>`
   border-radius: 8px;
   border: 1px solid ${Color.MAIN_DARK};
   width: 100%;

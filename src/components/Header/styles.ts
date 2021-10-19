@@ -197,3 +197,14 @@ export const ProfileContainer = styled.div`
     }
   }
 `;
+
+export const SearchContainer = styled.div`
+  background: ${Color.MAIN};
+  color: ${Color.TEXT_MAIN};
+  border-top: 1px solid ${Color.HIGHLIGHT};
+
+  section {
+    border: none;
+    height: 40px;
+  }
+`;
