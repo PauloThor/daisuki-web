@@ -31,7 +31,7 @@ import { ParamProps } from "../../model/param";
 import { FaHeart, FaHeartBroken, FaRegHeart } from "react-icons/fa";
 import BackTop from "../../components/BackTop";
 import { useUser } from "../../hooks/User";
-import { ModalToLogin } from "../../components/ModalToLogin";
+import { ModalLogin } from "../../components/ModalLogin";
 import toast from "react-hot-toast";
 import { returnStars } from "../../shared/util/anime-utils";
 import { Color } from "../../model/enums/theme-colors";
@@ -53,7 +53,7 @@ const AnimePage = () => {
 
   const [isModalSynopsisVisible, setIsModalSynopsisVisible] =
     useState<boolean>(false);
-  const [isModalToLoginVisible, setIsModalToLoginVisible] =
+  const [isModalLoginVisible, setIsModalLoginVisible] =
     useState<boolean>(false);
 
   const loadAnime = async () => {
@@ -133,7 +133,7 @@ const AnimePage = () => {
       value = animeRate;
     }
     if (!token) {
-      handleModalToLogin();
+      handleModalLogin();
     } else {
       daisukiApi
         .put(
@@ -164,13 +164,13 @@ const AnimePage = () => {
     setIsModalSynopsisVisible(!isModalSynopsisVisible);
   };
 
-  const handleModalToLogin = () => {
-    setIsModalToLoginVisible(!isModalToLoginVisible);
+  const handleModalLogin = () => {
+    setIsModalLoginVisible(!isModalLoginVisible);
   };
 
   const handleFavoriteAnime = () => {
     if (!token) {
-      handleModalToLogin();
+      handleModalLogin();
     } else if (!isFavorite) {
       daisukiApi
         .put(`/users/favorites/${anime?.id}`, null, {
@@ -358,9 +358,9 @@ const AnimePage = () => {
               isModalSynopsisVisible={isModalSynopsisVisible}
               synopsis={anime.synopsis || ""}
             />
-            <ModalToLogin
-              isModalToLoginVisible={isModalToLoginVisible}
-              handleModalToLogin={handleModalToLogin}
+            <ModalLogin
+              isModalLoginVisible={isModalLoginVisible}
+              handleModalLogin={handleModalLogin}
             />
           </Container>
         </>
