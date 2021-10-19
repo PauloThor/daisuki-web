@@ -1,4 +1,5 @@
 import { useParams, Redirect, useHistory } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import toast from "react-hot-toast";
@@ -53,18 +54,23 @@ const PasswordRecovery = () => {
   }
 
   return (
-    <Container>
-      <BgLeft />
-      <FormProvider {...methods}>
-        <Form onSubmit={methods.handleSubmit(onSubmit)}>
-          {FormUtils.passwordRecovery.map((field) => (
-            <InputText {...field} key={field.name} />
-          ))}
-          <Button text="Enviar" margin="4px 0 0" />
-        </Form>
-      </FormProvider>
-      <BgRight />
-    </Container>
+    <>
+      <Helmet>
+        <title>Anime Daisuki! | Recuperar senha</title>
+      </Helmet>
+      <Container>
+        <BgLeft />
+        <FormProvider {...methods}>
+          <Form onSubmit={methods.handleSubmit(onSubmit)}>
+            {FormUtils.passwordRecovery.map((field) => (
+              <InputText {...field} key={field.name} />
+            ))}
+            <Button text="Enviar" margin="4px 0 0" />
+          </Form>
+        </FormProvider>
+        <BgRight />
+      </Container>
+    </>
   );
 };
 

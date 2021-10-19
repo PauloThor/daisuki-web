@@ -63,6 +63,7 @@ const InputSearch = ({ placeholder, maxWidth = "350px" }: InputSearchProps) => {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter" && isFocused) {
       e.preventDefault();
+      setList([]);
       return history.push(`/search/${value}`);
     }
   };
