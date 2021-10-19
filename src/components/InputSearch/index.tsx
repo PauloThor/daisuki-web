@@ -38,7 +38,6 @@ const InputSearch = ({ placeholder, maxWidth = "350px" }: InputSearchProps) => {
       output = res.data.data;
     }
     setList(output);
-    console.log(output);
     setIsLoading(false);
   };
 
