@@ -136,11 +136,21 @@ export const MobileSubMenu = styled(SubMenu)`
   background: ${Color.MAIN};
   color: ${Color.TEXT_MAIN};
   border-top: 1px solid ${Color.HIGHLIGHT};
+
+  &:hover,
+  &:focus {
+    background: ${Color.MAIN};
+  }
 `;
 
 export const MobileItem = styled(Menu.Item)`
   background: ${Color.MAIN};
   color: ${Color.TEXT_MAIN};
+
+  &:hover,
+  &:focus {
+    background: ${Color.MAIN};
+  }
 `;
 
 export const Item = styled(MobileSubMenu)`

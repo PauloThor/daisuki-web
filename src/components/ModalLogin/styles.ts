@@ -3,7 +3,42 @@ import { Modal } from "antd";
 import { Color } from "../../model/enums/theme-colors";
 import { Link } from "react-router-dom";
 
-export const Content = styled.div`
+export const StyledModal = styled(Modal)`
+  max-width: 90vw;
+  max-width: 19rem;
+
+  @media (min-width: 768px) {
+    max-width: 25rem;
+  }
+  svg {
+    color: white;
+  }
+  .ant-modal-content {
+    background-color: transparent;
+  }
+  .ant-modal-header {
+    background-color: ${Color.MAIN};
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+
+    .ant-modal-title {
+      color: ${Color.TEXT_MAIN};
+    }
+  }
+
+  .ant-modal-body {
+    background-color: ${Color.MAIN};
+    padding: 1rem;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+
+  .ant-modal-footer {
+    display: none;
+  }
+`;
+
+export const Container = styled.div`
   overflow: auto;
   max-height: 60vh;
   display: flex;
@@ -15,35 +50,7 @@ export const Content = styled.div`
   }
 `;
 
-export const StyledModal = styled(Modal)`
-  max-width: 90vw;
-  max-width: 19rem;
-
-  @media (min-width: 768px) {
-    max-width: 25rem;
-  }
-  svg {
-    color: white;
-  }
-  .ant-modal-header {
-    background-color: ${Color.MAIN};
-
-    .ant-modal-title {
-      color: ${Color.TEXT_MAIN};
-    }
-  }
-
-  .ant-modal-body {
-    background-color: ${Color.MAIN};
-    padding: 1rem;
-  }
-
-  .ant-modal-footer {
-    display: none;
-  }
-`;
-
-export const Container = styled.div`
+export const Content = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
