@@ -1,5 +1,4 @@
 import {
-  Category,
   Container,
   Footer,
   InfoAnime,
@@ -8,7 +7,6 @@ import {
   StyledCollapse,
   StyledListEpisodes,
   Synopsis,
-  Categories,
   Details,
   RateContainer,
   AnimeData,
@@ -16,6 +14,8 @@ import {
   AnimeCover,
   AnimeEpisode,
   StyledLink,
+  Genre,
+  Genres,
 } from "./styles";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
@@ -269,14 +269,14 @@ const AnimePage = () => {
                           anime.isCompleted ? "Completo" : "Em lançamento"
                         }`}
                   </p>
-                  <Categories>
+                  <Genres>
                     {anime.genres &&
                       anime.genres.map((genre) => (
-                        <Category to={`/genres/${genresToEnglish[genre.name]}`}>
+                        <Genre to={`/genres/${genresToEnglish[genre.name]}`}>
                           {genre.name}
-                        </Category>
+                        </Genre>
                       ))}
-                  </Categories>
+                  </Genres>
                   <Synopsis>
                     <strong> Sinopse:</strong> {anime.synopsis}
                   </Synopsis>

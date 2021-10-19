@@ -296,7 +296,7 @@ export const StyledListEpisodes = styled(ListEpisodes)`
   padding: 0;
 `;
 
-export const Categories = styled.div`
+export const Genres = styled.div`
   display: none;
   gap: 1rem;
   margin-top: 15px;
@@ -307,7 +307,7 @@ export const Categories = styled.div`
   }
 `;
 
-export const Category = styled(Link)`
+export const Genre = styled(Link)`
   padding: 0.5rem;
   height: 1.8rem;
   border: 1px solid ${Color.TEXT_MAIN};
