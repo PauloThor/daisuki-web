@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import calendar from "dayjs/plugin/calendar";
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
 import utc from "dayjs/plugin/utc";
@@ -35,6 +36,11 @@ class DateUtils {
     dayjs.extend(utc);
     const day = dayjs();
     return day.utc().format();
+  };
+
+  static StringToDate = (date?: string) => {
+    dayjs.extend(calendar);
+    return dayjs().calendar(dayjs(date));
   };
 }
 

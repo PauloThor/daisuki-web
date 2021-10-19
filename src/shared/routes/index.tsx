@@ -18,7 +18,7 @@ const Routes = () => {
       <Route exact path="/" component={Home} />
       <Route path="/register" component={Register} />
       <Route path="/login" component={Login} />
-      <Route path="/animes/:name" component={AnimePage} />
+      <Route exact path="/animes/:name" component={AnimePage} />
       <Route path="/animes/:name/:episode_number" component={EpisodePage} />
       <Route path="/genres/:genre">
         <AnimeList request="genre" />
@@ -27,6 +27,7 @@ const Routes = () => {
         <AnimeList request="search" search />
       </Route>
       <Route
+        exact
         path="/password-recovery/:id/:token"
         component={PasswordRecovery}
       />

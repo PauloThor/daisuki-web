@@ -20,83 +20,118 @@ import {
 import { daisukiApi } from "../../services/api";
 import { ParamProps } from "../../model/param";
 import { Episode } from "../../model/episode";
+import { Anime } from "../../model/anime";
 import Header from "../../components/Header";
+import DateUtils from "../../shared/util/date-utils";
+import StringUtils from "../../shared/util/string-utils";
 
 const EpisodePage = () => {
   const param: ParamProps = useParams();
+  const history = useHistory();
   const [loading, setLoading] = useState<boolean>(true);
-  const [episode, setEpisode] = useState<Episode[]>();
-  console.log("teste");
+  const [episode, setEpisode] = useState<Episode>();
+  const [anime, setAnime] = useState<Anime>();
+  const [next, setNext] = useState<boolean>(false);
+  const [previous, setPrevious] = useState<boolean>(false);
 
-  const episodio = {
-    anime_name: "Hunter x Hunter",
-    episode_number: 15,
-    publicade_at: new Date(),
-    video_url: "https://streamable.com/e/z8xs0a",
-    all_episodes: "https://animedaisuki.vercel.app/animes/1",
+  const loadEpisode = async () => {
+    await daisukiApi
+      .get(`/animes/${param.name}/${param.episode_number}`)
+      .then((res) => {
+        console.log(res);
+        setEpisode(res.data.data[0]);
+        setAnime(res.data.anime);
+        res.data.next && setNext(true);
+        res.data.previous && setPrevious(true);
+      });
+    setLoading(false);
   };
 
-  // const loadEpisode = async () => {
-  //   await daisukiApi
-  //     .get(`/animes/${param.anime_name}/${param.episode_number}`)
-  //     .then((res) => {
-  //       console.log(res);
-  //     });
-  //   setLoading(false);
-  // };
+  const EmbledVideo = (episode?: string) => {
+    let episodeArray: any = episode?.split("/");
+    const lastValue = episodeArray.pop();
+    episodeArray = [...episodeArray, "e", lastValue];
+    return episodeArray.join("/");
+  };
 
-  // useEffect(() => {
-  //   loadEpisode();
-  // }, []);
+  const handleEpisode = (nextEpisode?: boolean) => {
+    const previous_ep = Number(episode?.episodeNumber) - 1;
+    const next_ep = Number(episode?.episodeNumber) + 1;
+    return history.push(
+      `/animes/${StringUtils.urlMask(anime?.name)}/${
+        nextEpisode ? next_ep : previous_ep
+      }`
+    );
+  };
 
-  //frameborder="0" width="100%" height="100%"  allowfullscreen
+  useEffect(() => {
+    loadEpisode();
+  }, []);
 
   return (
     <>
       <Header />
-      {/* {loading ? (
+      {loading ? (
         <SpinContainer>
           <Spin size="large" />
         </SpinContainer>
       ) : (
-        <> </>
-      )} */}
-      <Main>
-        <section>
-          <Title>
-            {episodio.anime_name.toUpperCase()} - EPISÓDIO{" "}
-            {episodio.episode_number}
-          </Title>
-          <VideoPlayer>
-            <Video src={episodio.video_url}></Video>
-          </VideoPlayer>
-          <EpisodeOptions>
-            <TextOptions>
-              <span>
-                Publicado em: {episodio.publicade_at.toLocaleDateString()}
-              </span>
-              <span>
-                <ListEpisodes href={episodio.all_episodes}>
-                  <CardListIcon /> Mais episódios{" "}
-                </ListEpisodes>
-              </span>
-            </TextOptions>
-            <div>
-              <ButtonPrevious>
-                &lt; <TextButton>Anterior</TextButton>
-              </ButtonPrevious>
-              <ButtonNext>
-                <TextButton>Próximo</TextButton> &gt;
-              </ButtonNext>
-            </div>
-          </EpisodeOptions>
-        </section>
-        <section>
-          <Comment>
-            <ChatIcon /> Comentários:
-          </Comment>
-        </section>
-      </Main>
+        episode && (
+          <Main>
+            <section>
+              <Title>
+                {anime?.name?.toUpperCase()} - EPISÓDIO {episode?.episodeNumber}
+              </Title>
+              <VideoPlayer>
+                <Video
+                  src={EmbledVideo(episode.videoUrl)}
+                  frameBorder="0"
+                  width="100%"
+                  height="100%"
+                  allowFullScreen
+                ></Video>
+              </VideoPlayer>
+              <EpisodeOptions>
+                <TextOptions>
+                  <span>
+                    Publicado em: {DateUtils.StringToDate(episode?.createdAt)}
+                  </span>
+                  <span>
+                    <ListEpisodes
+                      to={`/animes/${StringUtils.urlMask(anime?.name)}`}
+                    >
+                      <CardListIcon /> Mais episódios
+                    </ListEpisodes>
+                  </span>
+                </TextOptions>
+                <div>
+                  {previous && (
+                    <ButtonPrevious
+                      type="button"
+                      onClick={() => handleEpisode()}
+                    >
+                      &lt; <TextButton>Anterior</TextButton>
+                    </ButtonPrevious>
+                  )}
+                  {next && (
+                    <ButtonNext
+                      type="button"
+                      onClick={() => handleEpisode(true)}
+                    >
+                      <TextButton>Próximo</TextButton> &gt;
+                    </ButtonNext>
+                  )}
+                </div>
+              </EpisodeOptions>
+            </section>
+            <section>
+              <Comment>
+                <ChatIcon /> Comentários:
+              </Comment>
+            </section>
+          </Main>
+        )
+      )}
     </>
   );
 };

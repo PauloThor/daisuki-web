@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Color } from "./../../model/enums/theme-colors";
+import { Link } from "react-router-dom";
 import { BsCardList } from "react-icons/bs";
 import { AiOutlineWechat } from "react-icons/ai";
 
@@ -73,7 +74,7 @@ export const TextOptions = styled.div`
   }
 `;
 
-export const ListEpisodes = styled.a`
+export const ListEpisodes = styled(Link)`
   color: ${Color.TEXT_MAIN};
 
   &:hover,
