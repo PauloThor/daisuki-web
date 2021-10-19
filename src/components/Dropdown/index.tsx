@@ -37,7 +37,7 @@ const DropdownItem = ({ title, items, hasAvatar }: DropdownItemProps) => {
   return (
     <MenuContainer>
       <Dropdown overlay={menu}>
-        <MenuItem onClick={(e) => e.preventDefault()}>
+        <MenuItem>
           {!hasAvatar ? (
             <MenuLabel>{title}</MenuLabel>
           ) : (
