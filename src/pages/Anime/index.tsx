@@ -273,7 +273,7 @@ const AnimePage = () => {
                           new Date(anime.createdAt || "")
                         )}`
                       : `Status: ${
-                          anime.isCompleted ? "Encerrado" : "Em lançamento"
+                          anime.isCompleted ? "Completo" : "Em lançamento"
                         }`}
                   </p>
                   <Categories>
