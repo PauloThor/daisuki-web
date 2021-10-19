@@ -224,7 +224,7 @@ const AnimePage = () => {
 
   const isFavorite = favorites.find((f) => f.id === anime?.id);
 
-  episodes?.sort((a, b) => a.id - b.id);
+  // episodes?.sort((a, b) => a.id - b.id);
 
   return (
     <>
