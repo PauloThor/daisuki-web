@@ -128,15 +128,21 @@ const AnimeList = ({ request, search = false }: Props) => {
   }, []);
 
   useEffect(() => {
-    getAnimesBySearch(currentPage);
+    if (request === "search") {
+      getAnimesBySearch(currentPage);
+    }
   }, [params.search]);
 
   useEffect(() => {
-    getAnimesByGenre(currentPage);
+    if (request === "genre") {
+      getAnimesByGenre(currentPage);
+    }
   }, [params.genre]);
 
   useEffect(() => {
-    getAnimesByStatus(currentPage);
+    if (request === "filter") {
+      getAnimesByStatus(currentPage);
+    }
   }, [params.filter]);
 
   return (
