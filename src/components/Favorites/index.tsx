@@ -5,14 +5,35 @@ import BannerImage from "../../assets/img/profile-header.png";
 import { useUser } from "../../hooks/User";
 import { SpinContainer } from "../../pages/Home/styles";
 import { Spin } from "antd";
+import { useEffect, useState } from "react";
+import { Anime } from "../../model/anime";
 
 interface FavoritesProps {
   list: Favorite[];
   onClose: () => void;
 }
 
-const Favorites = ({ onClose, list }: FavoritesProps) => {
+const Favorites = ({ onClose }: FavoritesProps) => {
   const { deleteFavorite, isLoading } = useUser();
+  const { getFavoritesByPage } = useUser();
+  const [favPage, setFavPage] = useState(1);
+  const [list, setList] = useState<Anime[]>([]);
+
+  const loadFavorites = async () => {
+    const res = await getFavoritesByPage(favPage);
+    setList(res);
+  };
+
+  useEffect(() => {
+    loadFavorites();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleScroll = async () => {
+    const res = await getFavoritesByPage(favPage + 1);
+    setList([...list, ...res]);
+    setFavPage(favPage + 1);
+  };
 
   return (
     <Container>

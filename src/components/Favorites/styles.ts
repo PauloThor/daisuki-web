@@ -7,6 +7,8 @@ export const Container = styled.div``;
 
 export const Options = styled.section`
   margin: 10px 0px;
+  overflow-y: scroll;
+  height: 80%;
 `;
 
 export const Item = styled.div`
@@ -17,6 +19,7 @@ export const Item = styled.div`
   transition: 0.3s ease-in;
   justify-content: space-between;
   align-items: center;
+  height: 20rem;
 
   svg {
     opacity: 0;
