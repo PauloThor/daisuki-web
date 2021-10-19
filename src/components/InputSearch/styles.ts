@@ -18,7 +18,6 @@ interface InputWrapperProps {
 
 export const SearchContainer = styled(InputContainer)`
   position: relative;
-  /* width: 500px; */
 `;
 
 export const SearchWrapper = styled(InputWrapper)<InputWrapperProps>``;
@@ -52,6 +51,12 @@ export const Item = styled(Link)`
   &:hover {
     color: ${Color.HIGHLIGHT_LIGHT};
   }
+
+  width: 100vw;
+
+  @media (min-width: 768px) {
+    width: initial;
+  }
 `;
 
 export const Info = styled.div`
@@ -67,7 +72,7 @@ export const Title = styled.div`
   line-height: 20px;
 `;
 
-export const InfoList = styled.ul`
+export const InfoList = styled.div`
   margin-top: auto;
   display: flex;
   flex-direction: column;

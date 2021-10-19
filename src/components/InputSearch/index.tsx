@@ -17,7 +17,7 @@ import {
   Title,
 } from "./styles";
 import StringUtils from "../../shared/util/string-utils";
-import { Redirect, useHistory } from "react-router";
+import { useHistory } from "react-router";
 
 interface InputSearchProps {
   placeholder: string;
@@ -61,13 +61,12 @@ const InputSearch = ({ placeholder, maxWidth = "350px" }: InputSearchProps) => {
 
   const history = useHistory();
 
-  document.body.addEventListener("keyup", function (event) {
-    if (event.key === "Enter" && isFocused) {
-      event.preventDefault();
-      console.log(value);
-      // return history.push(`/search/${value}`);
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter" && isFocused) {
+      e.preventDefault();
+      return history.push(`/search/${value}`);
     }
-  });
+  };
 
   return (
     <SearchContainer {...validationProps} className="search-container">
@@ -82,6 +81,7 @@ const InputSearch = ({ placeholder, maxWidth = "350px" }: InputSearchProps) => {
           value={value}
           id="search-input"
           autoComplete="off"
+          onKeyPress={handleKeyPress}
         />
         {isLoading ? (
           <SpinLoading size="small" />

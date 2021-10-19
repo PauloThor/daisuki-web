@@ -110,7 +110,4 @@ export const GlobalStyle = createGlobalStyle`
     z-index: 1002 ;
   }
 
-  .dlPQwC ul {
-      background: none !important; 
-  }
 `;
