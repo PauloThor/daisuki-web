@@ -7,3 +7,8 @@ export interface AnimeListParamProps {
   filter: string;
   search: string;
 }
+
+export interface PasswordRecoveryParams {
+  id: string;
+  token: string;
+}

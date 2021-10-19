@@ -7,6 +7,7 @@ import NotFound from "../../pages/NotFound";
 import Admin from "../../pages/Admin";
 import AnimePage from "../../pages/Anime";
 import AnimeList from "../../pages/AnimeList";
+import PasswordRecovery from "../../pages/PasswordRecovery";
 import Styleguide from "../../pages/Styleguide";
 
 const Routes = () => {
@@ -23,6 +24,7 @@ const Routes = () => {
       <Route path="/search/:search">
         <AnimeList request="search" search />
       </Route>
+      <Route path="/password-recovery/:id/:token" component={PasswordRecovery}/>
       {user.permission === "mod" && <Route path="/admin" component={Admin} />}
       {user.permission === "admin" && <Route path="/admin" component={Admin} />}
       <Route path="/:filter">

@@ -77,11 +77,11 @@ const Login = () => {
   };
 
   const handleSubmitEmail = (data: FormPasswordRecovery) => {
-    const fetch = async () => {
+    const postData = async () => {
       await daisukiApi.post("/users/temp-token", data);
       handleCancel();
     };
-    const myPromise = fetch();
+    const myPromise = postData();
     toast.promise(
       myPromise,
       {

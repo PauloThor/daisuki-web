@@ -110,6 +110,24 @@ class SchemaUtils {
         .required(" - Campo obrigatório"),
     });
   }
+
+  static passwordRecovery() {
+    return yup.object({
+      email: yup
+      .string()
+      .email(" - Deve ser um e-mail")
+      .required(" - Campo obrigatório"),
+      password: yup
+        .string()
+        .min(8, " - Mínimo de 8 caracteres")
+        .required(" - Campo obrigatório"),
+      confirmPassword: yup
+        .string()
+        .min(8, "")
+        .required("")
+        .oneOf([yup.ref("password")], ""),
+    });
+  }
 }
 
 export default SchemaUtils;
