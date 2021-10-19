@@ -127,6 +127,18 @@ const AnimeList = ({ request, search = false }: Props) => {
     }
   }, []);
 
+  useEffect(() => {
+    getAnimesBySearch(currentPage);
+  }, [params.search]);
+
+  useEffect(() => {
+    getAnimesByGenre(currentPage);
+  }, [params.genre]);
+
+  useEffect(() => {
+    getAnimesByStatus(currentPage);
+  }, [params.filter]);
+
   return (
     <>
       {!isInvalidLink && (
