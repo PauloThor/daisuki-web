@@ -9,7 +9,7 @@ function App() {
     <Provider>
       <BrowserRouter>
         <GlobalStyle />
-        <Toaster/>
+        <Toaster />
         <Routes />
       </BrowserRouter>
     </Provider>

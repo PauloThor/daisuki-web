@@ -1,3 +1,5 @@
 export interface ParamProps {
-  id: string;
+  id?: string;
+  anime_name?: string;
+  episode_number?: string;
 }

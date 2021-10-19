@@ -5,6 +5,7 @@ import Login from "../../pages/Login";
 import NotFound from "../../pages/NotFound";
 import Admin from "../../pages/Admin";
 import AnimePage from "../../pages/Anime";
+import EpisodePage from "../../pages/Episode";
 import Styleguide from "../../pages/Styleguide";
 
 const Routes = () => {
@@ -15,8 +16,12 @@ const Routes = () => {
       <Route path="/login" component={Login} />
       <Route path="/admin" component={Admin} />
       <Route path="/animes/:id" component={AnimePage} />
+      <Route
+        path="/animes/:anime_name/:episode_number"
+        component={EpisodePage}
+      />
       <Route exact path="/styleguide" component={Styleguide} />
-      <Route path="*" component={NotFound} />
+      {/* <Route path="*" component={NotFound} /> */}
     </Switch>
   );
 };

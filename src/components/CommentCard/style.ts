@@ -22,7 +22,8 @@ export const Container = styled.div`
   position: relative;
   display: flex;
 
-  &:hover ${OptionContainer} {
+  &:hover,
+  &:focus ${OptionContainer} {
     display: initial;
   }
 `;
