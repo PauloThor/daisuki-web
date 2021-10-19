@@ -15,9 +15,10 @@ interface FavoritesProps {
 
 const Favorites = ({ onClose }: FavoritesProps) => {
   const { deleteFavorite, isLoading } = useUser();
-  const { getFavoritesByPage } = useUser();
+  const { getFavoritesByPage, favorites } = useUser();
   const [favPage, setFavPage] = useState(1);
   const [list, setList] = useState<Anime[]>([]);
+  const [scrolledToBottom, setScrolledToBottom] = useState(false);
 
   const loadFavorites = async () => {
     const res = await getFavoritesByPage(favPage);
@@ -30,9 +31,32 @@ const Favorites = ({ onClose }: FavoritesProps) => {
   }, []);
 
   const handleScroll = async () => {
-    const res = await getFavoritesByPage(favPage + 1);
-    setList([...list, ...res]);
-    setFavPage(favPage + 1);
+    if (favorites.length !== list.length) {
+      const wrappedElement = document.getElementById("opt");
+
+      if (wrappedElement) {
+        if (
+          Math.ceil(wrappedElement.offsetHeight + wrappedElement.scrollTop) >=
+          wrappedElement.scrollHeight
+        ) {
+          setScrolledToBottom(true);
+
+          const res = await getFavoritesByPage(favPage + 1);
+          if (res) {
+            setList([...list, ...res]);
+            setFavPage(favPage + 1);
+
+            setTimeout(() => {
+              setScrolledToBottom(false);
+            }, 2000);
+          }
+        }
+      }
+    } else {
+      setTimeout(() => {
+        setScrolledToBottom(false);
+      }, 1000);
+    }
   };
 
   return (
@@ -47,7 +71,7 @@ const Favorites = ({ onClose }: FavoritesProps) => {
           <Spin size="large" />
         </SpinContainer>
       ) : (
-        <Options>
+        <Options id="opt" onScroll={handleScroll}>
           {list.map((favorite, index) => (
             <Item key={index}>
               <p>{favorite.name}</p>
@@ -61,6 +85,11 @@ const Favorites = ({ onClose }: FavoritesProps) => {
               </Pop>
             </Item>
           ))}
+          {scrolledToBottom && (
+            <SpinContainer style={{ height: "10vh" }}>
+              <Spin size="large" />
+            </SpinContainer>
+          )}
         </Options>
       )}
     </Container>

@@ -115,7 +115,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   const getFavorites = async () => {
-    const res = await daisukiApi.get(`/users/favorites`, headersJson);
+    const res = await daisukiApi.get(
+      `/users/favorites?per_page=100`,
+      headersJson
+    );
     const output = res.data.data.map((favorite: Anime) => {
       return {
         id: favorite.id,
@@ -127,7 +130,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const getFavoritesByPage = async (page: number) => {
     const res = await daisukiApi.get(
-      `/users/favorites?page=${page}&per_page=${5}`,
+      `/users/favorites?page=${page}&per_page=16`,
       headersJson
     );
     const output = res.data.data.map((favorite: Anime) => {
