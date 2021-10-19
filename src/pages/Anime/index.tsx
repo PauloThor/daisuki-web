@@ -19,7 +19,9 @@ import {
 } from "./styles";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Rate, Spin, Collapse } from "antd";
+import Motion from "../../components/Motion";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
 import { ModalSynopsis } from "../../components/ModalSynopsis";
@@ -221,150 +223,157 @@ const AnimePage = () => {
 
   return (
     <>
-      {!isLoad && (
-        <>
-          <Header />
-          <SpinContainer>
-            <Spin size="large" />
-          </SpinContainer>
-        </>
-      )}
-      {anime && (
-        <>
-          <Header />
-          <Container>
-            <InfoAnime>
-              <AnimeData>
-                <HeaderAnimeData isFavorite={!!isFavorite}>
-                  <h1>{anime.name}</h1>
-                  <button type="button" onClick={handleFavoriteAnime}>
-                    {!token && <FaRegHeart />}
-                    {token && isFavorite && <FaHeart />}
-                    {token && !isFavorite && <FaRegHeart />}
-                    <span>{isFavorite ? <FaHeartBroken /> : <FaHeart />}</span>
-                  </button>
-                </HeaderAnimeData>
-                <RateContainer
-                  onMouseOver={handleAllowHalf}
-                  onMouseOut={handleAllowHalf}
-                >
-                  <Rate
-                    onChange={handleRate}
-                    value={animeRate}
-                    allowHalf={ativAllowHalf}
-                  />
-                  <span className="ant-rate-text">
-                    {animeRate ? animeRate.toFixed(2) : "N/A"}
-                  </span>
-                </RateContainer>
-                <Details>
-                  <p>Áudio: {anime.isDubbed ? "Português" : "Japonês"}</p>
-                  <p>Episódios: {anime.totalEpisodes}</p>
-                  <p>
-                    {anime.isMovie
-                      ? `Lançamento: ${new Intl.DateTimeFormat("pt-BR").format(
-                          new Date(anime.createdAt || "")
-                        )}`
-                      : `Status: ${
-                          anime.isCompleted ? "Completo" : "Em lançamento"
-                        }`}
-                  </p>
-                  <Genres>
-                    {anime.genres &&
-                      anime.genres.map((genre) => (
-                        <Genre to={`/genres/${genresToEnglish[genre.name]}`}>
-                          {genre.name}
-                        </Genre>
-                      ))}
-                  </Genres>
-                  <Synopsis>
-                    <strong> Sinopse:</strong> {anime.synopsis}
-                  </Synopsis>
-                </Details>
-              </AnimeData>
-              <AnimeCover>
-                <img src={anime.imageUrl} alt="anime cover" />
-                <Button
-                  text="Ver Sinopse"
-                  margin="0 8px"
-                  handleClick={handleModalSynopsis}
-                />
-              </AnimeCover>
-            </InfoAnime>
-
-            {episodesPerPage[0][0] !== undefined ? (
-              episodesPerPage.map((list) => (
-                <>
-                  <StyledCollapse defaultActiveKey={["0"]} bordered={false}>
-                    <Panel
-                      header={
-                        <span>
-                          Episódios:{" "}
-                          {episodesPerPage.indexOf(list) !== 0
-                            ? 1 * episodesPerPage.indexOf(list)
-                            : 1}
-                          {" - "}
-                          {episodesPerPage.indexOf(list) !== 0
-                            ? 24 * episodesPerPage.indexOf(list)
-                            : list.length}
-                        </span>
-                      }
-                      key={episodesPerPage.indexOf(list)}
-                      style={{ color: "white" }}
-                    >
-                      <StyledListEpisodes>
-                        {list.map((epi) => (
-                          <AnimeEpisode
-                            watched={epi?.hasWatched || false}
-                            key={epi.id}
-                          >
-                            <StyledLink
-                              to={`/animes/${param.name}/episodes/${
-                                epi.episodeNumber ? epi.episodeNumber : 1
-                              }`}
-                            >
-                              {anime.isMovie
-                                ? anime.name
-                                : `Episódio ${epi.episodeNumber}`}
-                            </StyledLink>
-                          </AnimeEpisode>
-                        ))}
-                      </StyledListEpisodes>
-                    </Panel>
-                  </StyledCollapse>
-                </>
-              ))
-            ) : (
-              <ListEpisodes>
-                {episodes.map((epi) => (
-                  <AnimeEpisode watched={false} key={epi.id}>
-                    <StyledLink
-                      to={`/animes/${param.name}/episodes/${
-                        epi.episodeNumber ? epi.episodeNumber : 1
-                      }`}
-                    >
+      <Helmet>
+        <title>{`Anime Daisuki! | ${anime?.name ?? ""}`}</title>
+      </Helmet>
+      <Motion>
+        {!isLoad && (
+          <>
+            <Header />
+            <SpinContainer>
+              <Spin size="large" />
+            </SpinContainer>
+          </>
+        )}
+        {anime && (
+          <>
+            <Header />
+            <Container>
+              <InfoAnime>
+                <AnimeData>
+                  <HeaderAnimeData isFavorite={!!isFavorite}>
+                    <h1>{anime.name}</h1>
+                    <button type="button" onClick={handleFavoriteAnime}>
+                      {!token && <FaRegHeart />}
+                      {token && isFavorite && <FaHeart />}
+                      {token && !isFavorite && <FaRegHeart />}
+                      <span>
+                        {isFavorite ? <FaHeartBroken /> : <FaHeart />}
+                      </span>
+                    </button>
+                  </HeaderAnimeData>
+                  <RateContainer
+                    onMouseOver={handleAllowHalf}
+                    onMouseOut={handleAllowHalf}
+                  >
+                    <Rate
+                      onChange={handleRate}
+                      value={animeRate}
+                      allowHalf={ativAllowHalf}
+                    />
+                    <span className="ant-rate-text">
+                      {animeRate ? animeRate.toFixed(2) : "N/A"}
+                    </span>
+                  </RateContainer>
+                  <Details>
+                    <p>Áudio: {anime.isDubbed ? "Português" : "Japonês"}</p>
+                    <p>Episódios: {anime.totalEpisodes}</p>
+                    <p>
                       {anime.isMovie
-                        ? `${anime.name} - Filme`
-                        : `Episódio ${epi.episodeNumber}`}
-                    </StyledLink>
-                  </AnimeEpisode>
-                ))}
-              </ListEpisodes>
-            )}
-            <Footer />
-            <BackTop />
-            <ModalSynopsis
-              handleModalSynopsis={handleModalSynopsis}
-              isModalSynopsisVisible={isModalSynopsisVisible}
-              synopsis={anime.synopsis || ""}
-            />
-            <ModalLogin
-              isModalLoginVisible={isModalLoginVisible}
-              handleModalLogin={handleModalLogin}
-            />
-          </Container>
-        </>
-      )}
+                        ? `Lançamento: ${new Intl.DateTimeFormat(
+                            "pt-BR"
+                          ).format(new Date(anime.createdAt || ""))}`
+                        : `Status: ${
+                            anime.isCompleted ? "Completo" : "Em lançamento"
+                          }`}
+                    </p>
+                    <Genres>
+                      {anime.genres &&
+                        anime.genres.map((genre) => (
+                          <Genre to={`/genres/${genresToEnglish[genre.name]}`}>
+                            {genre.name}
+                          </Genre>
+                        ))}
+                    </Genres>
+                    <Synopsis>
+                      <strong> Sinopse:</strong> {anime.synopsis}
+                    </Synopsis>
+                  </Details>
+                </AnimeData>
+                <AnimeCover>
+                  <img src={anime.imageUrl} alt="anime cover" />
+                  <Button
+                    text="Ver Sinopse"
+                    margin="0 8px"
+                    handleClick={handleModalSynopsis}
+                  />
+                </AnimeCover>
+              </InfoAnime>
+
+              {episodesPerPage[0][0] !== undefined ? (
+                episodesPerPage.map((list) => (
+                  <>
+                    <StyledCollapse defaultActiveKey={["0"]} bordered={false}>
+                      <Panel
+                        header={
+                          <span>
+                            Episódios:{" "}
+                            {episodesPerPage.indexOf(list) !== 0
+                              ? 1 * episodesPerPage.indexOf(list)
+                              : 1}
+                            {" - "}
+                            {episodesPerPage.indexOf(list) !== 0
+                              ? 24 * episodesPerPage.indexOf(list)
+                              : list.length}
+                          </span>
+                        }
+                        key={episodesPerPage.indexOf(list)}
+                        style={{ color: "white" }}
+                      >
+                        <StyledListEpisodes>
+                          {list.map((epi) => (
+                            <AnimeEpisode
+                              watched={epi?.hasWatched || false}
+                              key={epi.id}
+                            >
+                              <StyledLink
+                                to={`/animes/${param.name}/episodes/${
+                                  epi.episodeNumber ? epi.episodeNumber : 1
+                                }`}
+                              >
+                                {anime.isMovie
+                                  ? anime.name
+                                  : `Episódio ${epi.episodeNumber}`}
+                              </StyledLink>
+                            </AnimeEpisode>
+                          ))}
+                        </StyledListEpisodes>
+                      </Panel>
+                    </StyledCollapse>
+                  </>
+                ))
+              ) : (
+                <ListEpisodes>
+                  {episodes.map((epi) => (
+                    <AnimeEpisode watched={false} key={epi.id}>
+                      <StyledLink
+                        to={`/animes/${param.name}/episodes/${
+                          epi.episodeNumber ? epi.episodeNumber : 1
+                        }`}
+                      >
+                        {anime.isMovie
+                          ? `${anime.name} - Filme`
+                          : `Episódio ${epi.episodeNumber}`}
+                      </StyledLink>
+                    </AnimeEpisode>
+                  ))}
+                </ListEpisodes>
+              )}
+              <Footer />
+              <BackTop />
+              <ModalSynopsis
+                handleModalSynopsis={handleModalSynopsis}
+                isModalSynopsisVisible={isModalSynopsisVisible}
+                synopsis={anime.synopsis || ""}
+              />
+              <ModalLogin
+                isModalLoginVisible={isModalLoginVisible}
+                handleModalLogin={handleModalLogin}
+              />
+            </Container>
+          </>
+        )}
+      </Motion>
 
       {isInvalidLink && isLoad && <NotFound />}
     </>
