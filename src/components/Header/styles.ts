@@ -57,6 +57,51 @@ export const Container = styled.header`
       max-width: initial;
     }
   }
+
+  .ant-menu-light,
+  .ant-menu-item-active,
+  .ant-menu-item:hover {
+    color: ${Color.HIGHLIGHT};
+  }
+
+  .ant-menu-light .ant-menu-item:hover,
+  .ant-menu-light .ant-menu-item-active {
+    color: ${Color.HIGHLIGHT};
+    background-color: ${Color.MAIN};
+  }
+
+  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: ${Color.MAIN};
+  }
+
+  .ant-menu-vertical .ant-menu-item::after,
+  .ant-menu-vertical-left .ant-menu-item::after,
+  .ant-menu-vertical-right .ant-menu-item::after,
+  .ant-menu-inline .ant-menu-item::after {
+    border-color: ${Color.HIGHLIGHT};
+  }
+
+  .ant-menu-item:active,
+  .ant-menu-submenu-title:active {
+    background-color: ${Color.MAIN};
+  }
+`;
+
+export const HeaderSection = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  > div {
+    padding-left: 20px;
+  }
+
+  @media (min-width: 1024px) {
+    min-width: 30%;
+  }
+
+  @media (min-width: 1800px) {
+    min-width: 17%;
+  }
 `;
 
 export const ProfileLink = styled(Link)`
@@ -84,15 +129,7 @@ export const HeaderItem = styled.div`
   }
 `;
 
-export const MenuMobileContainer = styled.div`
-  /* display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  @media (min-width: 1024px) {
-    display: none;
-  } */
-`;
+export const MenuMobileContainer = styled.div``;
 
 export const MobileMenu = styled(Menu)`
   position: absolute;
@@ -187,6 +224,12 @@ export const MobileAuth = styled.div`
 
     svg {
       padding-left: 5px;
+    }
+  }
+
+  @media (min-width: 400px) {
+    label {
+      margin-right: 15px;
     }
   }
 `;
