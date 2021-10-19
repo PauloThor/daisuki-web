@@ -6,6 +6,7 @@ import { Select, Spin } from "antd";
 import { SelectValue } from "antd/lib/select";
 import { toast } from "react-hot-toast";
 import { IoMdRefresh, IoMdRemoveCircleOutline } from "react-icons/io";
+import Motion from "../../components/Motion";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
 import InputText from "../../components/InputText";
@@ -257,169 +258,171 @@ const Admin = () => {
       <Helmet>
         <title>Anime Daisuki! | Central de upload</title>
       </Helmet>
-      <Header />
-      <Container>
-        <Box>
-          <h2>Adicionar anime:</h2>
-          <FormProvider {...methodsAnime}>
-            <FormStyled
-              onSubmit={methodsAnime.handleSubmit(onSubmitAnime)}
-              autoComplete="off"
-            >
-              <InputText
-                name="name"
-                placeholder="Nome do anime"
-                label="Nome do anime*"
-                type={InputTypes.TEXT}
-              />
-              <TextArea>
-                <label htmlFor="synopsis">Sinopse*</label>
-                <textarea
-                  value={synopsis}
-                  onChange={(e) => setSynopsis(e.target.value)}
-                  name="synopsis"
-                  id="synopsis"
-                  cols={30}
-                  rows={4}
-                  placeholder=" Uma sinopse bem legal..."
-                  maxLength={1023}
+      <Motion>
+        <Header />
+        <Container>
+          <Box>
+            <h2>Adicionar anime:</h2>
+            <FormProvider {...methodsAnime}>
+              <FormStyled
+                onSubmit={methodsAnime.handleSubmit(onSubmitAnime)}
+                autoComplete="off"
+              >
+                <InputText
+                  name="name"
+                  placeholder="Nome do anime"
+                  label="Nome do anime*"
+                  type={InputTypes.TEXT}
                 />
-              </TextArea>
-              <CheckboxStyled
-                name="isMovie"
-                onChange={(e) => setIsMovie(e.target.checked)}
-              >
-                Filme
-              </CheckboxStyled>
-              <InputText
-                name="totalEpisodes"
-                placeholder="12"
-                label="Total de episódios*"
-                type={InputTypes.TEXT}
-                disabled={isMovie}
-                maxWidth="120px"
-              />
-              <CheckboxStyled
-                name="isDubbed"
-                onChange={(e) => setIsDubbed(e.target.checked)}
-              >
-                Dublado
-              </CheckboxStyled>
-              <SelectStyled
-                placeholder="Selecione os gêneros"
-                mode="multiple"
-                onChange={(e) => setGenres(e)}
-              >
-                {allGenres?.map((genre) => (
-                  <Option name={genre} value={genre} key={genre}>
-                    {genre}
-                  </Option>
-                ))}
-              </SelectStyled>
-              <Wrapper>
-                <InputFile name="imageAnime" onChange={onUploadAnimeImage} />
-                <Button text="Enviar" />
-              </Wrapper>
-            </FormStyled>
-          </FormProvider>
-        </Box>
-        <Box>
-          <AddEpTitle>
-            Adicionar episódio:
-            <IoMdRefresh title="Atualizar animes" onClick={getAnimeList} />
-          </AddEpTitle>
-          <FormProvider {...methodsEpisode}>
-            <FormStyled
-              onSubmit={methodsEpisode.handleSubmit(onSubmitEpisode)}
-              autoComplete="off"
-            >
-              <SelectStyled
-                placeholder="Selecione o anime"
-                onChange={(e) => setAnime(e)}
-              >
-                {animeList?.map((anime, index) => (
-                  <Option name={anime} value={anime} key={index}>
-                    {anime}
-                  </Option>
-                ))}
-              </SelectStyled>
-              <InputText
-                name="episodeNumber"
-                placeholder="1"
-                label="Número*"
-                type={InputTypes.TEXT}
-                maxWidth="120px"
-              />
-              <InputText
-                name="videoUrl"
-                placeholder="https://streamable.com/z8xs0a"
-                label="Vídeo url*"
-                type={InputTypes.TEXT}
-              />
-              <Wrapper>
-                <InputFile
-                  name="imageEpisode"
-                  onChange={onUploadEpisodeImage}
-                />
-                <Button text="Enviar" />
-              </Wrapper>
-            </FormStyled>
-          </FormProvider>
-        </Box>
-        {user.permission === "admin" && (
-          <>
-            <Box>
-              <h2>Adicionar moderador:</h2>
-              <FormProvider {...methodsModerator}>
-                <FormMod
-                  onSubmit={methodsModerator.handleSubmit(onSubmitModerator)}
-                  autoComplete="off"
-                >
-                  <InputText
-                    name="email"
-                    placeholder="exemplo@mail.com"
-                    label="Email*"
-                    type={InputTypes.EMAIL}
+                <TextArea>
+                  <label htmlFor="synopsis">Sinopse*</label>
+                  <textarea
+                    value={synopsis}
+                    onChange={(e) => setSynopsis(e.target.value)}
+                    name="synopsis"
+                    id="synopsis"
+                    cols={30}
+                    rows={4}
+                    placeholder=" Uma sinopse bem legal..."
+                    maxLength={1023}
                   />
-                  <Button text="Enviar" margin="0.5rem 0 0.5rem 8px" />
-                </FormMod>
-              </FormProvider>
-            </Box>
-            <AddModButton onClick={handleModeratorsModal}>
-              Ver moderadores
-            </AddModButton>
-          </>
-        )}
-      </Container>
-      <Modal
-        title="Moderadores"
-        placement="right"
-        onClose={handleClose}
-        visible={openModal}
-      >
-        {loading ? (
-          <SpinContainer>
-            <Spin />
-          </SpinContainer>
-        ) : (
-          <ul>
-            {moderators?.map((mod) => (
-              <Li key={mod.id}>
-                {mod.email}
-                <Pop
-                  title={`Remover ${mod.username}?`}
-                  placement="left"
-                  onConfirm={() => deleteModerator(mod.email)}
-                  okText="Sim"
-                  cancelText="Não"
+                </TextArea>
+                <CheckboxStyled
+                  name="isMovie"
+                  onChange={(e) => setIsMovie(e.target.checked)}
                 >
-                  <IoMdRemoveCircleOutline />
-                </Pop>
-              </Li>
-            ))}
-          </ul>
-        )}
-      </Modal>
+                  Filme
+                </CheckboxStyled>
+                <InputText
+                  name="totalEpisodes"
+                  placeholder="12"
+                  label="Total de episódios*"
+                  type={InputTypes.TEXT}
+                  disabled={isMovie}
+                  maxWidth="120px"
+                />
+                <CheckboxStyled
+                  name="isDubbed"
+                  onChange={(e) => setIsDubbed(e.target.checked)}
+                >
+                  Dublado
+                </CheckboxStyled>
+                <SelectStyled
+                  placeholder="Selecione os gêneros"
+                  mode="multiple"
+                  onChange={(e) => setGenres(e)}
+                >
+                  {allGenres?.map((genre) => (
+                    <Option name={genre} value={genre} key={genre}>
+                      {genre}
+                    </Option>
+                  ))}
+                </SelectStyled>
+                <Wrapper>
+                  <InputFile name="imageAnime" onChange={onUploadAnimeImage} />
+                  <Button text="Enviar" />
+                </Wrapper>
+              </FormStyled>
+            </FormProvider>
+          </Box>
+          <Box>
+            <AddEpTitle>
+              Adicionar episódio:
+              <IoMdRefresh title="Atualizar animes" onClick={getAnimeList} />
+            </AddEpTitle>
+            <FormProvider {...methodsEpisode}>
+              <FormStyled
+                onSubmit={methodsEpisode.handleSubmit(onSubmitEpisode)}
+                autoComplete="off"
+              >
+                <SelectStyled
+                  placeholder="Selecione o anime"
+                  onChange={(e) => setAnime(e)}
+                >
+                  {animeList?.map((anime, index) => (
+                    <Option name={anime} value={anime} key={index}>
+                      {anime}
+                    </Option>
+                  ))}
+                </SelectStyled>
+                <InputText
+                  name="episodeNumber"
+                  placeholder="1"
+                  label="Número*"
+                  type={InputTypes.TEXT}
+                  maxWidth="120px"
+                />
+                <InputText
+                  name="videoUrl"
+                  placeholder="https://streamable.com/z8xs0a"
+                  label="Vídeo url*"
+                  type={InputTypes.TEXT}
+                />
+                <Wrapper>
+                  <InputFile
+                    name="imageEpisode"
+                    onChange={onUploadEpisodeImage}
+                  />
+                  <Button text="Enviar" />
+                </Wrapper>
+              </FormStyled>
+            </FormProvider>
+          </Box>
+          {user.permission === "admin" && (
+            <>
+              <Box>
+                <h2>Adicionar moderador:</h2>
+                <FormProvider {...methodsModerator}>
+                  <FormMod
+                    onSubmit={methodsModerator.handleSubmit(onSubmitModerator)}
+                    autoComplete="off"
+                  >
+                    <InputText
+                      name="email"
+                      placeholder="exemplo@mail.com"
+                      label="Email*"
+                      type={InputTypes.EMAIL}
+                    />
+                    <Button text="Enviar" margin="0.5rem 0 0.5rem 8px" />
+                  </FormMod>
+                </FormProvider>
+              </Box>
+              <AddModButton onClick={handleModeratorsModal}>
+                Ver moderadores
+              </AddModButton>
+            </>
+          )}
+        </Container>
+        <Modal
+          title="Moderadores"
+          placement="right"
+          onClose={handleClose}
+          visible={openModal}
+        >
+          {loading ? (
+            <SpinContainer>
+              <Spin />
+            </SpinContainer>
+          ) : (
+            <ul>
+              {moderators?.map((mod) => (
+                <Li key={mod.id}>
+                  {mod.email}
+                  <Pop
+                    title={`Remover ${mod.username}?`}
+                    placement="left"
+                    onConfirm={() => deleteModerator(mod.email)}
+                    okText="Sim"
+                    cancelText="Não"
+                  >
+                    <IoMdRemoveCircleOutline />
+                  </Pop>
+                </Li>
+              ))}
+            </ul>
+          )}
+        </Modal>
+      </Motion>
     </>
   );
 };

@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { InputTypes } from "../../model/enums/input-types";
 import SchemaUtils from "../../shared/util/schema-utils";
+import Motion from "../../components/Motion";
 import InputText from "../../components/InputText";
 import {
   CheckboxContainer,
@@ -127,69 +128,71 @@ const Login = () => {
       <Helmet>
         <title>Anime Daisuki! | Entrar</title>
       </Helmet>
-      <FullContainer>
-        <LogoContainer>
-          <Link to="/">
-            <img src={Logo} alt="logo" />
-          </Link>
-        </LogoContainer>
-        <Container>
-          <FormContainer>
-            <FormProvider {...methods}>
-              <Form onSubmit={methods.handleSubmit(onSubmit)}>
-                {inputList.map((input, index) => (
-                  <InputText
-                    key={`${input.name}-${index}`}
-                    name={input.name}
-                    placeholder={input.placeholder}
-                    label={input.label}
-                    type={input?.type ?? ""}
-                    autofocus={index === 0}
-                  />
-                ))}
-                <CheckboxContainer>
-                  <CheckboxStyled
-                    onChange={handleRemember}
-                    checked={shouldRemember}
-                  >
-                    Lembrar de mim
-                  </CheckboxStyled>
-                </CheckboxContainer>
-                <Button text="Enviar" margin="8px 0" />
-                <Subtitle>
-                  <StyledButton type="button" onClick={showModal}>
-                    Esqueceu a senha?
-                  </StyledButton>
-                </Subtitle>
-                <Subtitle>
-                  Não é cadastrado?
-                  <StyledLink to="/register"> Criar conta.</StyledLink>
-                </Subtitle>
-              </Form>
-            </FormProvider>
-          </FormContainer>
-          <LottieContainer>
-            <Lottie options={defaultOptions} />
-          </LottieContainer>
-        </Container>
-      </FullContainer>
-      <StyledModal
-        title="Insira o e-mail cadastrado"
-        visible={visible}
-        onCancel={handleCancel}
-      >
-        <FormProvider {...sendEmailMethods}>
-          <form onSubmit={sendEmailMethods.handleSubmit(handleSubmitEmail)}>
-            <InputText
-              type={InputTypes.EMAIL}
-              name="email"
-              label="E-mail*"
-              placeholder="exemplo@mail.com"
-            />
-            <Button text="Enviar" margin="8px 0 0" />
-          </form>
-        </FormProvider>
-      </StyledModal>
+      <Motion>
+        <FullContainer>
+          <LogoContainer>
+            <Link to="/">
+              <img src={Logo} alt="logo" />
+            </Link>
+          </LogoContainer>
+          <Container>
+            <FormContainer>
+              <FormProvider {...methods}>
+                <Form onSubmit={methods.handleSubmit(onSubmit)}>
+                  {inputList.map((input, index) => (
+                    <InputText
+                      key={`${input.name}-${index}`}
+                      name={input.name}
+                      placeholder={input.placeholder}
+                      label={input.label}
+                      type={input?.type ?? ""}
+                      autofocus={index === 0}
+                    />
+                  ))}
+                  <CheckboxContainer>
+                    <CheckboxStyled
+                      onChange={handleRemember}
+                      checked={shouldRemember}
+                    >
+                      Lembrar de mim
+                    </CheckboxStyled>
+                  </CheckboxContainer>
+                  <Button text="Enviar" margin="8px 0" />
+                  <Subtitle>
+                    <StyledButton type="button" onClick={showModal}>
+                      Esqueceu a senha?
+                    </StyledButton>
+                  </Subtitle>
+                  <Subtitle>
+                    Não é cadastrado?
+                    <StyledLink to="/register"> Criar conta.</StyledLink>
+                  </Subtitle>
+                </Form>
+              </FormProvider>
+            </FormContainer>
+            <LottieContainer>
+              <Lottie options={defaultOptions} />
+            </LottieContainer>
+          </Container>
+        </FullContainer>
+        <StyledModal
+          title="Insira o e-mail cadastrado"
+          visible={visible}
+          onCancel={handleCancel}
+        >
+          <FormProvider {...sendEmailMethods}>
+            <form onSubmit={sendEmailMethods.handleSubmit(handleSubmitEmail)}>
+              <InputText
+                type={InputTypes.EMAIL}
+                name="email"
+                label="E-mail*"
+                placeholder="exemplo@mail.com"
+              />
+              <Button text="Enviar" margin="8px 0 0" />
+            </form>
+          </FormProvider>
+        </StyledModal>
+      </Motion>
     </>
   );
 };

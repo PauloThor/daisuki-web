@@ -12,6 +12,7 @@ import {
   titleByParam,
 } from "../../shared/util/anime-list-utils";
 import StringUtils from "../../shared/util/string-utils";
+import Motion from "../../components/Motion";
 import Header from "../../components/Header";
 import Pagination from "../../components/Pagination";
 import AnimeCard from "../../components/AnimeCard";
@@ -151,68 +152,70 @@ const AnimeList = ({ request, search = false }: Props) => {
       <Helmet>
         <title>{`Anime Daisuki! | ${title}`}</title>
       </Helmet>
-      {!isInvalidLink && (
-        <>
-          <Header />
-          <main>
-            {!!title && (
-              <>
-                <Title>{title}</Title>
-                {!search && (
-                  <FilterMenu>
-                    <label htmlFor="filterOptions">Filtrar</label>
-                    <input type="checkbox" id="filterOptions" />
-                    <ul>
-                      <li key="0-9">
-                        <StyledButton onClick={() => handleFilter("1")}>
-                          0-9
-                        </StyledButton>
-                      </li>
-                      {alphabet.map((letter) => (
-                        <li key={letter}>
-                          <StyledButton onClick={() => handleFilter(letter)}>
-                            {letter}
+      <Motion>
+        {!isInvalidLink && (
+          <>
+            <Header />
+            <main>
+              {!!title && (
+                <>
+                  <Title>{title}</Title>
+                  {!search && (
+                    <FilterMenu>
+                      <label htmlFor="filterOptions">Filtrar</label>
+                      <input type="checkbox" id="filterOptions" />
+                      <ul>
+                        <li key="0-9">
+                          <StyledButton onClick={() => handleFilter("1")}>
+                            0-9
                           </StyledButton>
                         </li>
-                      ))}
-                    </ul>
-                  </FilterMenu>
-                )}
-              </>
-            )}
-            <section>
-              <StyledList>
-                {loading ? (
-                  <SpinContainer>
-                    <Spin size="large" />
-                  </SpinContainer>
-                ) : !animes[0] ? (
-                  <NoData>
-                    <img src={itachi} alt="Itachi" />
-                    <p>Nada encontrado</p>
-                  </NoData>
-                ) : (
-                  animes.map((anime) => (
-                    <li key={anime.id}>
-                      <AnimeCard anime={anime} showRating />
-                    </li>
-                  ))
-                )}
-              </StyledList>
-              {total > 24 && (
-                <Pagination
-                  current={currentPage}
-                  pageSize={24}
-                  total={total}
-                  onChange={handleChange}
-                />
+                        {alphabet.map((letter) => (
+                          <li key={letter}>
+                            <StyledButton onClick={() => handleFilter(letter)}>
+                              {letter}
+                            </StyledButton>
+                          </li>
+                        ))}
+                      </ul>
+                    </FilterMenu>
+                  )}
+                </>
               )}
-            </section>
-          </main>
-          <BackTop />
-        </>
-      )}{" "}
-      {isInvalidLink && <NotFound />}
+              <section>
+                <StyledList>
+                  {loading ? (
+                    <SpinContainer>
+                      <Spin size="large" />
+                    </SpinContainer>
+                  ) : !animes[0] ? (
+                    <NoData>
+                      <img src={itachi} alt="Itachi" />
+                      <p>Nada encontrado</p>
+                    </NoData>
+                  ) : (
+                    animes.map((anime) => (
+                      <li key={anime.id}>
+                        <AnimeCard anime={anime} showRating />
+                      </li>
+                    ))
+                  )}
+                </StyledList>
+                {total > 24 && (
+                  <Pagination
+                    current={currentPage}
+                    pageSize={24}
+                    total={total}
+                    onChange={handleChange}
+                  />
+                )}
+              </section>
+            </main>
+            <BackTop />
+          </>
+        )}
+        {isInvalidLink && <NotFound />}
+      </Motion>
     </>
   );
 };

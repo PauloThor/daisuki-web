@@ -3,6 +3,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { InputTypes } from "../../model/enums/input-types";
+import Motion from "../../components/Motion";
 import InputText from "../../components/InputText";
 import SchemaUtils from "../../shared/util/schema-utils";
 import {
@@ -98,39 +99,41 @@ const Register = () => {
       <Helmet>
         <title>Anime Daisuki! | Cadastrar</title>
       </Helmet>
-      <FullContainer>
-        <LogoContainer>
-          <Link to="/">
-            <img src={Logo} alt="logo" />
-          </Link>
-        </LogoContainer>
-        <Container>
-          <FormContainer>
-            <FormProvider {...methods}>
-              <Form onSubmit={methods.handleSubmit(onSubmit)}>
-                {inputList.map((input, index) => (
-                  <InputText
-                    key={`${input.name}-${index}`}
-                    name={input.name}
-                    placeholder={input.placeholder}
-                    label={input.label}
-                    type={input?.type ?? ""}
-                    autofocus={index === 0}
-                  />
-                ))}
-                <Button text="Enviar" margin="8px 0" />
-                <Subtitle>
-                  Já é cadastrado?
-                  <StyledLink to="/login"> Acessar conta.</StyledLink>
-                </Subtitle>
-              </Form>
-            </FormProvider>
-          </FormContainer>
-          <LottieContainer>
-            <Lottie options={defaultOptions} />
-          </LottieContainer>
-        </Container>
-      </FullContainer>
+      <Motion>
+        <FullContainer>
+          <LogoContainer>
+            <Link to="/">
+              <img src={Logo} alt="logo" />
+            </Link>
+          </LogoContainer>
+          <Container>
+            <FormContainer>
+              <FormProvider {...methods}>
+                <Form onSubmit={methods.handleSubmit(onSubmit)}>
+                  {inputList.map((input, index) => (
+                    <InputText
+                      key={`${input.name}-${index}`}
+                      name={input.name}
+                      placeholder={input.placeholder}
+                      label={input.label}
+                      type={input?.type ?? ""}
+                      autofocus={index === 0}
+                    />
+                  ))}
+                  <Button text="Enviar" margin="8px 0" />
+                  <Subtitle>
+                    Já é cadastrado?
+                    <StyledLink to="/login"> Acessar conta.</StyledLink>
+                  </Subtitle>
+                </Form>
+              </FormProvider>
+            </FormContainer>
+            <LottieContainer>
+              <Lottie options={defaultOptions} />
+            </LottieContainer>
+          </Container>
+        </FullContainer>
+      </Motion>
     </>
   );
 };

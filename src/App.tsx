@@ -1,5 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { AnimatePresence } from "framer-motion";
 import { GlobalStyle } from "./styles/global";
 import Provider from "./hooks";
 import Toaster from "./components/Toaster";
@@ -9,11 +10,13 @@ function App() {
   return (
     <Provider>
       <HelmetProvider>
-        <BrowserRouter>
-          <GlobalStyle />
-          <Toaster />
-          <Routes />
-        </BrowserRouter>
+        <AnimatePresence>
+          <BrowserRouter>
+            <GlobalStyle />
+            <Toaster />
+            <Routes />
+          </BrowserRouter>
+        </AnimatePresence>
       </HelmetProvider>
     </Provider>
   );
