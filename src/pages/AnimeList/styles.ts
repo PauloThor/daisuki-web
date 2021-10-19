@@ -19,6 +19,7 @@ export const StyledList = styled.ul`
   justify-content: center;
   max-width: 1600px;
   margin: 0 auto;
+  padding-bottom: 16px;
   li {
     margin: 4px;
   }
@@ -44,6 +45,7 @@ export const NoData = styled.div`
     flex-grow: 1;
     font-size: 5rem;
     display: flex;
+    justify-content: center;
 
     p {
       margin-left: -16px;
