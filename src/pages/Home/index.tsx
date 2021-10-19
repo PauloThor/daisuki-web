@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Spin } from "antd";
 import Header from "../../components/Header";
 import bannerImg from "../../assets/img/banner.png";
@@ -28,6 +28,8 @@ import {
   FooterImg,
   SpinContainer,
 } from "./styles";
+import Button from "../../components/Button";
+import { Input } from "../../components/InputText/styles";
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -126,6 +128,7 @@ const Home = () => {
           </Section>
         </Main>
       )}
+
       <Footer>
         <div>
           <p>
