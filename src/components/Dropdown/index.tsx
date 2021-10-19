@@ -1,4 +1,5 @@
 import { Menu, Dropdown } from "antd";
+import { Link } from "react-router-dom";
 import {
   avatarStyles,
   MenuContainer,
@@ -24,9 +25,7 @@ const DropdownItem = ({ title, items, hasAvatar }: DropdownItemProps) => {
       {items?.map((item, index) => (
         <StyledMenuSubItem key={`${item.name}-${index}`}>
           {!item.event ? (
-            <a rel="noopener noreferrer" href={item.path}>
-              {item.name}
-            </a>
+            <Link to={item.path ?? ""}>{item.name}</Link>
           ) : (
             <label onClick={item.event}>{item.name}</label>
           )}
