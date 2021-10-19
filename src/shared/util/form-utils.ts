@@ -39,6 +39,27 @@ class FormUtils {
       type: InputTypes.EMAIL,
     },
   ];
+
+  static passwordRecovery = [
+    {
+      name: "email",
+      placeholder: "exemplo@mail.com",
+      label: "E-mail*",
+      type: InputTypes.EMAIL,
+    },
+    {
+      name: "password",
+      placeholder: "Senha",
+      label: "Nova senha*",
+      type: InputTypes.PASSWORD,
+    },
+    {
+      name: "confirmPassword",
+      placeholder: "Senha",
+      label: "Confirme a nova senha*",
+      type: InputTypes.PASSWORD,
+    },
+  ]
 }
 
 export default FormUtils;

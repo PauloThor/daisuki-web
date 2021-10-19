@@ -15,6 +15,7 @@ import {
   HeaderAnimeData,
   AnimeCover,
   AnimeEpisode,
+  StyledLink,
 } from "./styles";
 import { useHistory, useParams } from "react-router";
 import { useEffect, useState } from "react";
@@ -323,15 +324,16 @@ const AnimePage = () => {
                           <AnimeEpisode
                             watched={epi?.hasWatched || false}
                             key={epi.id}
-                            onClick={() =>
-                              handleToEpisode(
-                                epi.episodeNumber ? epi.episodeNumber : 1
-                              )
-                            }
                           >
-                            {anime.isMovie
-                              ? anime.name
-                              : `Episódio ${epi.episodeNumber}`}
+                            <StyledLink
+                              to={`/animes/${param.name}/episodes/${
+                                epi.episodeNumber ? epi.episodeNumber : 1
+                              }`}
+                            >
+                              {anime.isMovie
+                                ? anime.name
+                                : `Episódio ${epi.episodeNumber}`}
+                            </StyledLink>
                           </AnimeEpisode>
                         ))}
                       </StyledListEpisodes>
@@ -342,16 +344,16 @@ const AnimePage = () => {
             ) : (
               <ListEpisodes>
                 {episodes.map((epi) => (
-                  <AnimeEpisode
-                    watched={false}
-                    key={epi.id}
-                    onClick={() =>
-                      handleToEpisode(epi.episodeNumber ? epi.episodeNumber : 1)
-                    }
-                  >
-                    {anime.isMovie
-                      ? `${anime.name} - Filme`
-                      : `Episódio ${epi.episodeNumber}`}
+                  <AnimeEpisode watched={false} key={epi.id}>
+                    <StyledLink
+                      to={`/animes/${param.name}/episodes/${
+                        epi.episodeNumber ? epi.episodeNumber : 1
+                      }`}
+                    >
+                      {anime.isMovie
+                        ? `${anime.name} - Filme`
+                        : `Episódio ${epi.episodeNumber}`}
+                    </StyledLink>
                   </AnimeEpisode>
                 ))}
               </ListEpisodes>

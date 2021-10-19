@@ -237,11 +237,12 @@ export const AnimeEpisode = styled.li<EpisodeProps>`
     watched ? Color.MAIN_LIGHT : Color.MAIN};
   height: 2.5rem;
   font-size: 1rem;
-  padding: 1rem 0.5rem;
+  padding: 0rem 0.5rem;
   color: ${Color.TEXT_MAIN};
 
   display: flex;
   align-items: center;
+  justify-content: start;
 
   cursor: pointer;
   transition: filter 0.2s;
@@ -252,7 +253,7 @@ export const AnimeEpisode = styled.li<EpisodeProps>`
 
   @media (min-width: 768px) {
     height: 3.5rem;
-    padding: 1.5rem 1rem;
+    padding: 0rem 1rem;
   }
 `;
 
@@ -362,4 +363,17 @@ export const Synopsis = styled.p`
 export const Footer = styled.div`
   width: 100%;
   height: 30px;
+`;
+
+export const StyledLink = styled(Link)`
+  font-size: 1rem;
+  color: ${Color.TEXT_MAIN};
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: ${Color.TEXT_MAIN};
+  }
 `;

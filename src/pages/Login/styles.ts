@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
+import { Modal } from "antd";
 import { Color } from "../../model/enums/theme-colors";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 export const FullContainer = styled.div`
   height: 100vh;
@@ -100,11 +101,52 @@ export const StyledLink = styled(Link)`
   }
 `;
 
+export const StyledButton = styled.button`
+  font-weight: 700;
+  color: ${Color.TEXT_SECONDARY};
+  border: none;
+  background-color: transparent;
+
+  &:hover,
+  &:focus {
+    color: ${Color.TEXT_MAIN};
+    transition: 0.5s;
+  }
+`;
+
 export const CheckboxContainer = styled.div`
   width: 100%;
   display: flex;
 
   span {
     font-size: 0.9rem;
+  }
+`;
+
+export const StyledModal = styled(Modal)`
+  color: ${Color.TEXT_MAIN};
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .ant-modal-body {
+    background-color: ${Color.MAIN};
+  }
+
+  .ant-modal-header {
+    background-color: ${Color.MAIN_DARK};
+  }
+
+  .ant-modal-footer {
+    display: none;
+  }
+
+  .ant-modal-header {
+    border: none;
+  }
+  .ant-modal-title,
+  .ant-modal-close {
+    color: ${Color.TEXT_MAIN};
   }
 `;
