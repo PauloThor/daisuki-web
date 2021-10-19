@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
+import { Helmet } from "react-helmet-async";
 import { Spin } from "antd";
 import { AnimeListParamProps } from "../../model/param";
 import { Anime } from "../../model/anime";
@@ -147,6 +148,9 @@ const AnimeList = ({ request, search = false }: Props) => {
 
   return (
     <>
+      <Helmet>
+        <title>{`Anime Daisuki! | ${title}`}</title>
+      </Helmet>
       {!isInvalidLink && (
         <>
           <Header />

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { Spin } from "antd";
 import Header from "../../components/Header";
 import bannerImg from "../../assets/img/banner.png";
@@ -75,6 +76,9 @@ const Home = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Anime Daisuki!</title>
+      </Helmet>
       <Header />
       <Banner>
         <Text>

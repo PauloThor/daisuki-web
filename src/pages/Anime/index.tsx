@@ -19,6 +19,7 @@ import {
 } from "./styles";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Rate, Spin, Collapse } from "antd";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
@@ -221,6 +222,9 @@ const AnimePage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{`Anime Daisuki! | ${anime?.name ?? ""}`}</title>
+      </Helmet>
       {!isLoad && (
         <>
           <Header />

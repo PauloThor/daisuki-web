@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link, Redirect, useHistory } from "react-router-dom";
@@ -123,6 +124,9 @@ const Login = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Anime Daisuki! | Entrar</title>
+      </Helmet>
       <FullContainer>
         <LogoContainer>
           <Link to="/">

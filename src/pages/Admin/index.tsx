@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Select, Spin } from "antd";
@@ -253,6 +254,9 @@ const Admin = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Anime Daisuki! | Central de upload</title>
+      </Helmet>
       <Header />
       <Container>
         <Box>
