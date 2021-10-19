@@ -47,6 +47,11 @@ const Profile = ({ onClose }: ProfileProps) => {
 
   const { user, isLoading, deleteSelf } = useUser();
 
+  const handleDelete = () => {
+    deleteSelf();
+    onClose();
+  };
+
   return (
     <Container>
       <CloseIcon size={30} onClick={onClose} />
@@ -70,7 +75,7 @@ const Profile = ({ onClose }: ProfileProps) => {
         <p>
           <Pop
             title="Excluir conta?"
-            onConfirm={deleteSelf}
+            onConfirm={handleDelete}
             okText="Sim"
             cancelText="Não"
           >

@@ -9,6 +9,7 @@ import {
   MobileSubMenu,
   ProfileContainer,
   ProfileLink,
+  SearchContainer,
   StyledLink,
 } from "./styles";
 import Logo from "../../assets/img/logo.svg";
@@ -62,7 +63,7 @@ const Header = () => {
 
   const handleLogout = () => {
     logout();
-    history.push("/login");
+    history.push("/");
   };
 
   const pathToAdmin = () => history.push("/admin");
@@ -119,6 +120,9 @@ const Header = () => {
           </StyledLink>
         </>
       )}
+      <SearchContainer>
+        <InputSearch placeholder="Buscar um anime" maxWidth="100%" />
+      </SearchContainer>
     </MobileMenu>
   );
 
