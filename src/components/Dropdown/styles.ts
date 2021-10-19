@@ -26,8 +26,8 @@ export const MenuStyles = {
 };
 
 export const avatarStyles = {
-  top: "20px",
-  right: "20px",
+  top: "0px",
+  left: "0px",
 };
 
 export const StyledMenuSubItem = styled(Menu.Item)`
@@ -44,7 +44,7 @@ export const StyledMenuSubItem = styled(Menu.Item)`
   }
 `;
 
-export const MenuItem = styled.a`
+export const MenuItem = styled.div`
   color: ${Color.TEXT_MAIN};
 
   &:hover {

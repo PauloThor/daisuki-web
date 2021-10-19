@@ -85,6 +85,10 @@ export const Container = styled.header`
   .ant-menu-submenu-title:active {
     background-color: ${Color.MAIN};
   }
+
+  .eBVoYw:hover {
+    color: ${Color.HIGHLIGHT};
+  }
 `;
 
 export const HeaderSection = styled.section`
@@ -140,8 +144,9 @@ export const MobileMenu = styled(Menu)`
   animation: fromTop 0.5s;
   background: ${Color.MAIN_LIGHT};
 
-  ul {
-    background: ${Color.MAIN} !important;
+  ul,
+  .ant-menu {
+    background: ${Color.MAIN};
   }
 
   @keyframes fromTop {
@@ -154,15 +159,17 @@ export const MobileMenu = styled(Menu)`
     color: ${Color.TEXT_MAIN};
   }
 
-  .ant-menu-submenu-title:hover {
-    color: ${Color.HIGHLIGHT} !important;
-  }
-
   .ant-menu-submenu:hover > .ant-menu-submenu-title > .ant-menu-submenu-arrow {
     color: ${Color.HIGHLIGHT};
   }
 
   border-bottom: 1px solid ${Color.HIGHLIGHT};
+
+  span:active,
+  span:focus,
+  span:active {
+    color: ${Color.HIGHLIGHT};
+  }
 
   @media (min-width: 1024px) {
     display: none;
@@ -178,6 +185,10 @@ export const MobileSubMenu = styled(SubMenu)`
   &:focus {
     background: ${Color.MAIN};
   }
+
+  span {
+    color: ${Color.TEXT_MAIN};
+  }
 `;
 
 export const MobileItem = styled(Menu.Item)`
@@ -187,6 +198,10 @@ export const MobileItem = styled(Menu.Item)`
   &:hover,
   &:focus {
     background: ${Color.MAIN};
+  }
+
+  span {
+    color: ${Color.TEXT_MAIN};
   }
 `;
 
