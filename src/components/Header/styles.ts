@@ -98,6 +98,10 @@ export const HeaderSection = styled.section`
   @media (min-width: 1024px) {
     min-width: 30%;
   }
+
+  @media (min-width: 1800px) {
+    min-width: 17%;
+  }
 `;
 
 export const ProfileLink = styled(Link)`
@@ -125,15 +129,7 @@ export const HeaderItem = styled.div`
   }
 `;
 
-export const MenuMobileContainer = styled.div`
-  /* display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  @media (min-width: 1024px) {
-    display: none;
-  } */
-`;
+export const MenuMobileContainer = styled.div``;
 
 export const MobileMenu = styled(Menu)`
   position: absolute;
@@ -228,6 +224,12 @@ export const MobileAuth = styled.div`
 
     svg {
       padding-left: 5px;
+    }
+  }
+
+  @media (min-width: 400px) {
+    label {
+      margin-right: 15px;
     }
   }
 `;
