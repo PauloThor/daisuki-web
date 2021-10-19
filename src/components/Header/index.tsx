@@ -2,6 +2,7 @@ import {
   Container,
   Divider,
   HeaderItem,
+  HeaderSection,
   Item,
   MobileAuth,
   MobileItem,
@@ -164,58 +165,62 @@ const Header = () => {
 
   return (
     <Container>
-      <Link to="/" className="link-logo">
-        <img src={Logo} alt="logo" className="header-logo" />
-      </Link>
-      <HeaderItem>
-        <DropdownItem title="Animes" items={MenuUtils.animes} />
-        <DropdownItem title="Filmes" items={MenuUtils.movies} />
-        <DropdownItem title="Gênero" items={MenuUtils.genders} />
-      </HeaderItem>
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <InputSearch placeholder="Buscar anime" />
-        </form>
-      </FormProvider>
-      {!token ? (
+      <HeaderSection>
+        <Link to="/" className="link-logo">
+          <img src={Logo} alt="logo" className="header-logo" />
+        </Link>
         <HeaderItem>
-          <ProfileLink to="/login">Entrar</ProfileLink>
-          <Divider />
-          <ProfileLink to="/register">Cadastrar</ProfileLink>
+          <DropdownItem title="Animes" items={MenuUtils.animes} />
+          <DropdownItem title="Filmes" items={MenuUtils.movies} />
+          <DropdownItem title="Gênero" items={MenuUtils.genders} />
         </HeaderItem>
-      ) : (
-        <HeaderItem>
-          {isLoading ? (
-            <SpinLoading />
-          ) : (
+      </HeaderSection>
+      <HeaderSection>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <InputSearch placeholder="Buscar anime" />
+          </form>
+        </FormProvider>
+        {!token ? (
+          <HeaderItem>
+            <ProfileLink to="/login">Entrar</ProfileLink>
+            <Divider />
+            <ProfileLink to="/register">Cadastrar</ProfileLink>
+          </HeaderItem>
+        ) : (
+          <HeaderItem>
+            {isLoading ? (
+              <SpinLoading />
+            ) : (
+              <DropdownItem
+                title="avatar"
+                hasAvatar
+                items={getAvatarItems()}
+                key={"desktop-dropdown-1"}
+              />
+            )}
+          </HeaderItem>
+        )}
+        {!token ? (
+          <GiHamburgerMenu
+            size={35}
+            className="hamburger-menu"
+            onClick={handleOpenMenu}
+          />
+        ) : (
+          <MobileAuth>
+            <label onClick={handleOpenMenu}>
+              Navegar <TiArrowSortedDown size={20} />
+            </label>
             <DropdownItem
               title="avatar"
               hasAvatar
               items={getAvatarItems()}
-              key={"desktop-dropdown-1"}
+              key={"mobile-dropdown-1"}
             />
-          )}
-        </HeaderItem>
-      )}
-      {!token ? (
-        <GiHamburgerMenu
-          size={35}
-          className="hamburger-menu"
-          onClick={handleOpenMenu}
-        />
-      ) : (
-        <MobileAuth>
-          <label onClick={handleOpenMenu}>
-            Navegar <TiArrowSortedDown size={20} />
-          </label>
-          <DropdownItem
-            title="avatar"
-            hasAvatar
-            items={getAvatarItems()}
-            key={"mobile-dropdown-1"}
-          />
-        </MobileAuth>
-      )}
+          </MobileAuth>
+        )}
+      </HeaderSection>
 
       {menuOpen && renderMobileMenu()}
       {profileOpen && (

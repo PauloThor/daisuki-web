@@ -87,6 +87,12 @@ export const Container = styled.header`
   }
 `;
 
+export const HeaderSection = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const ProfileLink = styled(Link)`
   color: ${Color.TEXT_MAIN};
   font-size: 16px;
