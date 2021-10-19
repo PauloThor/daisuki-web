@@ -237,7 +237,7 @@ export const AnimeEpisode = styled.li<EpisodeProps>`
     watched ? Color.MAIN_LIGHT : Color.MAIN};
   height: 2.5rem;
   font-size: 1rem;
-  padding: 0rem 0.5rem;
+
   color: ${Color.TEXT_MAIN};
 
   display: flex;
@@ -245,15 +245,9 @@ export const AnimeEpisode = styled.li<EpisodeProps>`
   justify-content: start;
 
   cursor: pointer;
-  transition: filter 0.2s;
-
-  &:hover {
-    filter: brightness(0.8);
-  }
 
   @media (min-width: 768px) {
     height: 3.5rem;
-    padding: 0rem 1rem;
   }
 `;
 
@@ -372,8 +366,18 @@ export const StyledLink = styled(Link)`
   height: 100%;
   display: flex;
   align-items: center;
+  padding: 0rem 0.5rem;
 
   &:hover {
     color: ${Color.TEXT_MAIN};
+    border: 1px solid ${Color.HIGHLIGHT};
+  }
+
+  &:focus {
+    border: 1px solid ${Color.HIGHLIGHT};
+  }
+
+  @media (min-width: 768px) {
+    padding: 0rem 1rem;
   }
 `;

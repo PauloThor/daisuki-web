@@ -17,7 +17,7 @@ import {
   AnimeEpisode,
   StyledLink,
 } from "./styles";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { Rate, Spin, Collapse } from "antd";
 import Header from "../../components/Header";
@@ -39,7 +39,6 @@ import { genresToEnglish } from "../../shared/util/genre-utils";
 
 const AnimePage = () => {
   const param: ParamProps = useParams();
-  const history = useHistory();
   const { token, getFavorites, favorites } = useUser();
   const { Panel } = Collapse;
 
@@ -169,10 +168,6 @@ const AnimePage = () => {
     setIsModalToLoginVisible(!isModalToLoginVisible);
   };
 
-  const handleToEpisode = (id: number) => {
-    history.push(`/animes/${param.name}/episodes/${id}`);
-  };
-
   const handleFavoriteAnime = () => {
     if (!token) {
       handleModalToLogin();
@@ -223,8 +218,6 @@ const AnimePage = () => {
   };
 
   const isFavorite = favorites.find((f) => f.id === anime?.id);
-
-  // episodes?.sort((a, b) => a.id - b.id);
 
   return (
     <>
