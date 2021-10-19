@@ -1,7 +1,7 @@
 import { Anime } from "./anime";
 
 export interface Episode {
-  id?: number;
+  id: number;
   episodeNumber?: number;
   imageUrl?: string;
   videoUrl?: string;
