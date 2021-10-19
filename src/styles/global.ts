@@ -109,4 +109,5 @@ export const GlobalStyle = createGlobalStyle`
   .ant-modal-wrap {
     z-index: 1002 ;
   }
+
 `;

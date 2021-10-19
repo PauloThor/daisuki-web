@@ -1,7 +1,7 @@
 import { Anime } from "./anime";
 
 export interface Episode {
-  id?: number;
+  id: number;
   episodeNumber?: number;
   imageUrl?: string;
   videoUrl?: string;
@@ -10,4 +10,5 @@ export interface Episode {
   updatedAt?: string;
   animeId?: number;
   anime?: Anime;
+  hasWatched?: boolean;
 }

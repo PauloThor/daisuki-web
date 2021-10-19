@@ -9,12 +9,11 @@ import {
   MobileSubMenu,
   ProfileContainer,
   ProfileLink,
+  SearchContainer,
   StyledLink,
 } from "./styles";
 import Logo from "../../assets/img/logo.svg";
 import DropdownItem from "../Dropdown";
-import InputText from "../InputText";
-import { InputTypes } from "../../model/enums/input-types";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SchemaUtils from "../../shared/util/schema-utils";
@@ -28,32 +27,46 @@ import Profile from "../Profile";
 import Favorites from "../Favorites";
 import { useUser } from "../../hooks/User";
 import { Anime } from "../../model/anime";
-
-const localToken = localStorage.getItem("@Daisuki:token");
+import SpinLoading from "../SpinLoading";
+import Watched from "../Watched";
+import InputSearch from "../InputSearch";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [profileOpen, setProfileOpen] = useState<boolean>(false);
   const [favoritesOpen, setFavoritesOpen] = useState<boolean>(false);
-  const [token] = useState<string>(!localToken ? "" : JSON.parse(localToken));
+  const [historyOpen, setHistoryOpen] = useState<boolean>(false);
+  const { token, user } = useUser();
 
   const history = useHistory();
-  const { favorites, logout, isLoading } = useUser();
+  const { favorites, logout, isLoading, watched } = useUser();
 
   const handleOpenMenu = () => setMenuOpen(!menuOpen);
   const handleOpenProfile = () => {
+    closeAll();
     setProfileOpen(!profileOpen);
-    setFavoritesOpen(false);
   };
   const handleOpenFavorites = () => {
+    closeAll();
     setFavoritesOpen(!favoritesOpen);
+  };
+  const handleOpenHistory = () => {
+    closeAll();
+    setHistoryOpen(!historyOpen);
+  };
+
+  const closeAll = () => {
     setProfileOpen(false);
+    setFavoritesOpen(false);
+    setHistoryOpen(false);
   };
 
   const handleLogout = () => {
     logout();
-    history.push("/login");
+    history.push("/");
   };
+
+  const pathToAdmin = () => history.push("/admin");
 
   const handlePath = (path: string) => history.push(path);
 
@@ -65,7 +78,7 @@ const Header = () => {
   const onSubmit = (data: any) => console.log(data);
 
   const renderMobileMenu = () => (
-    <MobileMenu onClick={() => console.log()} mode="inline">
+    <MobileMenu mode="inline">
       <MobileSubMenu key="submobile1" title="Animes">
         {MenuUtils.animes.map((item, index) => (
           <MobileItem
@@ -107,6 +120,9 @@ const Header = () => {
           </StyledLink>
         </>
       )}
+      <SearchContainer>
+        <InputSearch placeholder="Buscar um anime" maxWidth="100%" />
+      </SearchContainer>
     </MobileMenu>
   );
 
@@ -121,13 +137,23 @@ const Header = () => {
     },
     {
       name: "Histórico",
-      event: handleOpenFavorites,
+      event: handleOpenHistory,
     },
     {
       name: "Sair",
       event: handleLogout,
     },
   ];
+
+  const getAvatarItems = () => {
+    const adminItem = {
+      name: "Central de upload",
+      event: pathToAdmin,
+    };
+    return user.permission === "user"
+      ? avatarMenuItems
+      : [adminItem, ...avatarMenuItems];
+  };
 
   const favoritesList = favorites.map((favorite: Anime) => {
     return {
@@ -138,69 +164,74 @@ const Header = () => {
 
   return (
     <Container>
-      {!isLoading && (
-        <>
-          <Link to="/" className="link-logo">
-            <img src={Logo} alt="logo" />
-          </Link>
-          <HeaderItem>
-            <DropdownItem title="Animes" items={MenuUtils.animes} />
-            <DropdownItem title="Filmes" items={MenuUtils.movies} />
-            <DropdownItem title="Gênero" items={MenuUtils.genders} />
-          </HeaderItem>
-          <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(onSubmit)}>
-              <InputText placeholder="Buscar anime" type={InputTypes.SEARCH} />
-            </form>
-          </FormProvider>
-          {!token ? (
-            <HeaderItem>
-              <ProfileLink to="/login">Entrar</ProfileLink>
-              <Divider />
-              <ProfileLink to="/register">Cadastrar</ProfileLink>
-            </HeaderItem>
+      <Link to="/" className="link-logo">
+        <img src={Logo} alt="logo" className="header-logo" />
+      </Link>
+      <HeaderItem>
+        <DropdownItem title="Animes" items={MenuUtils.animes} />
+        <DropdownItem title="Filmes" items={MenuUtils.movies} />
+        <DropdownItem title="Gênero" items={MenuUtils.genders} />
+      </HeaderItem>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <InputSearch placeholder="Buscar anime" />
+        </form>
+      </FormProvider>
+      {!token ? (
+        <HeaderItem>
+          <ProfileLink to="/login">Entrar</ProfileLink>
+          <Divider />
+          <ProfileLink to="/register">Cadastrar</ProfileLink>
+        </HeaderItem>
+      ) : (
+        <HeaderItem>
+          {isLoading ? (
+            <SpinLoading />
           ) : (
-            <HeaderItem>
-              <DropdownItem
-                title="avatar"
-                hasAvatar
-                items={avatarMenuItems}
-                key={"desktop-dropdown-1"}
-              />
-            </HeaderItem>
-          )}
-          {!token ? (
-            <GiHamburgerMenu
-              size={35}
-              className="hamburger-menu"
-              onClick={handleOpenMenu}
+            <DropdownItem
+              title="avatar"
+              hasAvatar
+              items={getAvatarItems()}
+              key={"desktop-dropdown-1"}
             />
-          ) : (
-            <MobileAuth>
-              <label onClick={handleOpenMenu}>
-                Navegar <TiArrowSortedDown size={20} />
-              </label>
-              <DropdownItem
-                title="avatar"
-                hasAvatar
-                items={avatarMenuItems}
-                key={"mobile-dropdown-1"}
-              />
-            </MobileAuth>
           )}
+        </HeaderItem>
+      )}
+      {!token ? (
+        <GiHamburgerMenu
+          size={35}
+          className="hamburger-menu"
+          onClick={handleOpenMenu}
+        />
+      ) : (
+        <MobileAuth>
+          <label onClick={handleOpenMenu}>
+            Navegar <TiArrowSortedDown size={20} />
+          </label>
+          <DropdownItem
+            title="avatar"
+            hasAvatar
+            items={getAvatarItems()}
+            key={"mobile-dropdown-1"}
+          />
+        </MobileAuth>
+      )}
 
-          {menuOpen && renderMobileMenu()}
-          {profileOpen && (
-            <ProfileContainer>
-              <Profile onClose={handleOpenProfile} />
-            </ProfileContainer>
-          )}
-          {favoritesOpen && (
-            <ProfileContainer>
-              <Favorites onClose={handleOpenFavorites} list={favoritesList} />
-            </ProfileContainer>
-          )}
-        </>
+      {menuOpen && renderMobileMenu()}
+      {profileOpen && (
+        <ProfileContainer>
+          <Profile onClose={handleOpenProfile} />
+        </ProfileContainer>
+      )}
+      {favoritesOpen && (
+        <ProfileContainer>
+          <Favorites onClose={handleOpenFavorites} list={favoritesList} />
+        </ProfileContainer>
+      )}
+      {historyOpen && (
+        <ProfileContainer>
+          <Watched onClose={handleOpenHistory} list={watched} />
+        </ProfileContainer>
       )}
     </Container>
   );

@@ -51,6 +51,10 @@ export const CheckboxStyled = styled(Checkbox)`
   color: ${Color.TEXT_MAIN};
   margin: 0.2rem 0;
 
+  input[type="checkbox"]:not(:checked) ~ .ant-checkbox-inner {
+    background-color: transparent;
+  }
+
   .ant-checkbox-checked .ant-checkbox-inner {
     background-color: ${Color.HIGHLIGHT};
     border-color: ${Color.HIGHLIGHT};
@@ -62,6 +66,12 @@ export const CheckboxStyled = styled(Checkbox)`
     .ant-checkbox-inner {
       border-color: ${Color.HIGHLIGHT_DARK};
     }
+  }
+
+  .ant-checkbox-wrapper:hover .ant-checkbox-inner,
+  .ant-checkbox:hover .ant-checkbox-inner,
+  .ant-checkbox-input:focus + .ant-checkbox-inner {
+    border-color: ${Color.HIGHLIGHT_DARK};
   }
 
   @media (min-width: 900px) {

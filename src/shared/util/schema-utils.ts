@@ -5,7 +5,8 @@ class SchemaUtils {
     return yup.object({
       username: yup
         .string()
-        .min(5, " - Mínimo de 5 caracteres")
+        .min(3, " - Mínimo de 3 caracteres")
+        .max(20, " - Máximo de 20 caracteres")
         .required(" - Campo obrigatório"),
       email: yup
         .string()
@@ -84,7 +85,11 @@ class SchemaUtils {
 
   static updateUsername() {
     return yup.object({
-      username: yup.string().required(" - Campo obrigatório"),
+      username: yup
+        .string()
+        .max(3, " - Mínimo de 3 caracteres")
+        .max(20, " - Máximo de 20 caracteres")
+        .required(" - Campo obrigatório"),
     });
   }
 
@@ -94,6 +99,33 @@ class SchemaUtils {
         .string()
         .email(" - Deve ser um e-mail")
         .required(" - Campo obrigatório"),
+    });
+  }
+
+  static sendTokenEmail() {
+    return yup.object({
+      email: yup
+        .string()
+        .email(" - Deve ser um e-mail")
+        .required(" - Campo obrigatório"),
+    });
+  }
+
+  static passwordRecovery() {
+    return yup.object({
+      email: yup
+      .string()
+      .email(" - Deve ser um e-mail")
+      .required(" - Campo obrigatório"),
+      password: yup
+        .string()
+        .min(8, " - Mínimo de 8 caracteres")
+        .required(" - Campo obrigatório"),
+      confirmPassword: yup
+        .string()
+        .min(8, "")
+        .required("")
+        .oneOf([yup.ref("password")], ""),
     });
   }
 }

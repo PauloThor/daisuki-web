@@ -6,15 +6,15 @@ export const MenuContainer = styled.div`
   padding: 10px;
 
   img {
-    width: 65px;
-    height: 65px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
   }
 
-  @media (max-width: 350px) {
+  @media (min-width: 768px) {
     img {
-      width: 55px;
-      height: 55px;
+      width: 64px;
+      height: 64px;
     }
     padding: 5px;
   }

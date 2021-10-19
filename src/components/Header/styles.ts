@@ -40,12 +40,22 @@ export const Container = styled.header`
     }
   }
 
+  .header-logo {
+    max-width: 120px;
+  }
+
   @media (max-width: 350px) {
     .link-logo {
       padding-right: 10px;
     }
 
     padding: 15px;
+  }
+
+  @media (min-width: 768px) {
+    .header-logo {
+      max-width: initial;
+    }
   }
 `;
 
@@ -126,11 +136,21 @@ export const MobileSubMenu = styled(SubMenu)`
   background: ${Color.MAIN};
   color: ${Color.TEXT_MAIN};
   border-top: 1px solid ${Color.HIGHLIGHT};
+
+  &:hover,
+  &:focus {
+    background: ${Color.MAIN};
+  }
 `;
 
 export const MobileItem = styled(Menu.Item)`
   background: ${Color.MAIN};
   color: ${Color.TEXT_MAIN};
+
+  &:hover,
+  &:focus {
+    background: ${Color.MAIN};
+  }
 `;
 
 export const Item = styled(MobileSubMenu)`
@@ -185,5 +205,16 @@ export const ProfileContainer = styled.div`
       top: -30px;
       opacity: 0;
     }
+  }
+`;
+
+export const SearchContainer = styled.div`
+  background: ${Color.MAIN};
+  color: ${Color.TEXT_MAIN};
+  border-top: 1px solid ${Color.HIGHLIGHT};
+
+  section {
+    border: none;
+    height: 40px;
   }
 `;
