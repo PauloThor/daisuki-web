@@ -110,5 +110,4 @@ export const GlobalStyle = createGlobalStyle`
     z-index: 1002 ;
   }
 
-
 `;
