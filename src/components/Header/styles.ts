@@ -57,6 +57,34 @@ export const Container = styled.header`
       max-width: initial;
     }
   }
+
+  .ant-menu-light,
+  .ant-menu-item-active,
+  .ant-menu-item:hover {
+    color: ${Color.HIGHLIGHT};
+  }
+
+  .ant-menu-light .ant-menu-item:hover,
+  .ant-menu-light .ant-menu-item-active {
+    color: ${Color.HIGHLIGHT};
+    background-color: ${Color.MAIN};
+  }
+
+  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: ${Color.MAIN};
+  }
+
+  .ant-menu-vertical .ant-menu-item::after,
+  .ant-menu-vertical-left .ant-menu-item::after,
+  .ant-menu-vertical-right .ant-menu-item::after,
+  .ant-menu-inline .ant-menu-item::after {
+    border-color: ${Color.HIGHLIGHT};
+  }
+
+  .ant-menu-item:active,
+  .ant-menu-submenu-title:active {
+    background-color: ${Color.MAIN};
+  }
 `;
 
 export const ProfileLink = styled(Link)`
