@@ -70,6 +70,17 @@ export const GlobalStyle = createGlobalStyle`
     .ant-popover-arrow {
         display: none;
     }
+  .ant-popover-arrow-content {
+    background: ${Color.MAIN};
+  }
+
+  .ant-popover-inner-content {
+    background: ${Color.MAIN};
+  
+    .anticon svg {
+      display: none;
+  }
+  }
 
     .ant-popover-buttons {
         display: flex;
@@ -112,5 +123,10 @@ export const GlobalStyle = createGlobalStyle`
           background-color: ${Color.SECONDARY};
           color: ${Color.MAIN_DARK};
       }
-    }
+  }
+
+  .ant-modal-wrap {
+    z-index: 1002 ;
+  }
+
 `;

@@ -1,29 +1,44 @@
-import { useFormContext } from "react-hook-form";
+import { useState } from "react";
 import { RiImageAddLine } from "react-icons/ri";
 import { Label, Input } from "./styles";
 
 interface Props {
   name: string;
-  onChange: (e: any) => void;
+  onChange: (e: FileList) => void;
 }
 
-const InputFile = ({ name, onChange }: Props) => {
-  const { register } = useFormContext();
+const SliceFilename = (filename: string) => {
+  const splitFile = filename.split(".");
+  const len = splitFile.length;
+  const extension = splitFile[len - 1];
 
-  const onUpload = (e: any) => {
+  return `${splitFile[0].split("").slice(0, 25).join("")}...${extension}`;
+};
+
+const InputFile = ({ name, onChange }: Props) => {
+  const [fileName, setFileName] = useState<string | undefined>(undefined);
+
+  const onUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {
       return;
     }
-    onChange(e.target.files);
+    const file = e.target.files;
+    onChange(file);
+
+    let filename = file[0].name;
+    if (filename.split(".")[0].length > 24) {
+      filename = SliceFilename(filename);
+    }
+
+    setFileName(filename);
   };
 
   return (
     <>
       <Label htmlFor={`image-${name}`}>
-        <RiImageAddLine /> Escolha uma imagem
+        <RiImageAddLine /> {fileName ?? "Escolha uma imagem"}
       </Label>
       <Input
-        {...register(name)}
         type="file"
         id={`image-${name}`}
         accept="image/png, image/jpeg"

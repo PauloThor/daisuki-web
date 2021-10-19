@@ -14,4 +14,8 @@ export const Form = styled.form`
   button {
     color: ${Color.TEXT_MAIN};
   }
+
+  @media (min-width: 768px) {
+    padding: 12px 24px;
+  }
 `;

@@ -27,9 +27,39 @@ class FormUtils {
       name: "username",
       placeholder,
       label: "Novo nome de usuário*",
-      type: InputTypes.TEXT,
+      type: InputTypes.USER,
     },
   ];
+
+  static email = (placeholder: string) => [
+    {
+      name: "email",
+      placeholder,
+      label: "Novo endereço de e-mail*",
+      type: InputTypes.EMAIL,
+    },
+  ];
+
+  static passwordRecovery = [
+    {
+      name: "email",
+      placeholder: "exemplo@mail.com",
+      label: "E-mail*",
+      type: InputTypes.EMAIL,
+    },
+    {
+      name: "password",
+      placeholder: "Senha",
+      label: "Nova senha*",
+      type: InputTypes.PASSWORD,
+    },
+    {
+      name: "confirmPassword",
+      placeholder: "Senha",
+      label: "Confirme a nova senha*",
+      type: InputTypes.PASSWORD,
+    },
+  ]
 }
 
 export default FormUtils;
