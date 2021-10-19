@@ -20,9 +20,9 @@ import {
   Subtitle,
 } from "./styles";
 
-interface ModalToLoginProps {
-  isModalToLoginVisible: boolean;
-  handleModalToLogin: () => void;
+interface ModalLoginProps {
+  isModalLoginVisible: boolean;
+  handleModalLogin: () => void;
 }
 
 interface FormInput {
@@ -30,10 +30,10 @@ interface FormInput {
   password: string;
 }
 
-export const ModalToLogin = ({
-  isModalToLoginVisible,
-  handleModalToLogin,
-}: ModalToLoginProps) => {
+export const ModalLogin = ({
+  isModalLoginVisible,
+  handleModalLogin,
+}: ModalLoginProps) => {
   const history = useHistory();
   const [shouldRemember, setShouldRemember] = useState<boolean>(false);
   const { login } = useUser();
@@ -67,11 +67,11 @@ export const ModalToLogin = ({
   return (
     <StyledModal
       title="Login"
-      visible={isModalToLoginVisible}
-      onCancel={handleModalToLogin}
+      visible={isModalLoginVisible}
+      onCancel={handleModalLogin}
     >
-      <Content>
-        <Container>
+      <Container>
+        <Content>
           <FormContainer>
             <FormProvider {...methods}>
               <Form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -97,7 +97,7 @@ export const ModalToLogin = ({
                   <Button
                     text="Cancelar"
                     margin="0px"
-                    handleClick={handleModalToLogin}
+                    handleClick={handleModalLogin}
                   />
                   <Button text="Fazer login" margin="0px" type="submit" />
                 </ContainerButtons>
@@ -109,8 +109,8 @@ export const ModalToLogin = ({
               </Form>
             </FormProvider>
           </FormContainer>
-        </Container>
-      </Content>
+        </Content>
+      </Container>
     </StyledModal>
   );
 };

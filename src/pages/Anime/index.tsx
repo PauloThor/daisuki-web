@@ -1,5 +1,4 @@
 import {
-  Category,
   Container,
   Footer,
   InfoAnime,
@@ -8,7 +7,6 @@ import {
   StyledCollapse,
   StyledListEpisodes,
   Synopsis,
-  Categories,
   Details,
   RateContainer,
   AnimeData,
@@ -16,8 +14,10 @@ import {
   AnimeCover,
   AnimeEpisode,
   StyledLink,
+  Genre,
+  Genres,
 } from "./styles";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { Rate, Spin, Collapse } from "antd";
 import Header from "../../components/Header";
@@ -31,7 +31,7 @@ import { ParamProps } from "../../model/param";
 import { FaHeart, FaHeartBroken, FaRegHeart } from "react-icons/fa";
 import BackTop from "../../components/BackTop";
 import { useUser } from "../../hooks/User";
-import { ModalToLogin } from "../../components/ModalToLogin";
+import { ModalLogin } from "../../components/ModalLogin";
 import toast from "react-hot-toast";
 import { returnStars } from "../../shared/util/anime-utils";
 import { Color } from "../../model/enums/theme-colors";
@@ -39,7 +39,6 @@ import { genresToEnglish } from "../../shared/util/genre-utils";
 
 const AnimePage = () => {
   const param: ParamProps = useParams();
-  const history = useHistory();
   const { token, getFavorites, favorites } = useUser();
   const { Panel } = Collapse;
 
@@ -54,7 +53,7 @@ const AnimePage = () => {
 
   const [isModalSynopsisVisible, setIsModalSynopsisVisible] =
     useState<boolean>(false);
-  const [isModalToLoginVisible, setIsModalToLoginVisible] =
+  const [isModalLoginVisible, setIsModalLoginVisible] =
     useState<boolean>(false);
 
   const loadAnime = async () => {
@@ -134,7 +133,7 @@ const AnimePage = () => {
       value = animeRate;
     }
     if (!token) {
-      handleModalToLogin();
+      handleModalLogin();
     } else {
       daisukiApi
         .put(
@@ -165,17 +164,13 @@ const AnimePage = () => {
     setIsModalSynopsisVisible(!isModalSynopsisVisible);
   };
 
-  const handleModalToLogin = () => {
-    setIsModalToLoginVisible(!isModalToLoginVisible);
-  };
-
-  const handleToEpisode = (id: number) => {
-    history.push(`/animes/${param.name}/episodes/${id}`);
+  const handleModalLogin = () => {
+    setIsModalLoginVisible(!isModalLoginVisible);
   };
 
   const handleFavoriteAnime = () => {
     if (!token) {
-      handleModalToLogin();
+      handleModalLogin();
     } else if (!isFavorite) {
       daisukiApi
         .put(`/users/favorites/${anime?.id}`, null, {
@@ -224,8 +219,6 @@ const AnimePage = () => {
 
   const isFavorite = favorites.find((f) => f.id === anime?.id);
 
-  episodes?.sort((a, b) => a.id - b.id);
-
   return (
     <>
       {!isLoad && (
@@ -273,17 +266,17 @@ const AnimePage = () => {
                           new Date(anime.createdAt || "")
                         )}`
                       : `Status: ${
-                          anime.isCompleted ? "Encerrado" : "Em lançamento"
+                          anime.isCompleted ? "Completo" : "Em lançamento"
                         }`}
                   </p>
-                  <Categories>
+                  <Genres>
                     {anime.genres &&
                       anime.genres.map((genre) => (
-                        <Category to={`/genres/${genresToEnglish[genre.name]}`}>
+                        <Genre to={`/genres/${genresToEnglish[genre.name]}`}>
                           {genre.name}
-                        </Category>
+                        </Genre>
                       ))}
-                  </Categories>
+                  </Genres>
                   <Synopsis>
                     <strong> Sinopse:</strong> {anime.synopsis}
                   </Synopsis>
@@ -365,9 +358,9 @@ const AnimePage = () => {
               isModalSynopsisVisible={isModalSynopsisVisible}
               synopsis={anime.synopsis || ""}
             />
-            <ModalToLogin
-              isModalToLoginVisible={isModalToLoginVisible}
-              handleModalToLogin={handleModalToLogin}
+            <ModalLogin
+              isModalLoginVisible={isModalLoginVisible}
+              handleModalLogin={handleModalLogin}
             />
           </Container>
         </>
