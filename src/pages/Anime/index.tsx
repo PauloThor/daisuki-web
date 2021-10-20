@@ -46,7 +46,6 @@ const AnimePage = () => {
 
   const [anime, setAnime] = useState<Anime>();
   const [episodes, setEpisodes] = useState<Episode[]>([]);
-  const [episodesPerPage, setEpisodesPerPage] = useState<[Episode[]]>([[]]);
   const [animeRate, setAnimeRate] = useState(0);
   const [ativAllowHalf, setAtivAllowHalf] = useState(true);
 
@@ -106,10 +105,6 @@ const AnimePage = () => {
 
   useEffect(() => {
     loadAnime();
-    const fav = favorites.find((f) => f.id === anime?.id);
-    if (fav) {
-      setIsFavorite(true);
-    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -219,18 +214,15 @@ const AnimePage = () => {
     setAtivAllowHalf(!ativAllowHalf);
   };
 
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
-
   const setPerPage = (list: Episode[]) => {
     let output = [];
-
     for (let i = 0; i < list.length; i = i + 24) {
       output.push(list.slice(i, i + 24));
     }
-
     return output;
   };
 
+  const isFavorite = favorites.find((f) => f.id === anime?.id);
   const EpsPerPage = setPerPage(episodes);
 
   return (
@@ -256,9 +248,9 @@ const AnimePage = () => {
                   <HeaderAnimeData isFavorite={!!isFavorite}>
                     <h1>{anime.name}</h1>
                     <button type="button" onClick={handleFavoriteAnime}>
-                      {!isFavorite && !token && <FaRegHeart />}
+                      {isLoad && !isFavorite && !token && <FaRegHeart />}
                       {token && isFavorite && <FaHeart />}
-                      {token && !isFavorite && <FaRegHeart />}
+                      {isLoad && token && !isFavorite && <FaRegHeart />}
                       <span>
                         {isFavorite ? <FaHeartBroken /> : <FaHeart />}
                       </span>
