@@ -109,6 +109,12 @@ const AnimePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    loadAnime();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [param]);
+
   const handleRate = async (value: number) => {
     await setRating(value);
     setTimeout(() => {
