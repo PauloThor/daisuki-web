@@ -57,6 +57,8 @@ export const GlobalStyle = createGlobalStyle`
 
     .ant-popover-inner-content {
         color: ${Color.TEXT_MAIN};
+        cursor: pointer;
+
         &:hover,
         &:focus {
         background-color: ${Color.MAIN_LIGHT};
@@ -94,7 +96,7 @@ export const GlobalStyle = createGlobalStyle`
       font-size: 16px;
     }
 
-    .ant-btn {
+    .ant-btn-sm {
       width: 80px;
       height: 44px;
       margin: 0;
@@ -123,7 +125,7 @@ export const GlobalStyle = createGlobalStyle`
           background-color: ${Color.SECONDARY};
           color: ${Color.MAIN_DARK};
       }
-  }
+    }
 
   .ant-modal-wrap {
     z-index: 1002 ;

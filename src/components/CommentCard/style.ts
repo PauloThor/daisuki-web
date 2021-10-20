@@ -13,7 +13,6 @@ export const OptionContainer = styled.div`
   top: 14px;
   right: 30px;
   cursor: pointer;
-  display: none;
 `;
 
 export const Container = styled.div`
@@ -22,10 +21,10 @@ export const Container = styled.div`
   position: relative;
   display: flex;
 
-  &:hover,
+  /* &:hover,
   &:focus ${OptionContainer} {
     display: initial;
-  }
+  } */
 `;
 
 export const Content = styled.div<CommentProp>`
@@ -42,7 +41,7 @@ export const ProfilePicture = styled.img`
   border-radius: 50%;
   margin-right: 14px;
 
-  @media (max-width: 425px) {
+  @media (max-width: 590px) {
     width: 36px;
     height: 36px;
   }

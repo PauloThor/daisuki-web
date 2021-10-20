@@ -9,13 +9,6 @@ import Routes from "./shared/routes";
 function App() {
   return (
     <Provider>
-<<<<<<< HEAD
-      <BrowserRouter>
-        <GlobalStyle />
-        <Toaster />
-        <Routes />
-      </BrowserRouter>
-=======
       <HelmetProvider>
         <AnimatePresence>
           <BrowserRouter>
@@ -25,7 +18,6 @@ function App() {
           </BrowserRouter>
         </AnimatePresence>
       </HelmetProvider>
->>>>>>> 0bfc8aad519ef16bfbc3450c0b133b9bee386dcb
     </Provider>
   );
 }

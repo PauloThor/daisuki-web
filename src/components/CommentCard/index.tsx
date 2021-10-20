@@ -15,6 +15,7 @@ interface CommentProps {
   name: string;
   created_at: string;
   content: string;
+  handleDelete: () => void;
   visible?: boolean;
 }
 
@@ -23,6 +24,7 @@ const CommentCard = ({
   name,
   created_at,
   content,
+  handleDelete,
   visible = false,
 }: CommentProps) => {
   return (
@@ -31,7 +33,7 @@ const CommentCard = ({
       <Content visible={visible}>
         <UserName>{name}</UserName>
         <TimeLapsed>• {DateUtils.timeFromNow(created_at)}</TimeLapsed>
-        {visible && <OptionsMenu />}
+        {visible && <OptionsMenu handleDelete={handleDelete} />}
         <Comment>{content}</Comment>
       </Content>
     </Container>

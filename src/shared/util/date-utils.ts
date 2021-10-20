@@ -39,8 +39,7 @@ class DateUtils {
   };
 
   static StringToDate = (date?: string) => {
-    dayjs.extend(calendar);
-    return dayjs().calendar(dayjs(date));
+    return dayjs(date).format("DD/MM/YYYY");
   };
 }
 

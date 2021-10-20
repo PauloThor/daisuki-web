@@ -7,7 +7,11 @@ import {
 } from "./style";
 import { useState } from "react";
 
-const OptionsMenu = () => {
+interface Props {
+  handleDelete: () => void;
+}
+
+const OptionsMenu = ({ handleDelete }: Props) => {
   const [visible, setVisible] = useState(false);
 
   const handleVisibleChange = (visible: React.SetStateAction<boolean>) => {
@@ -16,6 +20,7 @@ const OptionsMenu = () => {
 
   const handleDeleteComment = () => {
     setVisible(false);
+    handleDelete();
   };
 
   return (
@@ -24,6 +29,7 @@ const OptionsMenu = () => {
         content={<DropDown onClick={handleDeleteComment}>Excluir</DropDown>}
         trigger="click"
         visible={visible}
+        placement="bottom"
         onVisibleChange={handleVisibleChange}
       >
         <ButtonStyle type="link">
