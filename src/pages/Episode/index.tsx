@@ -123,11 +123,15 @@ const EpisodePage = () => {
   };
 
   const handleWatch = () => {
-    daisukiApi.put(`/episodes/views/${episode?.id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    daisukiApi.put(
+      `/episodes/views/${episode?.id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
   };
 
   const handleComment = async () => {
@@ -227,7 +231,7 @@ const EpisodePage = () => {
               <Title onClick={handleWatch}>
                 {anime?.name?.toUpperCase()} - EPISÓDIO {episode?.episodeNumber}
               </Title>
-              <VideoPlayer>
+              <VideoPlayer onClick={handleWatch}>
                 <Video
                   src="https://streamable.com/e/jhgpg5"
                   frameBorder="0"
