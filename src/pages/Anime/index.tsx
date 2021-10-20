@@ -17,7 +17,7 @@ import {
   Genre,
   Genres,
 } from "./styles";
-import { useParams } from "react-router";
+import { useParams, useHistory } from "react-router";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Rate, Spin, Collapse } from "antd";
@@ -43,6 +43,7 @@ const AnimePage = () => {
   const param: ParamProps = useParams();
   const { token, getFavorites, favorites } = useUser();
   const { Panel } = Collapse;
+  const history = useHistory();
 
   const [anime, setAnime] = useState<Anime>();
   const [episodes, setEpisodes] = useState<Episode[]>([]);
@@ -58,11 +59,13 @@ const AnimePage = () => {
     useState<boolean>(false);
 
   const loadAnime = async () => {
-    const isValidAnime = await daisukiApi
+    await daisukiApi
       .get(`/animes/${param.name}`)
       .then((response) => {
         if (response?.data) {
           setAnime(response.data);
+          loadEpisodes();
+          setIsLoad(true);
           if (response.data.rating) {
             setAnimeRate(response.data.rating);
           }
@@ -74,37 +77,40 @@ const AnimePage = () => {
       })
       .catch((e) => {
         setIsInvalidLink(true);
+        history.push("/pageNotFound");
         return false;
       });
-
-    if (isValidAnime) {
-      await loadEpisodes();
-      setIsLoad(true);
-    } else {
-      setIsLoad(true);
-    }
   };
 
   const loadEpisodes = async (params = "page=1&per_page=24") => {
-    const res = await daisukiApi
-      .get(`/animes/${param.name}/episodes?page=${1}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then((response) => {
-        return response.data.data;
-      });
-
-    if (res.length === 24) {
-      daisukiApi
-        .get(`/animes/${param.name}/episodes?per_page=${50}`)
+    if (!!token) {
+      await daisukiApi
+        .get(`/animes/${param.name}/episodes?per_page=50`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((response) => {
           setEpisodes(response.data.data);
         });
-    } else {
-      setEpisodes(res);
     }
+    if (!token) {
+      await daisukiApi
+        .get(`/animes/${param.name}/episodes?per_page=50`)
+        .then((response) => {
+          setEpisodes(response.data.data);
+        });
+    }
+
+    // if (res.length === 24) {
+    //   daisukiApi
+    //     .get(`/animes/${param.name}/episodes?per_page=${50}`)
+    //     .then((response) => {
+    //       setEpisodes(response.data.data);
+    //     });
+    // } else {
+    //   setEpisodes(res);
+    // }
   };
 
   useEffect(() => {
@@ -359,7 +365,10 @@ const AnimePage = () => {
               ) : (
                 <ListEpisodes>
                   {episodes.map((epi) => (
-                    <AnimeEpisode watched={epi?.hasWatched ?? false} key={epi.id}>
+                    <AnimeEpisode
+                      watched={epi?.hasWatched ?? false}
+                      key={epi.id}
+                    >
                       <StyledLink
                         to={`/animes/${param.name}/${
                           epi.episodeNumber ? epi.episodeNumber : 1
