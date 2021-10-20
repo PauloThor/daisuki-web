@@ -82,8 +82,19 @@ const EpisodePage = () => {
         setAnime(res.data.anime);
         res.data.next && setNext(true);
         res.data.previous && setPrevious(true);
+
+        daisukiApi.put(
+          `/episodes/views/${res.data.data[0].id}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
       })
       .catch(() => history.push("/pageNotFound"));
+
     setLoading(false);
   };
 
@@ -120,14 +131,6 @@ const EpisodePage = () => {
         nextEpisode ? next_ep : previous_ep
       }`
     );
-  };
-
-  const handleWatch = () => {
-    daisukiApi.put(`/episodes/views/${episode?.id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
   };
 
   const handleComment = async () => {
@@ -211,6 +214,7 @@ const EpisodePage = () => {
     if (ordered && episode && loadingComments) {
       loadCommentsOrdered(actualPage);
     }
+    // eslint-disable-next-line
   }, [episode, loading, loadingComments, listComments]);
 
   return (
@@ -224,7 +228,7 @@ const EpisodePage = () => {
         episode && (
           <Main>
             <section>
-              <Title onClick={handleWatch}>
+              <Title>
                 {anime?.name?.toUpperCase()} - EPISÓDIO {episode?.episodeNumber}
               </Title>
               <VideoPlayer>
