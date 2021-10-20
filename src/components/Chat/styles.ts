@@ -5,7 +5,7 @@ import { Color } from "../../model/enums/theme-colors";
 export const StyledModal = styled(Modal)`
   .ant-modal-body {
     background-color: ${Color.MAIN};
-    height: 60vh;
+    height: 65vh;
   }
 
   .ant-modal-footer {
@@ -13,22 +13,77 @@ export const StyledModal = styled(Modal)`
   }
 `;
 
-export const FormStyled = styled.form``;
+export const FormStyled = styled.form`
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  height: 100%;
+  justify-content: space-between;
+`;
 
-export const ButtonStyled = styled.button``;
+export const ButtonStyled = styled.button`
+  width: 30%;
+`;
 
-export const BoxMessages = styled.div``;
+export const BoxMessages = styled.div`
+  overflow: scroll;
+  height: 80%;
+`;
+
+export const InputArea = styled.div`
+  height: 70px;
+  display: flex;
+`;
 
 export const MessageSentStyled = styled(Comment)`
-  background-color: ${Color.SECONDARY};
+  background-color: ${Color.TEXT_SECONDARY};
+
   border-radius: 5px;
+
+  margin: 10px 0px;
 
   .ant-comment-inner {
     flex-direction: row-reverse;
+    padding: 16px;
+  }
+
+  .ant-comment-content-author-name {
+    font-size: 16px;
+    color: ${Color.HIGHLIGHT};
+  }
+
+  .ant-comment-content-author-time {
+    color: ${Color.MAIN_DARK};
+  }
+  .ant-comment-content-detail {
+    color: ${Color.MAIN_DARK};
   }
 `;
 
 export const MessageReceivedStyled = styled(Comment)`
-  background-color: ${Color.MAIN_LIGHT};
+  background-color: ${Color.HIGHLIGHT};
+
   border-radius: 5px;
+  margin: 5px;
+
+  border-radius: 5px;
+
+  margin: 10px 0px;
+
+  .ant-comment-inner {
+    padding: 16px;
+  }
+
+  .ant-comment-content-author-name {
+    font-size: 16px;
+    color: ${Color.TEXT_SECONDARY};
+  }
+
+  .ant-comment-content-author-time {
+    color: ${Color.MAIN_DARK};
+  }
+
+  .ant-comment-content-detail {
+    color: ${Color.TEXT_MAIN};
+  }
 `;

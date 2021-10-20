@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import { Modal, Comment, Avatar, Tooltip } from "antd";
-import Button from "../Button";
+import { Modal, Comment, Avatar, Tooltip, Input, Button } from "antd";
+import InputEmoji from "react-input-emoji";
 import {
   StyledModal,
   MessageSentStyled,
@@ -9,28 +9,33 @@ import {
   BoxMessages,
   FormStyled,
   ButtonStyled,
+  InputArea,
 } from "./styles";
 import AvatarEmanu from "../../assets/img/avatar-emanuela.png";
 import moment from "moment";
+import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";
+import { useUser } from "../../hooks/User";
+import DefaultAvatar from "../../assets/img/default-user-avatar.png";
 
 interface MessageInterface {
   msg: string;
   socketIdUser: string;
   name: string;
+  avatarUrl: string;
 }
 
 const socket = io("https://daisuki-chat-back.herokuapp.com");
+const { TextArea } = Input;
 
 const Chat = () => {
   const [messages, setMessages] = useState<MessageInterface[]>([]);
   const [inputMessage, setInputMessage] = useState<string>("");
   const [socketId, setSocketId] = useState<string>("");
-  const [name, setName] = useState<string>("Batata");
+
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const { user } = useUser();
 
-  const sendMessage = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const sendMessage = () => {
     if (inputMessage) {
       socket.emit(
         "chat message",
@@ -39,7 +44,8 @@ const Chat = () => {
           {
             msg: inputMessage,
             socketIdUser: socketId,
-            name: name,
+            name: user.username,
+            avatarUrl: user.avatarUrl,
           },
         ].slice(-5)
       );
@@ -75,42 +81,51 @@ const Chat = () => {
         visible={isModalVisible}
         onCancel={handleCancel}
       >
-        <BoxMessages>
-          <FormStyled onSubmit={(e) => sendMessage(e)}>
+        <FormStyled>
+          <BoxMessages>
             {messages.map((message, index) => {
               if (message.socketIdUser === socketId) {
                 return (
                   <MessageSentStyled
-                    author={message.socketIdUser}
-                    avatar={
-                      <Avatar src="../../assets/img/avatar-emanuela.png" />
-                    }
+                    author={message.name}
+                    avatar={<Avatar src={message.avatarUrl ?? DefaultAvatar} />}
                     content={<p>{message.msg}</p>}
                     datetime={
                       <Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>
                         <span>{moment().fromNow()}</span>
                       </Tooltip>
                     }
+                    key={index}
                   />
                 );
               }
               return (
                 <MessageReceivedStyled
-                  author={message.socketIdUser}
-                  avatar={<Avatar src="../../assets/img/avatar-emanuela.png" />}
+                  author={message.name}
+                  avatar={<Avatar src={message.avatarUrl ?? DefaultAvatar} />}
                   content={<p>{message.msg}</p>}
                   datetime={
                     <Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>
                       <span>{moment().fromNow()}</span>
                     </Tooltip>
                   }
+                  key={index}
                 />
               );
             })}
-            <input onChange={(e) => setInputMessage(e.target.value)} />
-            <ButtonStyled>Enviar</ButtonStyled>
-          </FormStyled>
-        </BoxMessages>
+          </BoxMessages>
+          <InputArea>
+            <InputEmoji
+              value={inputMessage}
+              onChange={setInputMessage}
+              cleanOnEnter
+              // onEnter={handleOnEnter}
+              onEnter={sendMessage}
+              placeholder="Type a message"
+            />
+            {/* <button>Enviar</button> */}
+          </InputArea>
+        </FormStyled>
       </StyledModal>
     </>
   );
