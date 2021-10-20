@@ -76,7 +76,8 @@ export const LinkAnime = styled(Link)`
   }
 
   @media (min-width: 1025px) {
-    height: 3rem;
+    height: 3.2rem;
+
     font-size: 1rem;
   }
 

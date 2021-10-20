@@ -75,7 +75,9 @@ const Watched = ({ onClose }: FavoritesProps) => {
               key={index}
               to={`/animes/${StringUtils.urlMask(view.anime)}`}
             >
-              <p>{`${view.anime} - Episódio ${view.episode}`}</p>
+              <p
+                style={{ maxWidth: "100%" }}
+              >{`${view.anime} - Episódio ${view.episode}`}</p>
             </LinkAnime>
           ))}
           {scrolledToBottom && (
