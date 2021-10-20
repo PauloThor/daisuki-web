@@ -325,7 +325,7 @@ export const Genre = styled(Link)`
   &:hover,
   &:focus {
     color: ${Color.TEXT_MAIN};
-    border: 1px solid ${Color.HIGHLIGHT};
+    border: 1px solid ${Color.HIGHLIGHT_DARK};
   }
 `;
 

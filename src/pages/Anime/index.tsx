@@ -337,7 +337,7 @@ const AnimePage = () => {
                               key={epi.id}
                             >
                               <StyledLink
-                                to={`/animes/${param.name}/episodes/${
+                                to={`/animes/${param.name}/${
                                   epi.episodeNumber ? epi.episodeNumber : 1
                                 }`}
                               >
@@ -357,7 +357,7 @@ const AnimePage = () => {
                   {episodes.map((epi) => (
                     <AnimeEpisode watched={false} key={epi.id}>
                       <StyledLink
-                        to={`/animes/${param.name}/episodes/${
+                        to={`/animes/${param.name}/${
                           epi.episodeNumber ? epi.episodeNumber : 1
                         }`}
                       >
