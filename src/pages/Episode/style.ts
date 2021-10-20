@@ -253,6 +253,13 @@ export const BoxLogin = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  @media (max-width: 425px) {
+    font-size: 16px;
+  }
+  @media (max-width: 320px) {
+    font-size: 14px;
+  }
 `;
 
 export const ButtonLogin = styled.button`
