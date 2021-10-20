@@ -1,12 +1,13 @@
 import { Favorite } from "../../model/favorite";
 import { Banner, CloseIcon, Container, Text } from "../Profile/styles";
-import { Item, Options, Pop, UnfavoriteIcon } from "./styles";
+import { LinkAnime, Options, Pop, UnfavoriteIcon } from "./styles";
 import BannerImage from "../../assets/img/profile-header.png";
 import { useUser } from "../../hooks/User";
 import { SpinContainer } from "../../pages/Home/styles";
 import { Spin } from "antd";
 import { useEffect, useState } from "react";
 import { Anime } from "../../model/anime";
+import StringUtils from "../../shared/util/string-utils";
 
 interface FavoritesProps {
   list: Favorite[];
@@ -73,7 +74,10 @@ const Favorites = ({ onClose }: FavoritesProps) => {
       ) : (
         <Options id="opt" onScroll={handleScroll}>
           {list.map((favorite, index) => (
-            <Item key={index}>
+            <LinkAnime
+              key={index}
+              to={`/animes/${StringUtils.urlMask(favorite.name)}`}
+            >
               <p>{favorite.name}</p>
               <Pop
                 title="Remover dos favoritos?"
@@ -83,7 +87,7 @@ const Favorites = ({ onClose }: FavoritesProps) => {
               >
                 <UnfavoriteIcon size={30} />
               </Pop>
-            </Item>
+            </LinkAnime>
           ))}
           {scrolledToBottom && (
             <SpinContainer style={{ height: "10vh" }}>
