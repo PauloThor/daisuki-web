@@ -33,6 +33,7 @@ interface UserData {
   updateInfo: () => void;
   watched: EpisodeHistory[];
   getFavoritesByPage: (page: number) => Promise<Anime[]>;
+  getWatchedByPage: (page: number) => Promise<EpisodeHistory[]>;
 }
 
 interface UserProviderProps {
@@ -267,8 +268,26 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   const getWatched = async () => {
-    const res = await daisukiApi.get(`/users/watched-episodes`, headers);
+    const res = await daisukiApi.get(
+      `/users/watched-episodes?&per_page=1000`,
+      headers
+    );
     setWatched(res.data.data);
+  };
+
+  const getWatchedByPage = async (page: number) => {
+    const res = await daisukiApi.get(
+      `/users/watched-episodes?page=${page}&per_page=16`,
+      headersJson
+    );
+    // const output = res.data.data.map((watched_anime: Anime) => {
+    //   return {
+    //     anime: watched_anime.name,
+    //     name: watched_anime.,
+    //   };
+    // });
+    const output = res.data.data;
+    return output;
   };
 
   useEffect(() => {
@@ -296,6 +315,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         updateInfo,
         watched,
         getFavoritesByPage,
+        getWatchedByPage,
       }}
     >
       {children}
