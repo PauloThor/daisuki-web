@@ -46,7 +46,6 @@ const AnimePage = () => {
 
   const [anime, setAnime] = useState<Anime>();
   const [episodes, setEpisodes] = useState<Episode[]>([]);
-  const [episodesPerPage, setEpisodesPerPage] = useState<[Episode[]]>([[]]);
   const [animeRate, setAnimeRate] = useState(0);
   const [ativAllowHalf, setAtivAllowHalf] = useState(true);
 
@@ -86,31 +85,27 @@ const AnimePage = () => {
     }
   };
 
-  const loadEpisodes = async () => {
-    if (anime?.totalEpisodes) {
-      if (anime.totalEpisodes > 24) {
-        for (let counter = 24; counter <= anime.totalEpisodes; counter += 24) {
-          daisukiApi
-            .get(`/animes/${param.name}/episodes?page=${counter / 24}`)
-            .then((response) => {
-              if (episodesPerPage[0][0] !== undefined) {
-                const listEpisodes = [...episodesPerPage, response?.data.data];
-                setEpisodesPerPage([listEpisodes]);
-              } else {
-                setEpisodesPerPage([response.data.data]);
-              }
-            });
-        }
-      }
-    } else {
-      daisukiApi.get(`/animes/${param.name}/episodes`).then((response) => {
-        setEpisodes(response?.data.data);
+  const loadEpisodes = async (params = "page=1&per_page=24") => {
+    const res = await daisukiApi
+      .get(`/animes/${param.name}/episodes?page=${1}`)
+      .then((response) => {
+        return response.data.data;
       });
+
+    if (res.length === 24) {
+      daisukiApi
+        .get(`/animes/${param.name}/episodes?per_page=${50}`)
+        .then((response) => {
+          setEpisodes(response.data.data);
+        });
+    } else {
+      setEpisodes(res);
     }
   };
 
   useEffect(() => {
     loadAnime();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -219,7 +214,16 @@ const AnimePage = () => {
     setAtivAllowHalf(!ativAllowHalf);
   };
 
+  const setPerPage = (list: Episode[]) => {
+    let output = [];
+    for (let i = 0; i < list.length; i = i + 24) {
+      output.push(list.slice(i, i + 24));
+    }
+    return output;
+  };
+
   const isFavorite = favorites.find((f) => f.id === anime?.id);
+  const EpsPerPage = setPerPage(episodes);
 
   return (
     <>
@@ -244,9 +248,9 @@ const AnimePage = () => {
                   <HeaderAnimeData isFavorite={!!isFavorite}>
                     <h1>{anime.name}</h1>
                     <button type="button" onClick={handleFavoriteAnime}>
-                      {!token && <FaRegHeart />}
+                      {isLoad && !isFavorite && !token && <FaRegHeart />}
                       {token && isFavorite && <FaHeart />}
-                      {token && !isFavorite && <FaRegHeart />}
+                      {isLoad && token && !isFavorite && <FaRegHeart />}
                       <span>
                         {isFavorite ? <FaHeartBroken /> : <FaHeart />}
                       </span>
@@ -300,24 +304,24 @@ const AnimePage = () => {
                 </AnimeCover>
               </InfoAnime>
 
-              {episodesPerPage[0][0] !== undefined ? (
-                episodesPerPage.map((list) => (
+              {episodes.length > 24 ? (
+                EpsPerPage.map((list) => (
                   <>
                     <StyledCollapse defaultActiveKey={["0"]} bordered={false}>
                       <Panel
                         header={
                           <span>
                             Episódios:{" "}
-                            {episodesPerPage.indexOf(list) !== 0
-                              ? 1 * episodesPerPage.indexOf(list)
+                            {EpsPerPage.indexOf(list) !== 0
+                              ? 24 * EpsPerPage.indexOf(list) + 1
                               : 1}
                             {" - "}
-                            {episodesPerPage.indexOf(list) !== 0
-                              ? 24 * episodesPerPage.indexOf(list)
+                            {EpsPerPage.indexOf(list) !== 0
+                              ? 24 * EpsPerPage.indexOf(list) + list.length
                               : list.length}
                           </span>
                         }
-                        key={episodesPerPage.indexOf(list)}
+                        key={EpsPerPage.indexOf(list)}
                         style={{ color: "white" }}
                       >
                         <StyledListEpisodes>
