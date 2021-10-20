@@ -217,6 +217,10 @@ const EpisodePage = () => {
     // eslint-disable-next-line
   }, [episode, loading, loadingComments, listComments]);
 
+  useEffect(() => {
+    loadEpisode();
+  }, [param]);
+
   return (
     <>
       <Header />

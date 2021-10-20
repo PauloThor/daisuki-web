@@ -256,12 +256,11 @@ export const ProfileContainer = styled.div`
   left: 0;
   top: 0;
   z-index: 1001;
-  animation: fromTop 1s;
+  animation: fromLeft 1s;
 
-  @keyframes fromTop {
+  @keyframes fromLeft {
     from {
-      top: -30px;
-      opacity: 0;
+      left: -200px;
     }
   }
 `;
