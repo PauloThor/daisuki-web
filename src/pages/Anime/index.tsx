@@ -87,7 +87,11 @@ const AnimePage = () => {
 
   const loadEpisodes = async (params = "page=1&per_page=24") => {
     const res = await daisukiApi
-      .get(`/animes/${param.name}/episodes?page=${1}`)
+      .get(`/animes/${param.name}/episodes?page=${1}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       .then((response) => {
         return response.data.data;
       });
@@ -333,7 +337,7 @@ const AnimePage = () => {
                         <StyledListEpisodes>
                           {list.map((epi) => (
                             <AnimeEpisode
-                              watched={epi?.hasWatched || false}
+                              watched={epi?.hasWatched ?? false}
                               key={epi.id}
                             >
                               <StyledLink
@@ -355,7 +359,7 @@ const AnimePage = () => {
               ) : (
                 <ListEpisodes>
                   {episodes.map((epi) => (
-                    <AnimeEpisode watched={false} key={epi.id}>
+                    <AnimeEpisode watched={epi?.hasWatched ?? false} key={epi.id}>
                       <StyledLink
                         to={`/animes/${param.name}/${
                           epi.episodeNumber ? epi.episodeNumber : 1

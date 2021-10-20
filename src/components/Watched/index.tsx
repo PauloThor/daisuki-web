@@ -73,7 +73,7 @@ const Watched = ({ onClose }: FavoritesProps) => {
           {list.map((view, index) => (
             <LinkAnime
               key={index}
-              to={`/animes/${StringUtils.urlMask(view.anime)}`}
+              to={`/animes/${StringUtils.urlMask(view.anime)}/${view.episode}`}
             >
               <p
                 style={{ maxWidth: "100%" }}
