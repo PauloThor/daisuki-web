@@ -8,26 +8,75 @@ export const StyledModal = styled(Modal)`
     height: 65vh;
   }
 
+  .ant-modal-header {
+    background-color: ${Color.HIGHLIGHT_DARK};
+  }
+  .ant-modal-title {
+    color: ${Color.TEXT_MAIN};
+  }
+
   .ant-modal-footer {
     display: none;
+  }
+
+  @media (min-width: 768px) {
+    .ant-modal-body {
+      height: 60vh;
+    }
   }
 `;
 
 export const FormStyled = styled.form`
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+
   height: 100%;
   justify-content: space-between;
 `;
 
 export const ButtonStyled = styled.button`
-  width: 30%;
+  font-size: 0px;
+  position: fixed;
+  left: 15px;
+  bottom: 40px;
+  z-index: 1;
+  background-color: transparent;
+  border: none;
+
+  @media (min-width: 768px) {
+    @keyframes jump {
+      to {
+        transform: translateY(-10px);
+      }
+    }
+
+    animation: jump 0.5s infinite alternate-reverse;
+  }
 `;
 
 export const BoxMessages = styled.div`
-  overflow: scroll;
+  overflow-y: auto;
+
   height: 80%;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #2a2a2a;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${Color.MAIN_DARK};
+
+    &:hover {
+      background-color: ${Color.MAIN};
+    }
+  }
+
+  @media (min-width: 768px) {
+    height: 90%;
+  }
 `;
 
 export const InputArea = styled.div`

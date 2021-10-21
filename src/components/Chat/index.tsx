@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 import { Modal, Comment, Avatar, Tooltip, Input, Button } from "antd";
 import InputEmoji from "react-input-emoji";
@@ -15,6 +15,7 @@ import AvatarEmanu from "../../assets/img/avatar-emanuela.png";
 import moment from "moment";
 import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";
 import { useUser } from "../../hooks/User";
+import IconeChat from "../../assets/img/icone-chat.png";
 import DefaultAvatar from "../../assets/img/default-user-avatar.png";
 
 interface MessageInterface {
@@ -31,7 +32,7 @@ const Chat = () => {
   const [messages, setMessages] = useState<MessageInterface[]>([]);
   const [inputMessage, setInputMessage] = useState<string>("");
   const [socketId, setSocketId] = useState<string>("");
-
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { user } = useUser();
 
@@ -47,10 +48,10 @@ const Chat = () => {
             name: user.username,
             avatarUrl: user.avatarUrl,
           },
-        ].slice(-5)
+        ].slice(-10)
       );
       // TODO: limpar o input em si
-      // setInputMessage("");
+      setInputMessage("");
     }
   };
 
@@ -60,6 +61,10 @@ const Chat = () => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+  };
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView();
   };
 
   useEffect(() => {
@@ -73,16 +78,20 @@ const Chat = () => {
       setSocketId(socket.id);
     });
   }, []);
+
+  useEffect(scrollToBottom, [messages]);
   return (
     <>
-      <button onClick={showModal}>Chat</button>
+      <ButtonStyled onClick={showModal}>
+        <img src={IconeChat} />
+      </ButtonStyled>
       <StyledModal
         title="Chat dos otaku"
         visible={isModalVisible}
         onCancel={handleCancel}
       >
         <FormStyled>
-          <BoxMessages>
+          <BoxMessages ref={messagesEndRef}>
             {messages.map((message, index) => {
               if (message.socketIdUser === socketId) {
                 return (
@@ -119,11 +128,9 @@ const Chat = () => {
               value={inputMessage}
               onChange={setInputMessage}
               cleanOnEnter
-              // onEnter={handleOnEnter}
               onEnter={sendMessage}
-              placeholder="Type a message"
+              placeholder="Digite alguma coisa..."
             />
-            {/* <button>Enviar</button> */}
           </InputArea>
         </FormStyled>
       </StyledModal>
