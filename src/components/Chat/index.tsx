@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
-import { Avatar, Tooltip } from "antd";
+import { Tooltip } from "antd";
 import InputEmoji from "react-input-emoji";
 import {
   StyledModal,
@@ -46,7 +46,6 @@ const Chat = () => {
           },
         ].slice(-10)
       );
-      // TODO: limpar o input em si
       setInputMessage("");
     }
   };
@@ -71,6 +70,16 @@ const Chat = () => {
     });
   }, []);
 
+  const messagesEndRef = useRef<any>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
     <>
       <ButtonStyled onClick={showModal}>
@@ -88,7 +97,12 @@ const Chat = () => {
                 return (
                   <MessageSentStyled
                     author={message.name}
-                    avatar={<Avatar src={message.avatarUrl ?? DefaultAvatar} />}
+                    avatar={
+                      <img
+                        src={message.avatarUrl ?? DefaultAvatar}
+                        alt="avatar"
+                      />
+                    }
                     content={<p>{message.msg}</p>}
                     datetime={
                       <Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>
@@ -102,7 +116,12 @@ const Chat = () => {
               return (
                 <MessageReceivedStyled
                   author={message.name}
-                  avatar={<Avatar src={message.avatarUrl ?? DefaultAvatar} />}
+                  avatar={
+                    <img
+                      src={message.avatarUrl ?? DefaultAvatar}
+                      alt="avatar"
+                    />
+                  }
                   content={<p>{message.msg}</p>}
                   datetime={
                     <Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>
@@ -113,6 +132,7 @@ const Chat = () => {
                 />
               );
             })}
+            <div ref={messagesEndRef} />
           </BoxMessages>
           <InputArea>
             <InputEmoji

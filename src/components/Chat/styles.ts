@@ -59,7 +59,7 @@ export const BoxMessages = styled.div`
 
   height: 80%;
   &::-webkit-scrollbar {
-    width: 8px;
+    width: 4px;
   }
 
   &::-webkit-scrollbar-track {
@@ -107,6 +107,11 @@ export const MessageSentStyled = styled(Comment)`
   .ant-comment-content-detail {
     color: ${Color.MAIN_DARK};
   }
+
+  img {
+    width: 48px;
+    height: 48px;
+  }
 `;
 
 export const MessageReceivedStyled = styled(Comment)`
@@ -134,5 +139,10 @@ export const MessageReceivedStyled = styled(Comment)`
 
   .ant-comment-content-detail {
     color: ${Color.TEXT_MAIN};
+  }
+
+  img {
+    width: 48px;
+    height: 48px;
   }
 `;
