@@ -129,24 +129,28 @@ const AnimeList = ({ request, search = false }: Props) => {
     if (request === "filter") {
       getAnimesByStatus(currentPage);
     }
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (request === "search") {
       getAnimesBySearch(currentPage);
     }
+    // eslint-disable-next-line
   }, [params.search]);
 
   useEffect(() => {
     if (request === "genre") {
       getAnimesByGenre(currentPage);
     }
+    // eslint-disable-next-line
   }, [params.genre]);
 
   useEffect(() => {
     if (request === "filter") {
       getAnimesByStatus(currentPage);
     }
+    // eslint-disable-next-line
   }, [params.filter]);
 
   return (

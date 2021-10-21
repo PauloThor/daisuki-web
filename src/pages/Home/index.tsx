@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Motion from "../../components/Motion";
 import { Spin } from "antd";
@@ -30,8 +30,6 @@ import {
   FooterImg,
   SpinContainer,
 } from "./styles";
-import Button from "../../components/Button";
-import { Input } from "../../components/InputText/styles";
 import Chat from "../../components/Chat";
 import { useUser } from "../../hooks/User";
 

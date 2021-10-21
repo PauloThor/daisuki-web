@@ -178,6 +178,23 @@ export const CommentInput = styled.textarea`
   background-color: transparent;
   border: 2px solid ${Color.TEXT_MAIN};
   padding-bottom: 32px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #2a2a2a;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${Color.MAIN_DARK};
+
+    &:hover {
+      background-color: ${Color.MAIN};
+    }
+  }
 `;
 
 export const ButtonComment = styled.button`

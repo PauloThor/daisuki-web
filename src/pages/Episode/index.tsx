@@ -41,6 +41,7 @@ import StringUtils from "../../shared/util/string-utils";
 import { ModalLogin } from "../../components/ModalLogin";
 import { PopDrop } from "../../components/CommentCard/style";
 import DefaultAvatar from "../../assets/img/default-user-avatar.png";
+import Chat from "../../components/Chat";
 
 interface CommentProps {
   id: number;
@@ -66,7 +67,7 @@ const EpisodePage = () => {
   const [loadingComments, setLoadingComments] = useState<boolean>(true);
   const [listComments, setListComments] = useState<Array<CommentProps>>([]);
   const [totalComments, setTotalComments] = useState<number>(0);
-  const [actualPage, setActualPage] = useState<string>("page=1&per_page=10");
+  const [actualPage] = useState<string>("page=1&per_page=10");
   const [nextPage, setNextPage] = useState<string>();
   const [ordered, setOrdered] = useState<boolean>(false);
 
@@ -219,6 +220,7 @@ const EpisodePage = () => {
 
   useEffect(() => {
     loadEpisode();
+    // eslint-disable-next-line
   }, [param]);
 
   return (
@@ -375,6 +377,7 @@ const EpisodePage = () => {
         handleModalLogin={handleModalLogin}
       />
       <BackTop />
+      {!!token && <Chat />}
     </>
   );
 };
