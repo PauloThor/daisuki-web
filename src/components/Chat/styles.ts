@@ -152,7 +152,7 @@ export const Notification = styled(IoIosNotifications)`
   position: absolute;
   top: 0px;
   right: -10px;
-  color: ${Color.HIGHLIGHT};
+  color: ${Color.TEXT_MAIN};
 
   animation: shake 1s infinite;
 }
