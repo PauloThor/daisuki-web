@@ -29,7 +29,7 @@ const socket = io("https://daisuki-chat-back.herokuapp.com");
 const Chat = () => {
   const [messages, setMessages] = useState<MessageInterface[]>([]);
   const [inputMessage, setInputMessage] = useState<string>("");
-  const [socketId, setSocketId] = useState<string>("");
+  const [socketId, setSocketId] = useState<string | number>("");
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [showing, setShowing] = useState<boolean>(false);
 
@@ -74,8 +74,9 @@ const Chat = () => {
 
   useEffect(() => {
     socket.on("connect", () => {
-      setSocketId(socket.id);
+      setSocketId(user?.id ?? socket.id);
     });
+    // eslint-disable-next-line
   }, []);
 
   const messagesEndRef = useRef<any>(null);
