@@ -38,6 +38,7 @@ import toast from "react-hot-toast";
 import { returnStars } from "../../shared/util/anime-utils";
 import { Color } from "../../model/enums/theme-colors";
 import { genresToEnglish } from "../../shared/util/genre-utils";
+import Chat from "../../components/Chat";
 
 const AnimePage = () => {
   const param: ParamProps = useParams();
@@ -399,6 +400,7 @@ const AnimePage = () => {
       </Motion>
 
       {isInvalidLink && isLoad && <NotFound />}
+      {!!token && <Chat />}
     </>
   );
 };

@@ -30,6 +30,8 @@ import {
   FooterImg,
   SpinContainer,
 } from "./styles";
+import Chat from "../../components/Chat";
+import { useUser } from "../../hooks/User";
 
 const Home = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -38,6 +40,8 @@ const Home = () => {
   const [popularAnimes, setPopularAnimes] = useState<Anime[]>([]);
   const [latestAnimes, setLatestAnimes] = useState<Anime[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const { token } = useUser();
 
   const requireData = async () => {
     await daisukiApi
@@ -132,6 +136,7 @@ const Home = () => {
             </Section>
           </Main>
         )}
+        {!!token && <Chat />}
         <Footer>
           <div>
             <p>
