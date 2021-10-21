@@ -43,7 +43,7 @@ const Chat = () => {
           ...messages,
           {
             msg: inputMessage,
-            socketIdUser: socketId,
+            socketIdUser: user?.id?.toString() ?? socketId,
             name: user.username,
             avatarUrl: user.avatarUrl,
           },
@@ -74,8 +74,9 @@ const Chat = () => {
 
   useEffect(() => {
     socket.on("connect", () => {
-      setSocketId(socket.id);
+      setSocketId(user?.id?.toString() ?? socket.id);
     });
+    // eslint-disable-next-line
   }, []);
 
   const messagesEndRef = useRef<any>(null);
@@ -102,7 +103,7 @@ const Chat = () => {
         <FormStyled>
           <BoxMessages>
             {messages.map((message, index) => {
-              if (message.socketIdUser === socketId) {
+              if (message.socketIdUser === user?.id?.toString() ?? socketId) {
                 return (
                   <MessageSentStyled
                     author={message.name}
