@@ -27,6 +27,8 @@ import {
   FilterMenu,
   StyledButton,
 } from "./styles";
+import Chat from "../../components/Chat";
+import { useUser } from "../../hooks/User";
 
 interface Props {
   request: "genre" | "filter" | "search";
@@ -40,7 +42,7 @@ const AnimeList = ({ request, search = false }: Props) => {
   const [title, setTitle] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [isInvalidLink, setIsInvalidLink] = useState<boolean>(false);
-
+  const { token } = useUser();
   const params: AnimeListParamProps = useParams();
 
   const getAnimesByGenre = async (page: number, letter?: string) => {
@@ -216,6 +218,7 @@ const AnimeList = ({ request, search = false }: Props) => {
         )}
         {isInvalidLink && <NotFound />}
       </Motion>
+      {!!token && <Chat />}
     </>
   );
 };
