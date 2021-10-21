@@ -31,57 +31,9 @@ export const Options = styled.section`
       background-color: ${Color.MAIN};
     }
   }
-`;
-
-export const Item = styled.div`
-  display: flex;
-  background-color: ${Color.MAIN};
-  padding: 5px;
-  cursor: pointer;
-  transition: 0.3s ease-in;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1rem;
-
-  @media (min-width: 768px) {
-    height: 3.5rem;
-    font-size: 1rem;
-  }
-
-  @media (min-width: 1024px) {
-    height: 5rem;
-    font-size: 1.2rem;
-  }
-
-  @media (min-width: 1025px) {
-    height: auto;
-    font-size: 1rem;
-  }
-
-  svg {
-    opacity: 0;
-    transition: 0.5s;
-  }
-
-  p {
-    max-width: 85%;
-  }
-  &:hover,
-  &:focus {
-    color: ${Color.HIGHLIGHT_LIGHT};
-
-    svg {
-      opacity: 1;
-    }
-  }
-
-  :nth-child(2n) {
-    background-color: transparent;
-  }
-
   @media (max-width: 768px) {
-    svg {
-      opacity: 1;
+    &:last-child {
+      padding-bottom: 10rem;
     }
   }
 `;
@@ -111,7 +63,7 @@ export const LinkAnime = styled(Link)`
   transition: 0.3s ease-in;
   justify-content: space-between;
   align-items: center;
-  font-size: 1rem;
+  font-size: 0.9rem;
 
   @media (min-width: 768px) {
     height: 3.5rem;
@@ -119,12 +71,13 @@ export const LinkAnime = styled(Link)`
   }
 
   @media (min-width: 1024px) {
-    height: 5rem;
-    font-size: 1.2rem;
+    height: 4.5rem;
+    font-size: 1.1rem;
   }
 
   @media (min-width: 1025px) {
-    height: auto;
+    height: 3.2rem;
+
     font-size: 1rem;
   }
 

@@ -48,14 +48,30 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     .ant-spin-dot-item {
-    background-color: ${Color.HIGHLIGHT_DARK};
+        background-color: ${Color.HIGHLIGHT_DARK};
     }
 
-    .ant-popover-buttons {
-    display: flex;
-    justify-content: center;
-  }
+    .ant-popover-inner {
+        background-color: ${Color.MAIN};
+    }
 
+    .ant-popover-inner-content {
+        color: ${Color.TEXT_MAIN};
+        cursor: pointer;
+
+        &:hover,
+        &:focus {
+        background-color: ${Color.MAIN_LIGHT};
+        transition: 300ms;
+        }
+        .anticon svg {
+            display: none;
+        }
+    }
+
+    .ant-popover-arrow {
+        display: none;
+    }
   .ant-popover-arrow-content {
     background: ${Color.MAIN};
   }
@@ -68,14 +84,19 @@ export const GlobalStyle = createGlobalStyle`
   }
   }
 
-  .ant-popover-message-title {
+    .ant-popover-buttons {
+        display: flex;
+        justify-content: center;
+    }
+
+    .ant-popover-message-title {
       color: ${Color.TEXT_MAIN};
       padding: 0;
       text-align: center;
       font-size: 16px;
-  }
+    }
 
-  .ant-btn {
+    .ant-btn-sm {
       width: 80px;
       height: 44px;
       margin: 0;
@@ -90,13 +111,13 @@ export const GlobalStyle = createGlobalStyle`
           color: ${Color.TEXT_MAIN};
           opacity: 0.8;
       }
-  }
+    }
 
-  .ant-popover-buttons button {
+    .ant-popover-buttons button {
       margin: 0;
-  }
+    }
 
-  .ant-btn-primary {
+    .ant-btn-primary {
       background-color: ${Color.SECONDARY};
       color: ${Color.MAIN_DARK};
 
@@ -104,7 +125,7 @@ export const GlobalStyle = createGlobalStyle`
           background-color: ${Color.SECONDARY};
           color: ${Color.MAIN_DARK};
       }
-  }
+    }
 
   .ant-modal-wrap {
     z-index: 1002 ;

@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
+import calendar from "dayjs/plugin/calendar";
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
+import utc from "dayjs/plugin/utc";
 import "dayjs/locale/pt-br";
 
 dayjs.extend(updateLocale);
@@ -28,6 +30,16 @@ class DateUtils {
     dayjs.locale("pt-br");
     const timeDiff = dayjs(date).fromNow();
     return timeDiff;
+  };
+
+  static getDateTime = () => {
+    dayjs.extend(utc);
+    const day = dayjs();
+    return day.utc().format();
+  };
+
+  static StringToDate = (date?: string) => {
+    return dayjs(date).format("DD/MM/YYYY");
   };
 }
 

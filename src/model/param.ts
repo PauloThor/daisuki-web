@@ -1,5 +1,6 @@
 export interface ParamProps {
   name: string;
+  episode_number?: string;
 }
 
 export interface AnimeListParamProps {
