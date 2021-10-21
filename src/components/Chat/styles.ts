@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Modal, Comment } from "antd";
 import { Color } from "../../model/enums/theme-colors";
+import { IoIosNotifications } from "react-icons/io";
 
 export const StyledModal = styled(Modal)`
   .ant-modal-body {
@@ -144,5 +145,29 @@ export const MessageReceivedStyled = styled(Comment)`
   img {
     width: 48px;
     height: 48px;
+  }
+`;
+
+export const Notification = styled(IoIosNotifications)`
+  position: absolute;
+  top: 0px;
+  right: -10px;
+  color: ${Color.HIGHLIGHT};
+
+  animation: shake 1s infinite;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  20%,
+  60% {
+    transform: rotate(6deg);
+  }
+  40%,
+  80% {
+    transform: rotate(-6deg);
   }
 `;

@@ -10,6 +10,7 @@ import {
   FormStyled,
   ButtonStyled,
   InputArea,
+  Notification,
 } from "./styles";
 import moment from "moment";
 import { useUser } from "../../hooks/User";
@@ -29,7 +30,9 @@ const Chat = () => {
   const [messages, setMessages] = useState<MessageInterface[]>([]);
   const [inputMessage, setInputMessage] = useState<string>("");
   const [socketId, setSocketId] = useState<string>("");
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [showing, setShowing] = useState<boolean>(false);
+
   const { user } = useUser();
 
   const sendMessage = () => {
@@ -52,15 +55,20 @@ const Chat = () => {
 
   const showModal = () => {
     setIsModalVisible(true);
+    setShowing(false);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
+    setShowing(false);
   };
 
   useEffect(() => {
     socket.on("chat message", (msg) => {
       setMessages(msg);
+      if (!isModalVisible) {
+        setShowing(true);
+      }
     });
   });
 
@@ -84,6 +92,7 @@ const Chat = () => {
     <>
       <ButtonStyled onClick={showModal}>
         <img src={IconeChat} alt="Icone chat" />
+        {showing && !isModalVisible && <Notification size={30} />}
       </ButtonStyled>
       <StyledModal
         title="Chat dos otaku"
