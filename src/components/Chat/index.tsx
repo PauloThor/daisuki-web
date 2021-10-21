@@ -88,7 +88,12 @@ const Chat = () => {
                 return (
                   <MessageSentStyled
                     author={message.name}
-                    avatar={<Avatar src={message.avatarUrl ?? DefaultAvatar} />}
+                    avatar={
+                      <img
+                        src={message.avatarUrl ?? DefaultAvatar}
+                        alt="avatar"
+                      />
+                    }
                     content={<p>{message.msg}</p>}
                     datetime={
                       <Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>
@@ -102,7 +107,12 @@ const Chat = () => {
               return (
                 <MessageReceivedStyled
                   author={message.name}
-                  avatar={<Avatar src={message.avatarUrl ?? DefaultAvatar} />}
+                  avatar={
+                    <img
+                      src={message.avatarUrl ?? DefaultAvatar}
+                      alt="avatar"
+                    />
+                  }
                   content={<p>{message.msg}</p>}
                   datetime={
                     <Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>
