@@ -127,6 +127,7 @@ const EpisodePage = () => {
     setLoading(true);
     setNext(false);
     setPrevious(false);
+    setLoadingComments(true);
     history.push(
       `/animes/${StringUtils.urlMask(anime?.name)}/${
         nextEpisode ? next_ep : previous_ep
