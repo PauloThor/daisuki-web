@@ -197,7 +197,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const deleteSelf = () => {
     async function fetch() {
       setIsLoading(true);
-      const res = await daisukiApi.delete("/users", headers);
+      const res = await daisukiApi.delete("/users", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       logout();
       setIsLoading(false);
       return res.data;
