@@ -195,7 +195,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   const deleteSelf = () => {
-    async function fetch() {
+    async function deleteAccount() {
       setIsLoading(true);
       const res = await daisukiApi.delete("/users", {
         headers: {
@@ -206,7 +206,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       setIsLoading(false);
       return res.data;
     }
-    const myPromise = fetch();
+    const myPromise = deleteAccount();
     toast.promise(
       myPromise,
       {
