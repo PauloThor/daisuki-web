@@ -13,7 +13,7 @@ import {
   ButtonNext,
   ButtonShowMore,
   ChatIcon,
-  Comment,
+  CommentTitle,
   ContainerComment,
   UserPicture,
   BoxLogin,
@@ -28,11 +28,12 @@ import {
 import { Spin } from "antd";
 import { Anime } from "../../model/anime";
 import { useUser } from "../../hooks/User";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Episode } from "../../model/episode";
 import { ParamProps } from "../../model/param";
 import { daisukiApi } from "../../services/api";
 import { useHistory, useParams } from "react-router";
+import { Comment } from "../../model/comment";
 import Header from "../../components/Header";
 import BackTop from "../../components/BackTop";
 import DateUtils from "../../shared/util/date-utils";
@@ -42,13 +43,6 @@ import { ModalLogin } from "../../components/ModalLogin";
 import { PopDrop } from "../../components/CommentCard/style";
 import DefaultAvatar from "../../assets/img/default-user-avatar.png";
 import Chat from "../../components/Chat";
-
-interface CommentProps {
-  id: number;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 const EpisodePage = () => {
   const param: ParamProps = useParams();
@@ -65,7 +59,7 @@ const EpisodePage = () => {
 
   const [comment, setComment] = useState<string>();
   const [loadingComments, setLoadingComments] = useState<boolean>(true);
-  const [listComments, setListComments] = useState<Array<CommentProps>>([]);
+  const [listComments, setListComments] = useState<Comment[]>([]);
   const [totalComments, setTotalComments] = useState<number>(0);
   const [actualPage] = useState<string>("page=1&per_page=10");
   const [nextPage, setNextPage] = useState<string>();
@@ -104,7 +98,7 @@ const EpisodePage = () => {
       .get(`/episodes/${episode?.id}/comments?${actualPage}`)
       .then((res) => {
         setTotalComments(res.data.total);
-        setListComments(removeDuplicates([...listComments, ...res.data.data]));
+        setListComments([...listComments, ...res.data.data]);
         setNextPage(res.data.next);
         setLoadingComments(false);
       });
@@ -115,24 +109,25 @@ const EpisodePage = () => {
       .get(`/episodes/${episode?.id}/comments?order_by=true&${actualPage}`)
       .then((res) => {
         setTotalComments(res.data.total);
-        setListComments(removeDuplicates([...listComments, ...res.data.data]));
+        setListComments([...listComments, ...res.data.data]);
         setNextPage(res.data.next);
         setLoadingComments(false);
       });
   };
 
   const handleEpisode = (nextEpisode?: boolean) => {
+    setListComments([]);
     const previous_ep = Number(episode?.episodeNumber) - 1;
     const next_ep = Number(episode?.episodeNumber) + 1;
-    setLoading(true);
-    setNext(false);
-    setPrevious(false);
-    setLoadingComments(true);
     history.push(
       `/animes/${StringUtils.urlMask(anime?.name)}/${
         nextEpisode ? next_ep : previous_ep
       }`
     );
+    setLoading(true);
+    setNext(false);
+    setPrevious(false);
+    setLoadingComments(true);
   };
 
   const handleComment = async () => {
@@ -154,7 +149,7 @@ const EpisodePage = () => {
       });
   };
 
-  const handleInput = (e: any) => {
+  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length < 511) {
       setComment(e.target.value);
     }
@@ -182,47 +177,18 @@ const EpisodePage = () => {
     setIsModalLoginVisible(!isModalLoginVisible);
   };
 
-  const removeDuplicates = (list: any[]) => {
-    let result: any[] = [];
-
-    list.forEach((value) => {
-      let found = false;
-      result.forEach((resultValue) => {
-        if (resultValue.id === value.id) {
-          found = true;
-        }
-      });
-      if (!found) {
-        result.push(value);
-      }
-    });
-    return result;
-  };
-
-  // const EmbledVideo = (episode?: string) => {
-  //   let episodeArray: any = episode?.split("/");
-  //   const lastValue = episodeArray.pop();
-  //   episodeArray = [...episodeArray, "e", lastValue];
-  //   return episodeArray.join("/");
-  // };
-
   useEffect(() => {
     if (loading) {
       loadEpisode();
     }
-    if (!ordered && episode && loadingComments) {
+    if (!ordered && episode && loadingComments && !loading) {
       loadComments(actualPage);
     }
-    if (ordered && episode && loadingComments) {
+    if (ordered && episode && loadingComments && !loading) {
       loadCommentsOrdered(actualPage);
     }
     // eslint-disable-next-line
-  }, [episode, loading, loadingComments, listComments]);
-
-  useEffect(() => {
-    loadEpisode();
-    // eslint-disable-next-line
-  }, [param]);
+  }, [episode, loadingComments]);
 
   return (
     <>
@@ -282,9 +248,9 @@ const EpisodePage = () => {
               </EpisodeOptions>
             </section>
             <section>
-              <Comment>
+              <CommentTitle>
                 <ChatIcon /> Comentários:
-              </Comment>
+              </CommentTitle>
               <ContainerComment>
                 {token ? (
                   <>
@@ -335,26 +301,29 @@ const EpisodePage = () => {
                       </OrderBy>
                     </PopDrop>
                   </OptionsComment>
-                  {loadingComments && !loading && (
+                  {loadingComments && !loading ? (
                     <SpinContainer>
                       <Spin size="large" />
                     </SpinContainer>
+                  ) : (
+                    <ul>
+                      {listComments.map((comment: Comment) => (
+                        <li key={comment?.id}>
+                          <CommentCard
+                            comment={comment}
+                            handleDelete={() =>
+                              handleDeleteComment(comment?.id)
+                            }
+                            visible={
+                              user?.id === comment.user.id ||
+                              user?.permission === "mod" ||
+                              user?.permission === "admin"
+                            }
+                          />
+                        </li>
+                      ))}
+                    </ul>
                   )}
-                  {listComments.map((comment: any) => (
-                    <CommentCard
-                      name={comment.user.username}
-                      content={comment.content}
-                      created_at={comment.createdAt}
-                      image={comment.user.avatarUrl ?? DefaultAvatar}
-                      key={comment.id}
-                      handleDelete={() => handleDeleteComment(comment.id)}
-                      visible={
-                        user.id === comment.user.id ||
-                        user.permission === "mod" ||
-                        user.permission === "admin"
-                      }
-                    />
-                  ))}
                   <ButtonShowMore
                     onClick={() => {
                       ordered
