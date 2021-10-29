@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 import { useUser } from "../../hooks/User";
@@ -36,7 +36,7 @@ export const ModalLogin = ({
 }: ModalLoginProps) => {
   const history = useHistory();
   const [shouldRemember, setShouldRemember] = useState<boolean>(false);
-  const { login } = useUser();
+  const { login, token } = useUser();
 
   const handleRemember = () => setShouldRemember(!shouldRemember);
 
@@ -63,6 +63,13 @@ export const ModalLogin = ({
       type: InputTypes.PASSWORD,
     },
   ];
+
+  useEffect(() => {
+    if (!!token && isModalLoginVisible) {
+      handleModalLogin();
+    }
+    // eslint-disable-next-line
+  }, [token]);
 
   return (
     <StyledModal
