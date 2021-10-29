@@ -260,6 +260,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       .then((response) => {
         setUser(response.data);
       })
+      .catch(() => logout())
       .finally(() => setIsLoading(false));
   };
 
