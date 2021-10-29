@@ -15,7 +15,7 @@ interface FavoritesProps {
 }
 
 const Watched = ({ onClose }: FavoritesProps) => {
-  const { isLoading, getWatchedByPage, watched } = useUser();
+  const { isLoading, getWatchedByPage, watched, token } = useUser();
   const [watchedPage, setWatchedPage] = useState(1);
   const [list, setList] = useState<EpisodeHistory[]>([]);
   const [scrolledToBottom, setScrolledToBottom] = useState(false);
@@ -26,7 +26,9 @@ const Watched = ({ onClose }: FavoritesProps) => {
   };
 
   useEffect(() => {
-    loadWatched();
+    if (!!token) {
+      loadWatched();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

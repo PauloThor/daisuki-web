@@ -66,7 +66,7 @@ const Login = () => {
   });
 
   const onSubmit = (data: FormInput) => {
-    login({ ...data, remindMe: shouldRemember }, history);
+    login({ ...data, remindMe: shouldRemember }, history, true);
   };
 
   const showModal = () => {

@@ -17,7 +17,7 @@ import { Color } from "../../model/enums/theme-colors";
 
 interface UserData {
   token: string;
-  login: (data: LoginData, history: History) => void;
+  login: (data: LoginData, history: History, redirect?: boolean) => void;
   register: (data: RegisterData, history: History) => void;
   logout: () => void;
   user: UserInfo;
@@ -67,7 +67,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     },
   };
 
-  const login = (data: LoginData, history: History) => {
+  const login = (data: LoginData, history: History, redirect: boolean = false) => {
     setIsLoading(true);
     async function fetch() {
       await daisukiApi.post("/users/login", data).then((res) => {
@@ -77,7 +77,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         );
         setToken(res.data.accessToken);
         updateInfo();
-        history.push("/");
+        if (redirect) {
+          history.push("/");
+        }
       });
     }
     const myPromise = fetch();
@@ -199,8 +201,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       setIsLoading(true);
       const res = await daisukiApi.delete("/users", {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       logout();
       setIsLoading(false);
