@@ -142,7 +142,7 @@ const Home = () => {
             <p>
               Projeto realizado com fins didáticos. Os vídeos são somente
               prévias dos episódios.
-              <br /> Todos os direitos de personagens e obras pertecem aos
+              <br /> Todos os direitos de personagens e obras pertencem aos
               respectivos proprietários.
             </p>
             <Developers>
