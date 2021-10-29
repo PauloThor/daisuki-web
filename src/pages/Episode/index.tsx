@@ -98,7 +98,7 @@ const EpisodePage = () => {
       .get(`/episodes/${episode?.id}/comments?${actualPage}`)
       .then((res) => {
         setTotalComments(res.data.total);
-        setListComments(res.data.data);
+        setListComments([...listComments, ...res.data.data]);
         setNextPage(res.data.next);
         setLoadingComments(false);
       });
@@ -109,13 +109,14 @@ const EpisodePage = () => {
       .get(`/episodes/${episode?.id}/comments?order_by=true&${actualPage}`)
       .then((res) => {
         setTotalComments(res.data.total);
-        setListComments(res.data.data);
+        setListComments([...listComments, ...res.data.data]);
         setNextPage(res.data.next);
         setLoadingComments(false);
       });
   };
 
   const handleEpisode = (nextEpisode?: boolean) => {
+    setListComments([]);
     const previous_ep = Number(episode?.episodeNumber) - 1;
     const next_ep = Number(episode?.episodeNumber) + 1;
     history.push(
@@ -187,7 +188,7 @@ const EpisodePage = () => {
       loadCommentsOrdered(actualPage);
     }
     // eslint-disable-next-line
-  }, [episode, loading, loadingComments, listComments]);
+  }, [episode, loadingComments]);
 
   return (
     <>
