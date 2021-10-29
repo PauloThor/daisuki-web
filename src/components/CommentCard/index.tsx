@@ -4,37 +4,35 @@ import {
   ProfilePicture,
   UserName,
   TimeLapsed,
-  Comment,
+  Text,
 } from "./style";
-
+import { Comment } from "../../model/comment";
 import OptionsMenu from "./options";
 import DateUtils from "../../shared/util/date-utils";
+import DefaultAvatar from "../../assets/img/default-user-avatar.png";
 
 interface CommentProps {
-  image?: string;
-  name: string;
-  created_at: string;
-  content: string;
+  comment: Comment;
   handleDelete: () => void;
   visible?: boolean;
 }
 
 const CommentCard = ({
-  image,
-  name,
-  created_at,
-  content,
+  comment,
   handleDelete,
   visible = false,
 }: CommentProps) => {
   return (
     <Container>
-      <ProfilePicture src={image} alt={`${name} avatar`} />
+      <ProfilePicture
+        src={comment.user?.avatarUrl ?? DefaultAvatar}
+        alt="Avatar"
+      />
       <Content visible={visible}>
-        <UserName>{name}</UserName>
-        <TimeLapsed>• {DateUtils.timeFromNow(created_at)}</TimeLapsed>
+        <UserName>{comment.user?.username}</UserName>
+        <TimeLapsed>• {DateUtils.timeFromNow(comment?.createdAt)}</TimeLapsed>
         {visible && <OptionsMenu handleDelete={handleDelete} />}
-        <Comment>{content}</Comment>
+        <Text>{comment?.content}</Text>
       </Content>
     </Container>
   );

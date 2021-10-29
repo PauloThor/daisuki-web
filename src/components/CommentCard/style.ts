@@ -64,7 +64,7 @@ export const TimeLapsed = styled.span`
   line-height: 16px;
 `;
 
-export const Comment = styled.p`
+export const Text = styled.p`
   font-size: 16px;
   padding-top: 5px;
   color: ${Color.TEXT_MAIN};

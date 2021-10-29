@@ -142,7 +142,7 @@ export const ChatIcon = styled(AiOutlineWechat)`
   }
 `;
 
-export const Comment = styled.h2`
+export const CommentTitle = styled.h2`
   font-size: 24px;
   font-weight: normal;
   color: ${Color.TEXT_MAIN};

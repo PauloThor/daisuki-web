@@ -13,7 +13,7 @@ import {
   ButtonNext,
   ButtonShowMore,
   ChatIcon,
-  Comment,
+  CommentTitle,
   ContainerComment,
   UserPicture,
   BoxLogin,
@@ -28,11 +28,12 @@ import {
 import { Spin } from "antd";
 import { Anime } from "../../model/anime";
 import { useUser } from "../../hooks/User";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Episode } from "../../model/episode";
 import { ParamProps } from "../../model/param";
 import { daisukiApi } from "../../services/api";
 import { useHistory, useParams } from "react-router";
+import { Comment } from "../../model/comment";
 import Header from "../../components/Header";
 import BackTop from "../../components/BackTop";
 import DateUtils from "../../shared/util/date-utils";
@@ -42,13 +43,6 @@ import { ModalLogin } from "../../components/ModalLogin";
 import { PopDrop } from "../../components/CommentCard/style";
 import DefaultAvatar from "../../assets/img/default-user-avatar.png";
 import Chat from "../../components/Chat";
-
-interface CommentProps {
-  id: number;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 const EpisodePage = () => {
   const param: ParamProps = useParams();
@@ -65,7 +59,7 @@ const EpisodePage = () => {
 
   const [comment, setComment] = useState<string>();
   const [loadingComments, setLoadingComments] = useState<boolean>(true);
-  const [listComments, setListComments] = useState<Array<CommentProps>>([]);
+  const [listComments, setListComments] = useState<Comment[]>([]);
   const [totalComments, setTotalComments] = useState<number>(0);
   const [actualPage] = useState<string>("page=1&per_page=10");
   const [nextPage, setNextPage] = useState<string>();
@@ -154,7 +148,7 @@ const EpisodePage = () => {
       });
   };
 
-  const handleInput = (e: any) => {
+  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length < 511) {
       setComment(e.target.value);
     }
@@ -253,9 +247,9 @@ const EpisodePage = () => {
               </EpisodeOptions>
             </section>
             <section>
-              <Comment>
+              <CommentTitle>
                 <ChatIcon /> Comentários:
-              </Comment>
+              </CommentTitle>
               <ContainerComment>
                 {token ? (
                   <>
@@ -312,13 +306,10 @@ const EpisodePage = () => {
                     </SpinContainer>
                   ) : (
                     <ul>
-                      {listComments.map((comment: any) => (
+                      {listComments.map((comment: Comment) => (
                         <li key={comment?.id}>
                           <CommentCard
-                            name={comment.user?.username}
-                            content={comment?.content}
-                            created_at={comment?.createdAt}
-                            image={comment.user?.avatarUrl ?? DefaultAvatar}
+                            comment={comment}
                             handleDelete={() =>
                               handleDeleteComment(comment?.id)
                             }
