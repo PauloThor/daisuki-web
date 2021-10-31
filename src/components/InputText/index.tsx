@@ -91,9 +91,6 @@ const InputText = ({
     const text = value.toString();
     const MaskFormats = {
       [Mask.CURRENCY]: StringUtils.currencyMask(text),
-      [Mask.PHONE]: StringUtils.phoneMask(text),
-      [Mask.CNPJ]: StringUtils.cnpjMask(text),
-      [Mask.CPF]: StringUtils.cpfMask(text),
       [Mask.DEFAULT]: text,
     };
 
