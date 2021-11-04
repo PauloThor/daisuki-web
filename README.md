@@ -1,46 +1,111 @@
-# Getting Started with Create React App
+<div align="center">
+    <br>
+    <img  src="https://i.imgur.com/FdxcJm7.png" width="260px" alt="Ícone Logo Anime Daisuki" />
+    <br>
+</div>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center">Plataforma de streaming gratuíta que fornece um acervo de animes e filmes, com o uso disponível para diversas plataformas (computadores, smartphones, tablets).</p>
 
-## Available Scripts
+<p align="center"> 
+  <a href="http://makeapullrequest.com">
+    <img src="https://img.shields.io/badge/progress-92%25-brightgreen.svg" alt="PRs Welcome">
+  </a>
+   <a href="https://documenter.getpostman.com/view/17890889/UV5ZAbTe">
+    <img src="https://img.shields.io/badge/DaisukiAPI-Postman-6A57D5.svg" alt="Daisuki API">
+  </a>
+ </p>
 
-In the project directory, you can run:
+<h4 align="center"> 
+🚧  Status: Doing  🚧
+</h4>
 
-### `yarn start`
+<p align="center">
+  <a href="#-sobre">Sobre</a> •
+  <a href="#-layout">Layout</a> • 
+  <a href="#-tech-stack">Tech Stack</a> •
+  <a href="#-autores">Autores</a> •
+</p>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 💻 Sobre
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+A plataforma visa garantir o entretenimento dos usuários oferecendo um acervo de animes e filmes, além de trazer algumas vantagens aos usuários cadastrados, como poder avaliar e favoritar animes, comentar episódios, verificar o histórico de episódios assistidos, mudar avatar e também acesso à um chat online para se conectar com outros usuários. Os usuários com permissões de administrador ou moderador são responsaveis por postar, editar e deletar animes e episódios.
 
-### `yarn test`
+## 🎨 Layout
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Mobile
 
-### `yarn build`
+<p align="center">
+  <img alt="Dashboard Mobile" title="#dasboardMobile" src="https://i.imgur.com/ZMuOVfx.png" width="200px" height="540px">
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  <img alt="Anime Page Mobile" title="#animePageMobile" src="https://i.imgur.com/nMvUawn.png" width="200px" height="540px">
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  <img alt="Episode Page Mobile" title="#episodePageMobile" src="https://i.imgur.com/es7mXrS.png" width="200px" height="540px">
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  <img alt="Animes Filtered Mobile" title="#animesFilteredMobile" src="https://i.imgur.com/wBNSaz1.png" width="200px" height="540px">
 
-### `yarn eject`
+  <img alt="Modal Profile" title="#modalProfile" src="https://i.imgur.com/Fq6ceIo.png" width="200px" height="540px">
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  <img alt="Modal Favorites" title="#modalFavorites" src="https://i.imgur.com/EpEN2o5.png" width="200px" height="540px">
+</p>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Web
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<p align="center" style="display: flex; align-items: flex-start; justify-content: center; flex-wrap: wrap;">
+  <img alt="Login Page" title="#loginPage" src="https://i.imgur.com/QGo8MAI.png" width="400px">
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+   <img alt="Register Page" title="#RegisterPage" src="https://i.imgur.com/enjwsZn.png" width="400px">
 
-## Learn More
+   <img alt="Dashboard Page" title="#DashboardPage" src="https://i.imgur.com/1d3wC20.png" width="400px">
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   <img alt="Anime Page" title="#animePage" src="https://i.imgur.com/KBIa2eV.png" width="400px">
+   
+   <img alt="Episode Page" title="#episodePage" src="https://i.imgur.com/WYQpatX.png" width="400px">
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+   <img alt="Adimin Page" title="#adminPage" src="https://i.imgur.com/ZJyyOfa.png" width="400px">
+</p>
+
+## 🛠 Tech Stack
+
+The following tools were used in the construction of the project:
+
+- [Styled Components](https://www.styled-components.com/)
+- [Ant Design](https://ant.design/docs/react/introduce)
+- [Day.js](https://day.js.org/)
+- [Axios](https://www.npmjs.com/package/axios)
+- [Framer Motion](https://www.framer.com/motion/)
+- [JWT Decode](https://jwt.io/)
+- [Yup](https://www.npmjs.com/package/yup)
+- [React Hook Form](https://react-hook-form.com/)
+- [React Router DOM](https://www.npmjs.com/package/react-router-dom)
+- [React Icons](https://react-icons.github.io/react-icons/)
+- [Context API](https://reactjs.org/docs/context.html)
+- [Socket.IO](https://socket.io/)
+- [React Multi Carousel](https://www.npmjs.com/package/react-multi-carousel)
+- [Lottie FIles](https://lottiefiles.com/)
+- [React Input Emoji](https://www.npmjs.com/package/react-input-emoji)
+- [React Hot Toast](https://react-hot-toast.com/)
+
+---
+
+## 🦸 Autores
+
+- **Laiane Suzart**:
+  <br>
+  [![Linkedin Badge](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white&link=https://www.linkedin.com/in/laianesuzart/)](https://www.linkedin.com/in/laianesuzart/)
+  [![Github Badge](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/laianesuzart)](https://github.com/laianesuzart)
+
+- **Paulo Thor**:
+  <br>
+  [![Linkedin Badge](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white&link=https://www.linkedin.com/in/paulothorsilva/)](https://www.linkedin.com/in/paulothorsilva/) [![Github Badge](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/PauloThor)](https://github.com/PauloThor)
+
+- **Thaina Ferreira**:
+  <br>
+  [![Linkedin Badge](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white&link=https://www.linkedin.com/in/thainaferreira/)](https://www.linkedin.com/in/thainaferreira/) [![Github Badge](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/thainaferreira)](https://github.com/thainaferreira)
+
+- **Matheus Paiva**:
+  <br>
+  [![Linkedin Badge](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white&link=https://www.linkedin.com/in/matheus-paiva-vieira/)](https://www.linkedin.com/in/matheus-paiva-vieira/) [![Github Badge](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/matheuspaivah2)](https://github.com/matheuspaivah2)
+
+- **Emanuela Quizini**:
+  <br>
+  [![Linkedin Badge](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white&link=https://www.linkedin.com/in/emanuela-biondo-quizini-245ab0195/)](https://www.linkedin.com/in/emanuela-biondo-quizini-245ab0195/) [![Github Badge](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/emanuelakenzie)](https://github.com/emanuelakenzie)
