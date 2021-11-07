@@ -66,7 +66,7 @@ A plataforma visa garantir o entretenimento dos usuários oferecendo um acervo d
 
 ## 🛠 Tech Stack
 
-The following tools were used in the construction of the project:
+As ferramentas a seguir foram usadas na construção deste projeto:
 
 - [Styled Components](https://www.styled-components.com/)
 - [Ant Design](https://ant.design/docs/react/introduce)
@@ -109,3 +109,7 @@ The following tools were used in the construction of the project:
 - **Emanuela Quizini**:
   <br>
   [![Linkedin Badge](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white&link=https://www.linkedin.com/in/emanuela-biondo-quizini-245ab0195/)](https://www.linkedin.com/in/emanuela-biondo-quizini-245ab0195/) [![Github Badge](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/emanuelakenzie)](https://github.com/emanuelakenzie)
+
+## 📃 Licença
+
+Este projeto está sob a licença [MIT](https://choosealicense.com/licenses/mit/).
