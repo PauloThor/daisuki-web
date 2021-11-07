@@ -1,10 +1,12 @@
 <div align="center">
-    <br>
+    <br/>
+    <a href="https://animedaisuki.vercel.app/" target="_blank" rel="noreferrer">
     <img  src="https://i.imgur.com/FdxcJm7.png" width="260px" alt="Ícone Logo Anime Daisuki" />
-    <br>
+    </a>
+    <br/>
 </div>
 
-<p align="center">Plataforma de streaming gratuíta que fornece um acervo de animes e filmes, com o uso disponível para diversas plataformas (computadores, smartphones, tablets).</p>
+<p align="center">Plataforma de streaming gratuita que fornece um acervo de animes e filmes, com o uso disponível para diversas plataformas (computadores, smartphones, tablets).</p>
 
 <p align="center"> 
   <a href="http://makeapullrequest.com">
@@ -16,21 +18,24 @@
  </p>
 
 <h4 align="center"> 
-🚧  Status: Doing  🚧
+🚧  Projeto em construção...  🚧
 </h4>
 
 <p align="center">
-  <a href="#-sobre">Sobre</a> •
-  <a href="#-layout">Layout</a> • 
-  <a href="#-tech-stack">Tech Stack</a> •
-  <a href="#-autores">Autores</a> •
+  <a href="#sobre">Sobre</a> •
+  <a href="#layout">Layout</a> • 
+  <a href="#tecnologias">Tecnologias</a> •
+  <a href="#autores">Autores</a> •
+  <a href="#licença">Licença</a>
 </p>
 
-## 💻 Sobre
+## Sobre
 
-A plataforma visa garantir o entretenimento dos usuários oferecendo um acervo de animes e filmes, além de trazer algumas vantagens aos usuários cadastrados, como poder avaliar e favoritar animes, comentar episódios, verificar o histórico de episódios assistidos, mudar avatar e também acesso à um chat online para se conectar com outros usuários. Os usuários com permissões de administrador ou moderador são responsaveis por postar, editar e deletar animes e episódios.
+A plataforma visa garantir o entretenimento dos usuários oferecendo um acervo de animes e filmes, além de trazer algumas vantagens aos usuários cadastrados, como poder avaliar e favoritar animes, comentar episódios, verificar o histórico de episódios assistidos, mudar avatar e também acesso a um chat online para se conectar com outros usuários. Os usuários com permissões de administrador ou moderador são responsáveis por postar, editar e deletar animes e episódios.
 
-## 🎨 Layout
+## Layout
+
+Aplicação desenvolvida com abordagem _mobile first_, sendo compatível com qualquer dispositivo.
 
 ### Mobile
 
@@ -64,7 +69,7 @@ A plataforma visa garantir o entretenimento dos usuários oferecendo um acervo d
    <img alt="Adimin Page" title="#adminPage" src="https://i.imgur.com/ZJyyOfa.png" width="400px">
 </p>
 
-## 🛠 Tech Stack
+## Tecnologias
 
 As ferramentas a seguir foram usadas na construção deste projeto:
 
@@ -87,7 +92,7 @@ As ferramentas a seguir foram usadas na construção deste projeto:
 
 ---
 
-## 🦸 Autores
+## Autores
 
 - **Laiane Suzart**:
   <br>
@@ -110,6 +115,6 @@ As ferramentas a seguir foram usadas na construção deste projeto:
   <br>
   [![Linkedin Badge](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white&link=https://www.linkedin.com/in/emanuela-biondo-quizini-245ab0195/)](https://www.linkedin.com/in/emanuela-biondo-quizini-245ab0195/) [![Github Badge](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/emanuelakenzie)](https://github.com/emanuelakenzie)
 
-## 📃 Licença
+## Licença
 
 Este projeto está sob a licença [MIT](https://choosealicense.com/licenses/mit/).
